@@ -64,6 +64,7 @@ export function useCreateEmployee() {
     mutationFn: (body: NewEmployee) => api<Employee>('/hr/employees', { body }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: employeesKey });
+      qc.invalidateQueries({ queryKey: ['hr', 'onboarding'] });
       qc.invalidateQueries({ queryKey: ['dashboard'] });
     },
   });

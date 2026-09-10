@@ -29,6 +29,42 @@ function scopeToSelf(role: string) {
   return role === 'EMPLOYEE';
 }
 
+// Modèles de checklist par type de parcours.
+const JOURNEY_TEMPLATES: Record<'ONBOARDING' | 'OFFBOARDING', string[]> = {
+  ONBOARDING: [
+    'Contrat signé électroniquement',
+    'DPAE effectuée',
+    'Compte e-mail & accès créés',
+    'Matériel attribué (ordinateur, badge)',
+    'Parcours de formation sécurité',
+    'Rendez-vous manager J+7',
+  ],
+  OFFBOARDING: [
+    'Entretien de départ planifié',
+    'Restitution du matériel',
+    'Clôture des accès',
+    'Solde de tout compte préparé',
+    'Certificat de travail & attestation France Travail',
+  ],
+};
+
+/** Crée un parcours (onboarding / offboarding) avec sa checklist type. */
+function createJourney(
+  tx: Pick<typeof prisma, 'onboardingJourney'>,
+  employeeId: string,
+  kind: 'ONBOARDING' | 'OFFBOARDING',
+  startDate: Date,
+) {
+  return tx.onboardingJourney.create({
+    data: {
+      employeeId,
+      kind,
+      startDate,
+      tasks: { create: JOURNEY_TEMPLATES[kind].map((label, position) => ({ label, position })) },
+    },
+  });
+}
+
 /* ================================================================== */
 /*  Salariés                                                          */
 /* ================================================================== */
@@ -75,26 +111,31 @@ hrRouter.post(
   authorize('ADMIN', 'HR'),
   asyncHandler(async (req, res) => {
     const body = employeeCreate.parse(req.body);
-    const e = await prisma.employee.create({
-      data: {
-        companyId: req.auth!.companyId,
-        firstName: body.firstName,
-        lastName: body.lastName,
-        email: body.email,
-        jobTitle: body.jobTitle,
-        department: body.department,
-        contractType: body.contractType,
-        startDate: body.startDate,
-        managerId: body.managerId || null,
-        status: 'ONBOARDING',
-        ibanEncrypted: body.iban ? encrypt(body.iban) : null,
-        socialNumberEncrypted: body.socialNumber ? encrypt(body.socialNumber) : null,
-      },
-      include: { manager: { select: { firstName: true, lastName: true } } },
+    const e = await prisma.$transaction(async (tx) => {
+      const created = await tx.employee.create({
+        data: {
+          companyId: req.auth!.companyId,
+          firstName: body.firstName,
+          lastName: body.lastName,
+          email: body.email,
+          jobTitle: body.jobTitle,
+          department: body.department,
+          contractType: body.contractType,
+          startDate: body.startDate,
+          managerId: body.managerId || null,
+          status: 'ONBOARDING',
+          ibanEncrypted: body.iban ? encrypt(body.iban) : null,
+          socialNumberEncrypted: body.socialNumber ? encrypt(body.socialNumber) : null,
+        },
+        include: { manager: { select: { firstName: true, lastName: true } } },
+      });
+      // Un nouveau salarié démarre automatiquement un parcours d'intégration.
+      await createJourney(tx, created.id, 'ONBOARDING', body.startDate);
+      return created;
     });
     await logActivity(
       req.auth!.companyId,
-      `Nouveau salarié : ${e.firstName} ${e.lastName} (${e.department}).`,
+      `Nouveau salarié : ${e.firstName} ${e.lastName} (${e.department}) — parcours d'intégration lancé.`,
     );
     res.status(201).json(employeeDTO(e));
   }),
@@ -566,25 +607,6 @@ hrRouter.get(
   }),
 );
 
-// Modèles de checklist par type de parcours.
-const JOURNEY_TEMPLATES: Record<'ONBOARDING' | 'OFFBOARDING', string[]> = {
-  ONBOARDING: [
-    'Contrat signé électroniquement',
-    'DPAE effectuée',
-    'Compte e-mail & accès créés',
-    'Matériel attribué (ordinateur, badge)',
-    'Parcours de formation sécurité',
-    'Rendez-vous manager J+7',
-  ],
-  OFFBOARDING: [
-    'Entretien de départ planifié',
-    'Restitution du matériel',
-    'Clôture des accès',
-    'Solde de tout compte préparé',
-    'Certificat de travail & attestation France Travail',
-  ],
-};
-
 hrRouter.post(
   '/onboarding',
   authorize('ADMIN', 'HR'),
@@ -602,15 +624,9 @@ hrRouter.post(
     });
     if (!employee) throw new HttpError(404, 'Salarié introuvable');
 
-    const journey = await prisma.onboardingJourney.create({
-      data: {
-        employeeId: body.employeeId,
-        kind: body.kind,
-        startDate: body.startDate,
-        tasks: {
-          create: JOURNEY_TEMPLATES[body.kind].map((label, position) => ({ label, position })),
-        },
-      },
+    const { id } = await createJourney(prisma, body.employeeId, body.kind, body.startDate);
+    const journey = await prisma.onboardingJourney.findUniqueOrThrow({
+      where: { id },
       include: {
         employee: { select: { firstName: true, lastName: true, jobTitle: true } },
         tasks: { orderBy: { position: 'asc' } },
