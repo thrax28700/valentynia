@@ -8,7 +8,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL") // connexion "pooled" (PgBouncer) pour l'application
-  directUrl = env("DIRECT_URL")   // connexion directe pour `prisma migrate`
+  directUrl = env("DIRECT_URL") // connexion directe pour `prisma migrate`
 }
 
 // ------------------------------------------------------------------ 
@@ -16,20 +16,25 @@ datasource db {
 // ------------------------------------------------------------------ 
 
 model Company {
-  id                String   @id @default(cuid())
-  name              String
-  siren             String   @unique
+  id                  String   @id @default(cuid())
+  name                String
+  siren               String   @unique
+  address             String?
   collectiveAgreement String?
-  plan              Plan     @default(BUSINESS)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  weeklyHours         Float    @default(35)
+  plan                Plan     @default(BUSINESS)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
-  users        User[]
-  employees    Employee[]
-  invoices     Invoice[]
-  legalAlerts  LegalAlert[]
-  vatJournal   VatJournalEntry[]
-  aiInsights   AiInsight[]
+  users             User[]
+  employees         Employee[]
+  invoices          Invoice[]
+  legalAlerts       LegalAlert[]
+  vatJournal        VatJournalEntry[]
+  aiInsights        AiInsight[]
+  activityLog       ActivityLog[]
+  documentTemplates DocumentTemplate[]
+  reviewCampaigns   ReviewCampaign[]
 }
 
 enum Plan {
@@ -39,25 +44,25 @@ enum Plan {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String    @id @default(cuid())
+  email        String    @unique
   passwordHash String
   firstName    String
   lastName     String
-  role         Role     @default(EMPLOYEE)
+  role         Role      @default(EMPLOYEE)
   companyId    String
-  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  employeeId   String?  @unique
+  company      Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employeeId   String?   @unique
   employee     Employee? @relation(fields: [employeeId], references: [id])
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
   lastLoginAt  DateTime?
 }
 
 enum Role {
-  ADMIN      // administrateur de l'espace entreprise
-  HR         // gestionnaire RH
-  MANAGER    // valide les demandes de son équipe
-  EMPLOYEE   // espace salarié
+  ADMIN // administrateur de l'espace entreprise
+  HR // gestionnaire RH
+  MANAGER // valide les demandes de son équipe
+  EMPLOYEE // espace salarié
 }
 
 // ------------------------------------------------------------------ 
@@ -65,35 +70,47 @@ enum Role {
 // ------------------------------------------------------------------ 
 
 model Employee {
-  id             String   @id @default(cuid())
-  companyId      String
-  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  firstName      String
-  lastName       String
-  email          String
-  jobTitle       String
-  department     String
-  contractType   ContractType
-  startDate      DateTime
-  endDate        DateTime?
-  status         EmployeeStatus @default(ACTIVE)
-  managerId      String?
-  manager        Employee?  @relation("Reports", fields: [managerId], references: [id])
-  reports        Employee[] @relation("Reports")
+  id           String         @id @default(cuid())
+  companyId    String
+  company      Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  firstName    String
+  lastName     String
+  email        String
+  jobTitle     String
+  department   String
+  contractType ContractType
+  startDate    DateTime
+  endDate      DateTime?
+  status       EmployeeStatus @default(ACTIVE)
+  managerId    String?
+  manager      Employee?      @relation("Reports", fields: [managerId], references: [id])
+  reports      Employee[]     @relation("Reports")
+
+  // Coordonnées personnelles (modifiables par le salarié)
+  phone   String?
+  address String?
+
+  // Soldes de congés (en jours)
+  paidLeaveBalance Float @default(25)
+  rttBalance       Float @default(10)
+  recoveryBalance  Float @default(0)
 
   // Données sensibles chiffrées au repos (AES-256-GCM), stockées en base64.
-  ibanEncrypted        String?
+  ibanEncrypted         String?
   socialNumberEncrypted String?
 
-  account        User?
-  absences       Absence[]
-  documents      HrDocument[]
-  reviews        Review[]
-  skills         EmployeeSkill[]
-  payslips       Payslip[]
-  shifts         Shift[]
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  account          User?
+  absences         Absence[]
+  documents        HrDocument[]
+  reviews          Review[]
+  skills           EmployeeSkill[]
+  payslips         Payslip[]
+  shifts           Shift[]
+  requests         EmployeeRequest[]
+  journeys         OnboardingJourney[]
+  developmentPlans DevelopmentPlan[]
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
 
   @@index([companyId])
 }
@@ -116,28 +133,28 @@ enum EmployeeStatus {
 }
 
 model Absence {
-  id         String       @id @default(cuid())
-  employeeId String
-  employee   Employee     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  type       AbsenceType
-  startDate  DateTime
-  endDate    DateTime
-  days       Float
-  reason     String?
-  status     AbsenceStatus @default(PENDING)
+  id          String        @id @default(cuid())
+  employeeId  String
+  employee    Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  type        AbsenceType
+  startDate   DateTime
+  endDate     DateTime
+  days        Float
+  reason      String?
+  status      AbsenceStatus @default(PENDING)
   decidedById String?
-  decidedAt  DateTime?
-  createdAt  DateTime     @default(now())
+  decidedAt   DateTime?
+  createdAt   DateTime      @default(now())
 
   @@index([employeeId, status])
 }
 
 enum AbsenceType {
-  PAID_LEAVE      // congés payés
+  PAID_LEAVE // congés payés
   RTT
-  SICK            // maladie
-  UNPAID          // sans solde
-  FAMILY          // événement familial
+  SICK // maladie
+  UNPAID // sans solde
+  FAMILY // événement familial
   OTHER
 }
 
@@ -149,39 +166,39 @@ enum AbsenceStatus {
 }
 
 model HrDocument {
-  id         String   @id @default(cuid())
-  employeeId String?
-  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  title      String
-  category   String
-  storageKey String
-  sha256     String
-  generatedByAi Boolean @default(false)
-  createdAt  DateTime @default(now())
+  id            String    @id @default(cuid())
+  employeeId    String?
+  employee      Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  title         String
+  category      String
+  storageKey    String
+  sha256        String
+  generatedByAi Boolean   @default(false)
+  createdAt     DateTime  @default(now())
 }
 
 model Review {
-  id         String   @id @default(cuid())
-  employeeId String
-  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  campaign   String
-  type       String   // annuel / professionnel
+  id          String    @id @default(cuid())
+  employeeId  String
+  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  campaign    String
+  type        String // annuel / professionnel
   scheduledAt DateTime
   completedAt DateTime?
-  summary    String?
-  createdAt  DateTime @default(now())
+  summary     String?
+  createdAt   DateTime  @default(now())
 }
 
 model Skill {
-  id     String @id @default(cuid())
-  name   String @unique
+  id        String          @id @default(cuid())
+  name      String          @unique
   employees EmployeeSkill[]
 }
 
 model EmployeeSkill {
   employeeId String
   skillId    String
-  level      Int      // 1..5
+  level      Int // 1..5
   employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   skill      Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
 
@@ -192,7 +209,7 @@ model Payslip {
   id         String   @id @default(cuid())
   employeeId String
   employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  period     String   // "2026-08"
+  period     String // "2026-08"
   netAmount  Decimal  @db.Decimal(12, 2)
   storageKey String
   sha256     String
@@ -206,7 +223,7 @@ model Shift {
   date       DateTime
   startTime  String
   endTime    String
-  location   String   // Bureau / Télétravail / Atelier
+  location   String // Bureau / Télétravail / Atelier
 }
 
 // ------------------------------------------------------------------ 
@@ -214,56 +231,56 @@ model Shift {
 // ------------------------------------------------------------------ 
 
 model Invoice {
-  id            String   @id @default(cuid())
-  companyId     String
-  company       Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  number        String
-  clientName    String
-  clientSiren   String?
-  issueDate     DateTime
-  dueDate       DateTime
-  currency      String   @default("EUR")
-  totalExclVat  Decimal  @db.Decimal(12, 2)
-  vatAmount     Decimal  @db.Decimal(12, 2)
-  totalInclVat  Decimal  @db.Decimal(12, 2)
-  facturxProfile String  @default("EN16931")
+  id             String   @id @default(cuid())
+  companyId      String
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  number         String
+  clientName     String
+  clientSiren    String?
+  issueDate      DateTime
+  dueDate        DateTime
+  currency       String   @default("EUR")
+  totalExclVat   Decimal  @db.Decimal(12, 2)
+  vatAmount      Decimal  @db.Decimal(12, 2)
+  totalInclVat   Decimal  @db.Decimal(12, 2)
+  facturxProfile String   @default("EN16931")
 
   // Fichier Factur-X généré (PDF/A-3 + XML CII).
   facturxStorageKey String?
   facturxSha256     String?
 
-  ppfStatus     PpfStatus @default(DRAFT)
+  ppfStatus     PpfStatus     @default(DRAFT)
   ppfMessageId  String?
   ppfHistory    PpfEvent[]
   lines         InvoiceLine[]
   paidAt        DateTime?
-  archivedUntil DateTime?   // conservation légale (10 ans)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  archivedUntil DateTime? // conservation légale (10 ans)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@unique([companyId, number])
   @@index([companyId, ppfStatus])
 }
 
 model InvoiceLine {
-  id          String  @id @default(cuid())
-  invoiceId   String
-  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-  label       String
-  quantity    Decimal @db.Decimal(12, 3)
-  unitPrice   Decimal @db.Decimal(12, 2)
-  vatRate     Decimal @db.Decimal(5, 2)
+  id        String  @id @default(cuid())
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  label     String
+  quantity  Decimal @db.Decimal(12, 3)
+  unitPrice Decimal @db.Decimal(12, 2)
+  vatRate   Decimal @db.Decimal(5, 2)
 }
 
 // Cycle de vie normalisé de la facture électronique (statuts PPF).
 enum PpfStatus {
   DRAFT
-  DEPOSITED         // déposée
-  RECEIVED_BY_PPF   // reçue par le PPF
-  REJECTED          // rejetée
-  ACCEPTED          // acceptée / mise à disposition
-  DISPUTED          // litige
-  PAID              // encaissée
+  DEPOSITED // déposée
+  RECEIVED_BY_PPF // reçue par le PPF
+  REJECTED // rejetée
+  ACCEPTED // acceptée / mise à disposition
+  DISPUTED // litige
+  PAID // encaissée
 }
 
 model PpfEvent {
@@ -295,15 +312,15 @@ model VatJournalEntry {
 // ------------------------------------------------------------------ 
 
 model LegalAlert {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   companyId String
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
   level     AlertLevel
   title     String
   detail    String
   dueDate   DateTime?
-  resolved  Boolean  @default(false)
-  createdAt DateTime @default(now())
+  resolved  Boolean    @default(false)
+  createdAt DateTime   @default(now())
 }
 
 enum AlertLevel {
@@ -317,12 +334,120 @@ enum AlertLevel {
 // ------------------------------------------------------------------ 
 
 model AiInsight {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   companyId String
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  kind      String   // signal_faible / prevision_absences / climat / audit / recommandation
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  kind      String // signal_faible / prevision_absences / climat / audit / recommandation
   title     String
   body      String
   severity  AlertLevel @default(LOW)
+  createdAt DateTime   @default(now())
+}
+
+// ------------------------------------------------------------------
+//  Demandes salarié (hors absences : attestation, note de frais…)
+// ------------------------------------------------------------------
+
+model EmployeeRequest {
+  id         String        @id @default(cuid())
+  employeeId String
+  employee   Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  kind       String // "Attestation de travail" / "Note de frais" / ...
+  message    String?
+  status     RequestStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  resolvedAt DateTime?
+
+  @@index([employeeId, status])
+}
+
+enum RequestStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+  REFUSED
+  REIMBURSED
+}
+
+// ------------------------------------------------------------------
+//  Onboarding / offboarding
+// ------------------------------------------------------------------
+
+model OnboardingJourney {
+  id         String           @id @default(cuid())
+  employeeId String
+  employee   Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  kind       JourneyKind
+  startDate  DateTime
+  tasks      OnboardingTask[]
+  createdAt  DateTime         @default(now())
+}
+
+enum JourneyKind {
+  ONBOARDING
+  OFFBOARDING
+}
+
+model OnboardingTask {
+  id        String            @id @default(cuid())
+  journeyId String
+  journey   OnboardingJourney @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  label     String
+  done      Boolean           @default(false)
+  position  Int               @default(0)
+}
+
+// ------------------------------------------------------------------
+//  Campagnes d'entretiens & plans de développement
+// ------------------------------------------------------------------
+
+model ReviewCampaign {
+  id        String   @id @default(cuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  name      String
+  type      String // annuel / professionnel / mi-année
+  deadline  DateTime
+  total     Int      @default(0)
+  done      Int      @default(0)
+  status    String   @default("En cours") // En cours / Clôturée
   createdAt DateTime @default(now())
+}
+
+model DevelopmentPlan {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  goal       String
+  progress   Int      @default(0)
+  status     String   @default("Formation")
+  createdAt  DateTime @default(now())
+}
+
+// ------------------------------------------------------------------
+//  Bibliothèque documentaire (modèles, notes, accords)
+// ------------------------------------------------------------------
+
+model DocumentTemplate {
+  id        String   @id @default(cuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  name      String
+  category  String // Modèle / Note / Accord / Obligatoire
+  uses      Int      @default(0)
+  updatedAt DateTime @default(now())
+}
+
+// ------------------------------------------------------------------
+//  Journal d'activité (fil du tableau de bord)
+// ------------------------------------------------------------------
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  text      String
+  createdAt DateTime @default(now())
+
+  @@index([companyId, createdAt])
 }
