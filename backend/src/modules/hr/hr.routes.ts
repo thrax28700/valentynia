@@ -485,6 +485,31 @@ hrRouter.post(
   }),
 );
 
+// Évaluation d'une compétence pour un salarié (création ou mise à jour du niveau).
+hrRouter.put(
+  '/employee-skills',
+  authorize('ADMIN', 'HR', 'MANAGER'),
+  asyncHandler(async (req, res) => {
+    const body = z
+      .object({
+        employeeId: z.string(),
+        skillId: z.string(),
+        level: z.number().int().min(1).max(5),
+      })
+      .parse(req.body);
+    const employee = await prisma.employee.findFirst({
+      where: { id: body.employeeId, companyId: req.auth!.companyId },
+    });
+    if (!employee) throw new HttpError(404, 'Salarié introuvable');
+    const link = await prisma.employeeSkill.upsert({
+      where: { employeeId_skillId: { employeeId: body.employeeId, skillId: body.skillId } },
+      update: { level: body.level },
+      create: body,
+    });
+    res.json(link);
+  }),
+);
+
 hrRouter.get(
   '/development-plans',
   asyncHandler(async (req, res) => {
@@ -538,6 +563,79 @@ hrRouter.get(
         };
       }),
     );
+  }),
+);
+
+// Modèles de checklist par type de parcours.
+const JOURNEY_TEMPLATES: Record<'ONBOARDING' | 'OFFBOARDING', string[]> = {
+  ONBOARDING: [
+    'Contrat signé électroniquement',
+    'DPAE effectuée',
+    'Compte e-mail & accès créés',
+    'Matériel attribué (ordinateur, badge)',
+    'Parcours de formation sécurité',
+    'Rendez-vous manager J+7',
+  ],
+  OFFBOARDING: [
+    'Entretien de départ planifié',
+    'Restitution du matériel',
+    'Clôture des accès',
+    'Solde de tout compte préparé',
+    'Certificat de travail & attestation France Travail',
+  ],
+};
+
+hrRouter.post(
+  '/onboarding',
+  authorize('ADMIN', 'HR'),
+  asyncHandler(async (req, res) => {
+    const body = z
+      .object({
+        employeeId: z.string(),
+        kind: z.enum(['ONBOARDING', 'OFFBOARDING']),
+        startDate: z.coerce.date(),
+      })
+      .parse(req.body);
+
+    const employee = await prisma.employee.findFirst({
+      where: { id: body.employeeId, companyId: req.auth!.companyId },
+    });
+    if (!employee) throw new HttpError(404, 'Salarié introuvable');
+
+    const journey = await prisma.onboardingJourney.create({
+      data: {
+        employeeId: body.employeeId,
+        kind: body.kind,
+        startDate: body.startDate,
+        tasks: {
+          create: JOURNEY_TEMPLATES[body.kind].map((label, position) => ({ label, position })),
+        },
+      },
+      include: {
+        employee: { select: { firstName: true, lastName: true, jobTitle: true } },
+        tasks: { orderBy: { position: 'asc' } },
+      },
+    });
+
+    // Aligne le statut du salarié sur le type de parcours.
+    await prisma.employee.update({
+      where: { id: body.employeeId },
+      data: { status: body.kind === 'ONBOARDING' ? 'ONBOARDING' : 'OFFBOARDING' },
+    });
+    await logActivity(
+      req.auth!.companyId,
+      `Parcours ${body.kind === 'ONBOARDING' ? "d'intégration" : 'de départ'} lancé — ${employee.firstName} ${employee.lastName}.`,
+    );
+
+    res.status(201).json({
+      id: journey.id,
+      kind: journey.kind,
+      employeeName: `${journey.employee.firstName} ${journey.employee.lastName}`,
+      jobTitle: journey.employee.jobTitle,
+      startDate: journey.startDate.toISOString(),
+      progress: 0,
+      tasks: journey.tasks.map((t) => ({ id: t.id, label: t.label, done: t.done })),
+    });
   }),
 );
 
