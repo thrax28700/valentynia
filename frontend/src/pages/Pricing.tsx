@@ -1,6 +1,6 @@
 import { Button, Card, IconEl, SectionTitle, Badge, cx } from '../components/ui';
 import { eur } from '../lib/format';
-import { pricingPlans, premiumOptions } from '../data/mock';
+import { pricingPlans, premiumOptions } from '../data/content';
 
 const faq = [
   { q: 'La facturation Factur-X est-elle vraiment incluse ?', a: 'Oui. La génération Factur-X (PDF/A-3 + XML) est incluse dès l’offre Essentiel. L’envoi au PPF et l’archivage légal 10 ans sont inclus à partir de Business.' },

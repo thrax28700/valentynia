@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import type { NavItem } from './nav';
 import { Avatar, IconEl, cx } from './ui';
-import { company } from '../data/mock';
 import { useAuth } from '../lib/auth';
+import { useCompany } from '../lib/api';
+import { canAccessCompany } from '../lib/roles';
+import { planLabel } from '../lib/labels';
 
 function groupItems(nav: NavItem[]) {
   const out: { group: string | null; items: NavItem[] }[] = [];
@@ -21,6 +23,8 @@ export default function AppShell({ nav, space }: { nav: NavItem[]; space: 'entre
   const loc = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { data: company } = useCompany();
+  const companyName = company?.name ?? 'Mon entreprise';
   const current =
     nav.find((n) => (n.end ? loc.pathname === n.to : loc.pathname.startsWith(n.to)) && n.to !== '/app' && n.to !== '/espace') ?? nav[0];
   const isCompany = space === 'entreprise';
@@ -38,13 +42,15 @@ export default function AppShell({ nav, space }: { nav: NavItem[]; space: 'entre
       </Link>
 
       <div className="v-card flex items-center gap-3 p-3">
-        <Avatar name={isCompany ? company.name : user?.name ?? '—'} size={38} />
+        <Avatar name={isCompany ? companyName : user?.name ?? '—'} size={38} />
         <div className="min-w-0">
           <p className="truncate font-heading text-sm font-medium text-prune">
-            {isCompany ? company.name : user?.name}
+            {isCompany ? companyName : user?.name}
           </p>
           <p className="truncate text-xs text-mauve">
-            {isCompany ? `Espace entreprise · ${company.plan}` : 'Espace salarié'}
+            {isCompany
+              ? `Espace entreprise${company ? ` · ${planLabel[company.plan] ?? company.plan}` : ''}`
+              : 'Espace salarié'}
           </p>
         </div>
       </div>
@@ -74,7 +80,7 @@ export default function AppShell({ nav, space }: { nav: NavItem[]; space: 'entre
       </nav>
 
       <div className="space-y-1">
-        {isCompany && user?.role !== 'EMPLOYEE' && (
+        {isCompany && user && canAccessCompany(user.role) && (
           <Link to="/espace" className="v-nav-link">
             <IconEl name="ArrowRight" size={18} />
             Voir l'espace salarié

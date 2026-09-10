@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Field, IconEl, cx } from '../components/ui';
 import { useAuth } from '../lib/auth';
-import { roleHome } from '../lib/api';
+import { roleHome } from '../lib/roles';
 
 const DEMO = {
   entreprise: { email: 'camille.ferrand@atelier-lumen.fr', label: 'Camille Ferrand · Directrice RH' },
