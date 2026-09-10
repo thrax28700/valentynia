@@ -27,12 +27,13 @@ export function createApp() {
   app.use(express.json({ limit: '1mb' }));
   if (env.NODE_ENV !== 'test') app.use(morgan('dev'));
 
-  // Anti-brute-force sur l'authentification.
+  // Anti-brute-force sur l'authentification (désactivé hors production).
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 20,
+    limit: 30,
     standardHeaders: 'draft-7',
     legacyHeaders: false,
+    skip: () => env.NODE_ENV !== 'production',
     message: { error: 'Trop de tentatives, réessayez dans quelques minutes.' },
   });
 

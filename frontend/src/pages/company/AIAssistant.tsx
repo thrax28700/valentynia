@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card, PageIntro, Badge, Button, Field, IconEl, IconBubble, Spinner, cx } from '../../components/ui';
-import { useStore } from '../../lib/store';
-import { ai } from '../../lib/api';
+import { useAiInsights, useAiChat, useGenerateDocument, useEmployees } from '../../lib/api';
 import { download } from '../../lib/download';
-import { aiFeatures } from '../../data/mock';
+import { aiFeatures } from '../../data/content';
 
 type Msg = { from: 'ia' | 'me'; text: string };
 const suggestions = [
@@ -14,42 +13,55 @@ const suggestions = [
 
 export default function AIAssistant() {
   const [tab, setTab] = useState<'chat' | 'documents' | 'analyses'>('chat');
-  const insights = useStore((d) => d.insights);
-  const employees = useStore((d) => d.employees);
+  const { data: insights = [] } = useAiInsights();
+  const { data: employees = [] } = useEmployees();
+  const chat = useAiChat();
+  const genDoc = useGenerateDocument();
 
   const [msgs, setMsgs] = useState<Msg[]>([
-    { from: 'ia', text: "Bonjour. Je suis l'assistante RH de Valentynia. Comment puis-je vous aider aujourd'hui, en douceur ?" },
+    {
+      from: 'ia',
+      text: "Bonjour. Je suis l'assistante RH de Valentynia. Comment puis-je vous aider aujourd'hui, en douceur ?",
+    },
   ]);
   const [input, setInput] = useState('');
-  const [thinking, setThinking] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
-  useEffect(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [msgs, thinking]);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [msgs, chat.isPending]);
 
   const send = async (text: string) => {
     const clean = text.trim();
-    if (!clean || thinking) return;
+    if (!clean || chat.isPending) return;
     setMsgs((m) => [...m, { from: 'me', text: clean }]);
     setInput('');
-    setThinking(true);
-    const answer = await ai.chat(clean);
-    setThinking(false);
-    setMsgs((m) => [...m, { from: 'ia', text: answer }]);
+    try {
+      const res = await chat.mutateAsync(clean);
+      setMsgs((m) => [...m, { from: 'ia', text: res.reply }]);
+    } catch {
+      setMsgs((m) => [...m, { from: 'ia', text: 'Désolée, je n’ai pas pu répondre. Réessayez.' }]);
+    }
   };
 
-  // Génération de documents
-  const [empId, setEmpId] = useState(employees[0]?.id ?? '');
-  const [kind, setKind] = useState('attestation');
+  const [empId, setEmpId] = useState('');
+  const [kind, setKind] = useState('attestation_travail');
   const [doc, setDoc] = useState('');
-  const [gen, setGen] = useState(false);
+
   const generate = async () => {
     const emp = employees.find((e) => e.id === empId);
     if (!emp) return;
-    setGen(true);
-    const content = await ai.generateDocument(kind, {
-      employee: emp.name, role: emp.role, contract: emp.contract, since: emp.since,
+    const res = await genDoc.mutateAsync({
+      template: kind,
+      employeeId: emp.id,
+      values: {
+        company: 'Atelier Lumen',
+        employee: emp.fullName,
+        jobTitle: emp.jobTitle,
+        contractType: emp.contractType,
+        since: emp.startDate.slice(0, 10),
+      },
     });
-    setGen(false);
-    setDoc(content);
+    setDoc(res.content);
   };
 
   return (
@@ -65,7 +77,10 @@ export default function AIAssistant() {
           <button
             key={k}
             onClick={() => setTab(k)}
-            className={cx('rounded-full px-4 py-2 font-heading text-sm capitalize transition', tab === k ? 'bg-white text-prune shadow-soft' : 'text-mauve')}
+            className={cx(
+              'rounded-full px-4 py-2 font-heading text-sm capitalize transition',
+              tab === k ? 'bg-white text-prune shadow-soft' : 'text-mauve',
+            )}
           >
             {k === 'chat' ? 'Conversation' : k === 'documents' ? 'Documents RH' : 'Analyses RH'}
           </button>
@@ -78,15 +93,22 @@ export default function AIAssistant() {
             {msgs.map((m, i) => (
               <div key={i} className={cx('flex gap-3', m.from === 'me' && 'flex-row-reverse')}>
                 {m.from === 'ia' && <IconBubble name="Sparkle" tone="powder" />}
-                <div className={cx('max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed', m.from === 'ia' ? 'bg-wash text-prune' : 'bg-powder text-white')}>
+                <div
+                  className={cx(
+                    'max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
+                    m.from === 'ia' ? 'bg-wash text-prune' : 'bg-powder text-white',
+                  )}
+                >
                   {m.text}
                 </div>
               </div>
             ))}
-            {thinking && (
+            {chat.isPending && (
               <div className="flex gap-3">
                 <IconBubble name="Sparkle" tone="powder" />
-                <div className="flex items-center rounded-2xl bg-wash px-4 py-3 text-mauve"><Spinner /></div>
+                <div className="flex items-center rounded-2xl bg-wash px-4 py-3 text-mauve">
+                  <Spinner />
+                </div>
               </div>
             )}
             <div ref={endRef} />
@@ -94,12 +116,31 @@ export default function AIAssistant() {
           <div className="border-t border-line p-4">
             <div className="mb-3 flex flex-wrap gap-2">
               {suggestions.map((s) => (
-                <button key={s} onClick={() => send(s)} className="v-btn-secondary !px-3 !py-1.5 text-xs">{s}</button>
+                <button
+                  key={s}
+                  onClick={() => send(s)}
+                  className="v-btn-secondary !px-3 !py-1.5 text-xs"
+                >
+                  {s}
+                </button>
               ))}
             </div>
-            <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); send(input); }}>
-              <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Écrivez votre demande…" className="v-input" />
-              <Button type="submit" icon="ArrowRight" loading={thinking}>Envoyer</Button>
+            <form
+              className="flex gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                send(input);
+              }}
+            >
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Écrivez votre demande…"
+                className="v-input"
+              />
+              <Button type="submit" icon="ArrowRight" loading={chat.isPending}>
+                Envoyer
+              </Button>
             </form>
           </div>
         </Card>
@@ -110,24 +151,43 @@ export default function AIAssistant() {
           <Card>
             <h3 className="text-lg">Générer un document</h3>
             <div className="mt-4 space-y-4">
-              <Field label="Salarié" value={empId} onChange={setEmpId} options={employees.map((e) => ({ value: e.id, label: e.name }))} />
+              <Field
+                label="Salarié"
+                value={empId}
+                onChange={setEmpId}
+                options={[
+                  { value: '', label: '— choisir —' },
+                  ...employees.map((e) => ({ value: e.id, label: e.fullName })),
+                ]}
+              />
               <Field
                 label="Type"
                 value={kind}
                 onChange={setKind}
-                options={[
-                  { value: 'attestation', label: 'Attestation de travail' },
-                  { value: 'avenant', label: 'Courrier / avenant' },
-                ]}
+                options={[{ value: 'attestation_travail', label: 'Attestation de travail' }]}
               />
-              <Button icon="Sparkle" onClick={generate} loading={gen} className="w-full">Rédiger</Button>
+              <Button
+                icon="Sparkle"
+                onClick={generate}
+                loading={genDoc.isPending}
+                disabled={!empId}
+                className="w-full"
+              >
+                Rédiger
+              </Button>
             </div>
           </Card>
           <Card>
             <div className="flex items-center justify-between">
               <h3 className="text-lg">Aperçu</h3>
               {doc && (
-                <Button variant="secondary" icon="Download" onClick={() => download(`${kind}.txt`, doc)}>Télécharger</Button>
+                <Button
+                  variant="secondary"
+                  icon="Download"
+                  onClick={() => download(`${kind}.txt`, doc)}
+                >
+                  Télécharger
+                </Button>
               )}
             </div>
             <pre className="mt-4 min-h-64 whitespace-pre-wrap rounded-xl bg-wash p-4 font-mono text-xs leading-relaxed text-prune">
@@ -143,7 +203,7 @@ export default function AIAssistant() {
             <Card key={i.id}>
               <IconEl name="Sparkle" size={18} className="text-powder" />
               <h3 className="mt-3 text-base">{i.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-mauve">{i.text}</p>
+              <p className="mt-2 text-sm leading-relaxed text-mauve">{i.body}</p>
             </Card>
           ))}
           {aiFeatures.slice(6).map((f) => (

@@ -35,6 +35,10 @@ export function setToken(token: string | null) {
   } catch {
     /* mode privé : la session vivra en mémoire le temps de l'onglet */
   }
+  // Notifie le contexte d'authentification (même onglet).
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('valentynia:auth'));
+  }
 }
 
 type Options = {

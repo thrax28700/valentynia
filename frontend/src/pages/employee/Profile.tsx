@@ -1,47 +1,59 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, PageIntro, Button, Field, Avatar, IconEl } from '../../components/ui';
-import { useStore, store } from '../../lib/store';
 import { useAuth } from '../../lib/auth';
+import { useEmployee, useUpdateEmployeeContact } from '../../lib/api';
+import { contractLabel } from '../../lib/labels';
 import { dateLong } from '../../lib/format';
 
 export default function EmpProfile() {
   const { user } = useAuth();
-  const employees = useStore((d) => d.employees);
-  const emp = employees.find((e) => e.id === user?.employeeId);
+  const { data: emp, isLoading } = useEmployee(user?.employeeId ?? undefined);
+  const update = useUpdateEmployeeContact();
 
-  const [phone, setPhone] = useState(emp?.phone ?? '06 12 34 56 78');
-  const [address, setAddress] = useState(emp?.address ?? '14 rue des Tilleuls, 69003 Lyon');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [saved, setSaved] = useState(false);
 
-  if (!emp) return null;
+  useEffect(() => {
+    if (emp) {
+      setPhone(emp.phone ?? '');
+      setAddress(emp.address ?? '');
+    }
+  }, [emp]);
+
+  if (isLoading) return <p className="py-16 text-center text-sm text-mauve">Chargement…</p>;
+  if (!emp) return <p className="py-16 text-center text-sm text-mauve">Profil indisponible.</p>;
+
   const rows: [string, string][] = [
-    ['Poste', emp.role],
-    ['Département', emp.dept],
-    ['Manager', emp.manager ?? '—'],
-    ['Contrat', `${emp.contract} — depuis le ${dateLong(emp.since)}`],
+    ['Poste', emp.jobTitle],
+    ['Département', emp.department],
+    ['Manager', emp.managerName ?? '—'],
+    [
+      'Contrat',
+      `${contractLabel[emp.contractType] ?? emp.contractType} — depuis le ${dateLong(emp.startDate)}`,
+    ],
     ['E-mail', emp.email],
   ];
 
-  const save = (e: React.FormEvent) => {
+  const save = async (e: React.FormEvent) => {
     e.preventDefault();
-    store.set((d) => {
-      const me = d.employees.find((x) => x.id === emp.id);
-      if (me) { me.phone = phone; me.address = address; }
-    });
-    store.log('Coordonnées personnelles mises à jour.');
+    await update.mutateAsync({ id: emp.id, phone, address });
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
 
   return (
     <div className="space-y-6">
-      <PageIntro title="Mon profil" text="Vos informations. Les coordonnées personnelles sont modifiables et enregistrées." />
+      <PageIntro
+        title="Mon profil"
+        text="Vos informations. Les coordonnées personnelles sont modifiables et enregistrées."
+      />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <Card className="flex flex-col items-center text-center">
-          <Avatar name={emp.name} size={88} />
-          <p className="mt-4 font-heading text-lg font-medium text-prune">{emp.name}</p>
-          <p className="text-sm text-mauve">{emp.role}</p>
+          <Avatar name={emp.fullName} size={88} />
+          <p className="mt-4 font-heading text-lg font-medium text-prune">{emp.fullName}</p>
+          <p className="text-sm text-mauve">{emp.jobTitle}</p>
         </Card>
 
         <Card>
@@ -63,13 +75,22 @@ export default function EmpProfile() {
           <Field label="Téléphone" value={phone} onChange={setPhone} />
           <Field label="Adresse" value={address} onChange={setAddress} />
           <div className="sm:col-span-2 flex items-center gap-3">
-            <Button type="submit" icon="Check">Enregistrer</Button>
+            <Button type="submit" icon="Check" loading={update.isPending}>
+              Enregistrer
+            </Button>
             {saved && <span className="text-sm text-prune">✓ Enregistré.</span>}
           </div>
         </form>
         <p className="mt-3 flex items-center gap-2 text-xs text-mauve">
-          <IconEl name="Lock" size={13} /> Coordonnées bancaires chiffrées (AES-256), jamais affichées en clair — IBAN se terminant par
-          <span className="font-mono"> {emp.iban?.slice(-4)}</span>.
+          <IconEl name="Lock" size={13} /> Coordonnées bancaires chiffrées (AES-256), jamais
+          affichées en clair
+          {emp.ibanLast4 && (
+            <>
+              {' '}
+              — IBAN se terminant par <span className="font-mono">{emp.ibanLast4}</span>
+            </>
+          )}
+          .
         </p>
       </Card>
     </div>
