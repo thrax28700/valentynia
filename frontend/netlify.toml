@@ -1,4 +1,7 @@
 # Déploiement Netlify — frontend Valentynia (SPA React + Vite)
+# Dans Netlify : "Base directory" = frontend
+# Variable d'environnement à définir dans le dashboard Netlify :
+#   VITE_API_URL = https://valentynia-api.onrender.com/api   (URL Render + /api)
 [build]
   command = "npm run build"
   publish = "dist"
@@ -6,7 +9,7 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# Toutes les routes React renvoient vers index.html
+# Toutes les routes React renvoient vers index.html (SPA)
 [[redirects]]
   from = "/*"
   to = "/index.html"
