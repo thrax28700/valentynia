@@ -39,8 +39,9 @@ async function purge() {
   await prisma.company.deleteMany();
 }
 
-async function main() {
-  console.log('🌱 Amorçage des données de démonstration Valentynia…');
+export async function seedDatabase({ quiet = false } = {}) {
+  const log = quiet ? () => {} : console.log;
+  log('🌱 Amorçage des données de démonstration Valentynia…');
   await purge();
 
   const company = await prisma.company.create({
@@ -389,15 +390,20 @@ async function main() {
     ],
   });
 
-  console.log('✅ Terminé.');
-  console.log('   Entreprise : camille.ferrand@atelier-lumen.fr / demo1234 (ADMIN)');
-  console.log('   RH         : sofia.renault@atelier-lumen.fr / demo1234 (HR)');
-  console.log('   Salarié    : yanis.moreau@atelier-lumen.fr / demo1234 (EMPLOYEE)');
+  log('✅ Terminé.');
+  log('   Entreprise : camille.ferrand@atelier-lumen.fr / demo1234 (ADMIN)');
+  log('   RH         : sofia.renault@atelier-lumen.fr / demo1234 (HR)');
+  log('   Salarié    : yanis.moreau@atelier-lumen.fr / demo1234 (EMPLOYEE)');
+
+  return { companyId: company.id };
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(() => prisma.$disconnect());
+// Exécution directe : `npm run seed`.
+if (process.argv[1] && /seed(\.ts|\.js)?$/.test(process.argv[1])) {
+  seedDatabase()
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    })
+    .finally(() => prisma.$disconnect());
+}

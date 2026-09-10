@@ -16,6 +16,7 @@ frontend/vite.config.d.ts
 .env
 .env.local
 .env.*.local
+.env.test
 
 # Prisma (base locale de dev)
 backend/prisma/dev.db

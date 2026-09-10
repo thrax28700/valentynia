@@ -17,7 +17,13 @@ export function createApp() {
   const app = express();
 
   app.set('trust proxy', 1); // derrière le proxy de l'hébergeur (Render)
-  app.use(helmet());
+  app.disable('x-powered-by');
+  app.use(
+    helmet({
+      // API JSON : pas de contenu HTML rendu, on garde des règles strictes par défaut.
+      crossOriginResourcePolicy: { policy: 'same-site' },
+    }),
+  );
   app.use(
     cors({
       origin: env.CORS_ORIGIN.split(',').map((o) => o.trim()),
@@ -25,9 +31,21 @@ export function createApp() {
     }),
   );
   app.use(express.json({ limit: '1mb' }));
-  if (env.NODE_ENV !== 'test') app.use(morgan('dev'));
+  if (env.NODE_ENV === 'production') app.use(morgan('combined'));
+  else if (env.NODE_ENV !== 'test') app.use(morgan('dev'));
 
-  // Anti-brute-force sur l'authentification (désactivé hors production).
+  // Limitation de débit globale (protection basique contre l'abus).
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: 600,
+      standardHeaders: 'draft-7',
+      legacyHeaders: false,
+      skip: () => env.NODE_ENV === 'test',
+    }),
+  );
+
+  // Anti-brute-force renforcé sur l'authentification (désactivé hors production).
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: 30,
