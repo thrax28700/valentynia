@@ -133,6 +133,20 @@ export function useShifts(opts: { mine?: boolean; from?: string } = {}) {
   });
 }
 
+export function useCreateShift() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: {
+      employeeId: string;
+      date: string;
+      startTime: string;
+      endTime: string;
+      location: string;
+    }) => api<Shift>('/hr/shifts', { body }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['hr', 'shifts'] }),
+  });
+}
+
 /* ---------------------------------------------------------------- Bulletins */
 
 export function usePayslips(opts: { mine?: boolean } = {}) {
@@ -174,12 +188,38 @@ export function useReviewCampaigns() {
   });
 }
 
+export function useCreateReviewCampaign() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { name: string; type: string; deadline: string; total?: number }) =>
+      api<ReviewCampaign>('/hr/review-campaigns', { body }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['hr', 'review-campaigns'] }),
+  });
+}
+
 /* ---------------------------------------------------------------- Compétences */
 
 export function useSkills() {
   return useQuery({
     queryKey: ['hr', 'skills'],
     queryFn: ({ signal }) => api<SkillsPayload>('/hr/skills', { signal }),
+  });
+}
+
+export function useCreateSkill() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (name: string) => api('/hr/skills', { body: { name } }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['hr', 'skills'] }),
+  });
+}
+
+export function useSetEmployeeSkill() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { employeeId: string; skillId: string; level: number }) =>
+      api('/hr/employee-skills', { method: 'PUT', body }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['hr', 'skills'] }),
   });
 }
 
@@ -197,6 +237,19 @@ export function useOnboarding(kind?: JourneyKind) {
     queryKey: ['hr', 'onboarding', kind ?? 'all'],
     queryFn: ({ signal }) =>
       api<OnboardingJourney[]>(`/hr/onboarding${qs({ kind })}`, { signal }),
+  });
+}
+
+export function useCreateJourney() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { employeeId: string; kind: JourneyKind; startDate: string }) =>
+      api<OnboardingJourney>('/hr/onboarding', { body }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['hr', 'onboarding'] });
+      qc.invalidateQueries({ queryKey: employeesKey });
+      qc.invalidateQueries({ queryKey: ['dashboard'] });
+    },
   });
 }
 

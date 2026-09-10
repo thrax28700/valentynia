@@ -1,5 +1,6 @@
 import { Card, PageIntro, Table, Badge, IconEl, IconBubble } from '../../components/ui';
 import { useDocumentTemplates } from '../../lib/api';
+import { download } from '../../lib/download';
 import { dateShort } from '../../lib/format';
 
 const catTone: Record<string, 'sage' | 'peach' | 'powder' | 'neutral'> = {
@@ -13,11 +14,17 @@ export default function Documents() {
   const { data: templates = [], isLoading } = useDocumentTemplates();
   const totalUses = templates.reduce((s, t) => s + t.uses, 0);
 
+  const grab = (name: string, category: string, updatedAt: string) =>
+    download(
+      `${name.toLowerCase().replace(/[^a-z0-9]+/gi, '-')}.txt`,
+      `VALENTYNIA — Bibliothèque documentaire\n\n${category} : ${name}\nDernière mise à jour : ${dateShort(updatedAt)}\n\n(Modèle de démonstration — le contenu réel serait un document DOCX/PDF versionné.)`,
+    );
+
   return (
     <div className="space-y-6">
       <PageIntro
         title="Documents RH"
-        text="Coffre-fort, modèles personnalisables et archivage à valeur probante. Diffusion en un clic aux salariés concernés."
+        text="Bibliothèque de modèles, notes internes et accords d’entreprise, avec suivi des diffusions."
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -26,7 +33,7 @@ export default function Documents() {
           { i: 'Lock' as const, k: 'Diffusions cumulées', v: String(totalUses) },
           {
             i: 'Sparkle' as const,
-            k: 'Modèles obligatoires',
+            k: 'Documents obligatoires',
             v: String(templates.filter((t) => t.category === 'Obligatoire').length),
           },
         ].map((s) => (
@@ -60,7 +67,11 @@ export default function Documents() {
                 <td className="px-3 py-3 font-mono text-xs text-mauve">{dateShort(d.updatedAt)}</td>
                 <td className="px-3 py-3 font-mono text-sm">{d.uses}</td>
                 <td className="px-3 py-3 text-right">
-                  <button className="v-btn-ghost !px-2 !py-1.5">
+                  <button
+                    className="v-btn-ghost !px-2 !py-1.5"
+                    title="Télécharger"
+                    onClick={() => grab(d.name, d.category, d.updatedAt)}
+                  >
                     <IconEl name="Download" size={16} />
                   </button>
                 </td>
@@ -69,6 +80,11 @@ export default function Documents() {
           </Table>
         )}
       </Card>
+
+      <p className="flex items-center gap-2 text-xs text-mauve">
+        <IconEl name="Sparkle" size={13} className="text-powder" />
+        Besoin d’un document nominatif (attestation, avenant) ? Générez-le depuis l’Assistant IA RH.
+      </p>
     </div>
   );
 }

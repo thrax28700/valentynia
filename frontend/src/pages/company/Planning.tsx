@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { Card, PageIntro, Badge, Stat } from '../../components/ui';
-import { useShifts } from '../../lib/api';
+import { useMemo, useState } from 'react';
+import { Card, PageIntro, Badge, Stat, Button, Modal, Field } from '../../components/ui';
+import { useShifts, useCreateShift, useEmployees } from '../../lib/api';
 
 const locationTone: Record<string, 'sage' | 'peach' | 'powder' | 'neutral'> = {
   Bureau: 'sage',
@@ -8,12 +8,24 @@ const locationTone: Record<string, 'sage' | 'peach' | 'powder' | 'neutral'> = {
   Atelier: 'powder',
   Repos: 'neutral',
 };
+const LOCATIONS = ['Bureau', 'Télétravail', 'Atelier', 'Repos'].map((v) => ({ value: v, label: v }));
 
 const dayLabel = (iso: string) =>
   new Date(iso).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
 
 export default function Planning() {
   const { data: shifts = [], isLoading } = useShifts();
+  const { data: employees = [] } = useEmployees();
+  const create = useCreateShift();
+
+  const [modal, setModal] = useState(false);
+  const [form, setForm] = useState({
+    employeeId: '',
+    date: new Date().toISOString().slice(0, 10),
+    startTime: '09:00',
+    endTime: '17:30',
+    location: 'Bureau',
+  });
 
   const { days, rows } = useMemo(() => {
     const dayset = Array.from(new Set(shifts.map((s) => s.date.slice(0, 10)))).sort();
@@ -26,23 +38,29 @@ export default function Planning() {
     return { days: dayset, rows: [...byEmp.values()] };
   }, [shifts]);
 
-  const overtimeAlerts = [
-    'Marc Bonnet — 48 h sur la semaine 36 : durée maximale hebdomadaire approchée.',
-    'Équipe Atelier — 3 salariés sans pause déjeuner pointée mardi.',
-    'Repos quotidien de 11 h non respecté pour 1 salarié (jeudi → vendredi).',
-  ];
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await create.mutateAsync(form);
+    setForm({ ...form, employeeId: '' });
+    setModal(false);
+  };
 
   return (
     <div className="space-y-6">
       <PageIntro
         title="Planning & temps de travail"
         text="Plannings par équipe, pointages et suivi des heures. Alertes automatiques en cas de dépassement."
+        action={
+          <Button icon="Plus" onClick={() => setModal(true)}>
+            Nouveau créneau
+          </Button>
+        }
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Stat label="Heures contractuelles / semaine" value="35 h" />
-        <Stat label="Heures supp. ce mois" value="34 h" delta="Atelier : +21 h" tone="down" />
-        <Stat label="Taux d’occupation" value="94 %" />
+        <Stat label="Créneaux planifiés" value={String(shifts.length)} delta="Semaine en cours" />
+        <Stat label="Salariés planifiés" value={String(rows.length)} />
       </div>
 
       <Card className="overflow-x-auto">
@@ -87,13 +105,68 @@ export default function Planning() {
       </Card>
 
       <Card>
-        <h3 className="text-lg">Alertes temps de travail</h3>
+        <h3 className="text-lg">Contrôles de conformité (durée du travail)</h3>
         <ul className="mt-3 space-y-2 text-sm text-mauve">
-          {overtimeAlerts.map((a) => (
-            <li key={a}>• {a}</li>
-          ))}
+          <li>• Durée maximale hebdomadaire : 48 h (44 h en moyenne sur 12 semaines).</li>
+          <li>• Repos quotidien minimal : 11 h consécutives.</li>
+          <li>• Repos hebdomadaire minimal : 35 h consécutives.</li>
+          <li>• Pause obligatoire de 20 min au-delà de 6 h de travail.</li>
         </ul>
       </Card>
+
+      <Modal open={modal} onClose={() => setModal(false)} title="Nouveau créneau de planning">
+        <form className="space-y-4" onSubmit={submit}>
+          <Field
+            label="Salarié"
+            value={form.employeeId}
+            onChange={(v) => setForm({ ...form, employeeId: v })}
+            options={[
+              { value: '', label: '— choisir —' },
+              ...employees.map((e) => ({ value: e.id, label: e.fullName })),
+            ]}
+          />
+          <Field
+            label="Date"
+            type="date"
+            value={form.date}
+            onChange={(v) => setForm({ ...form, date: v })}
+            required
+          />
+          <div className="grid grid-cols-2 gap-4">
+            <Field
+              label="Début"
+              type="time"
+              value={form.startTime}
+              onChange={(v) => setForm({ ...form, startTime: v })}
+              required
+            />
+            <Field
+              label="Fin"
+              type="time"
+              value={form.endTime}
+              onChange={(v) => setForm({ ...form, endTime: v })}
+              required
+            />
+          </div>
+          <Field
+            label="Lieu"
+            value={form.location}
+            onChange={(v) => setForm({ ...form, location: v })}
+            options={LOCATIONS}
+          />
+          {create.isError && (
+            <p className="text-xs text-powderdark">{(create.error as Error).message}</p>
+          )}
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="secondary" onClick={() => setModal(false)}>
+              Annuler
+            </Button>
+            <Button type="submit" icon="Check" loading={create.isPending} disabled={!form.employeeId}>
+              Ajouter au planning
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }
