@@ -1,0 +1,28 @@
+# Dépendances
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Builds & artefacts
+dist/
+build/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Environnement
+.env
+.env.local
+.env.*.local
+
+# Prisma (base locale de dev)
+backend/prisma/dev.db
+backend/prisma/migrations/dev/
+
+# Déploiement
+.netlify/
+
+# Divers
+*.log
+.DS_Store
+Thumbs.db

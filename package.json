@@ -1,0 +1,15 @@
+{
+  "name": "valentynia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Valentynia — L'humain, simplement. SaaS RH + facturation réforme 2026.",
+  "scripts": {
+    "install:all": "npm --prefix frontend install && npm --prefix backend install",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "typecheck": "npm --prefix frontend exec tsc -- -b && npm --prefix backend run typecheck",
+    "prisma:migrate": "npm --prefix backend run prisma:migrate",
+    "seed": "npm --prefix backend run seed"
+  }
+}
