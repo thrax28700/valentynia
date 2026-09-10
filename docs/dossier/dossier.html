@@ -1,0 +1,1078 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Dossier de projet — Valentynia</title>
+<style>
+  :root {
+    --ink: #232022;
+    --mut: #5b5551;
+    --accent: #b3325a;
+    --line: #e3ded9;
+    --wash: #f6f3f0;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 11pt; }
+  body {
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .page {
+    padding: 20mm 18mm;
+    max-width: 210mm;
+    margin: 0 auto;
+  }
+  h1, h2, h3, h4 { font-family: "Montserrat", "Segoe UI", sans-serif; line-height: 1.25; color: var(--ink); }
+  h1 { font-size: 22pt; margin: 0 0 4pt; }
+  h2 {
+    font-size: 15pt;
+    margin: 26pt 0 8pt;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid var(--accent);
+    page-break-after: avoid;
+  }
+  h3 { font-size: 12.5pt; margin: 16pt 0 4pt; color: var(--accent); page-break-after: avoid; }
+  h4 { font-size: 11pt; margin: 12pt 0 3pt; }
+  p { margin: 0 0 7pt; text-align: justify; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
+  li { margin: 2pt 0; }
+  code, .mono { font-family: "Roboto Mono", ui-monospace, Consolas, monospace; font-size: 9.2pt; background: var(--wash); padding: 1px 4px; border-radius: 3px; }
+  pre {
+    background: #1f1d1f; color: #f2ede8; font-family: "Roboto Mono", ui-monospace, Consolas, monospace;
+    font-size: 8.4pt; line-height: 1.5; padding: 10pt 12pt; border-radius: 6px; overflow-x: auto;
+    white-space: pre-wrap; word-break: break-word; page-break-inside: avoid; margin: 6pt 0 10pt;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 12pt; font-size: 9.4pt; page-break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 5pt 7pt; text-align: left; vertical-align: top; }
+  th { background: var(--wash); font-family: "Montserrat", sans-serif; font-size: 8.6pt; text-transform: uppercase; letter-spacing: .04em; }
+  figure { margin: 10pt 0; page-break-inside: avoid; text-align: center; }
+  figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+  figcaption { font-size: 8.8pt; color: var(--mut); margin-top: 4pt; font-style: italic; }
+  .lead { font-size: 11.5pt; color: var(--mut); }
+  .tag { display: inline-block; background: var(--wash); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; font-size: 8.6pt; margin: 2px 3px 2px 0; }
+  .cover {
+    height: 257mm; display: flex; flex-direction: column; justify-content: space-between;
+    page-break-after: always;
+  }
+  .cover .brand { display: flex; align-items: center; gap: 10px; font-family: "Montserrat"; font-weight: 600; font-size: 14pt; }
+  .cover .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #f4c9a9, #e7b7c8); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+  .cover h1 { font-size: 30pt; margin-top: 8pt; }
+  .cover .sub { font-family: "Playfair Display", Georgia, serif; font-style: italic; color: var(--accent); font-size: 15pt; }
+  .cover .meta { font-size: 10.5pt; color: var(--mut); }
+  .cover .meta strong { color: var(--ink); }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc ol { list-style: none; padding-left: 0; }
+  .toc > ol > li { margin: 5pt 0; font-family: "Montserrat"; font-weight: 600; }
+  .toc ol ol { padding-left: 14pt; font-weight: 400; font-family: "Inter"; }
+  .callout { border-left: 3px solid var(--accent); background: var(--wash); padding: 8pt 12pt; border-radius: 0 6px 6px 0; margin: 8pt 0 12pt; font-size: 10pt; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; }
+  .break { page-break-before: always; }
+  pre.mermaid {
+    background: #fff; color: var(--ink); border: 1px solid var(--line);
+    padding: 10pt; text-align: center; white-space: normal;
+  }
+  pre.mermaid svg { max-width: 100%; height: auto; }
+  .mermaid { text-align: center; margin: 10pt 0; }
+  @page { size: A4; margin: 0; }
+  @media print { .page { padding: 18mm 16mm; } }
+</style>
+</head>
+<body>
+
+<!-- ================= COUVERTURE ================= -->
+<section class="page cover">
+  <div>
+    <div class="brand"><span class="logo">V</span> Valentynia</div>
+  </div>
+  <div>
+    <p class="tag">Titre professionnel Développeur Web et Web Mobile (DWWM)</p>
+    <h1>Dossier de projet</h1>
+    <p class="sub">Valentynia — L'humain, simplement.</p>
+    <p class="lead" style="margin-top:14pt">Plateforme SaaS de gestion des ressources humaines et de
+    facturation électronique conforme à la réforme 2026 (Factur-X + Portail Public de Facturation),
+    avec suivi de la conformité légale et assistant IA RH.</p>
+  </div>
+  <div class="meta">
+    <p><strong>Candidat :</strong> Renaud Vaillant</p>
+    <p><strong>Dépôt du code :</strong> https://github.com/thrax28700/valentynia</p>
+    <p><strong>Application en ligne :</strong> frontend hébergé sur Netlify — API sur Render — base PostgreSQL sur Neon</p>
+    <p><strong>Session :</strong> 2026</p>
+  </div>
+</section>
+
+<!-- ================= SOMMAIRE ================= -->
+<section class="page toc">
+  <h1>Sommaire</h1>
+  <ol>
+    <li>1. Introduction et présentation du projet
+      <ol>
+        <li>1.1 Le candidat et le contexte</li>
+        <li>1.2 Présentation synthétique de Valentynia</li>
+        <li>1.3 Compétences du référentiel couvertes</li>
+      </ol>
+    </li>
+    <li>2. Expression des besoins et cahier des charges
+      <ol>
+        <li>2.1 Problématique métier</li>
+        <li>2.2 Utilisateurs cibles et rôles</li>
+        <li>2.3 Périmètre fonctionnel</li>
+        <li>2.4 Exigences non fonctionnelles et contraintes</li>
+      </ol>
+    </li>
+    <li>3. Spécifications fonctionnelles
+      <ol>
+        <li>3.1 Acteurs et cas d'usage</li>
+        <li>3.2 User stories principales</li>
+        <li>3.3 Arborescence des écrans</li>
+      </ol>
+    </li>
+    <li>4. Spécifications techniques
+      <ol>
+        <li>4.1 Choix de la pile technologique</li>
+        <li>4.2 Architecture applicative</li>
+        <li>4.3 Organisation du code</li>
+      </ol>
+    </li>
+    <li>5. Conception de la base de données
+      <ol>
+        <li>5.1 Modèle conceptuel</li>
+        <li>5.2 Dictionnaire de données (extrait)</li>
+        <li>5.3 Choix de conception</li>
+      </ol>
+    </li>
+    <li>6. Maquettage et design system</li>
+    <li>7. Réalisation — partie front-end (CCP 1)
+      <ol>
+        <li>7.1 Maquettage des interfaces</li>
+        <li>7.2 Interfaces statiques</li>
+        <li>7.3 Interfaces dynamiques</li>
+        <li>7.4 Sécurité côté front-end</li>
+      </ol>
+    </li>
+    <li>8. Réalisation — partie back-end (CCP 2)
+      <ol>
+        <li>8.1 Mise en place de la base de données relationnelle</li>
+        <li>8.2 Composants d'accès aux données</li>
+        <li>8.3 Composants métier côté serveur</li>
+        <li>8.4 Sécurité côté back-end (OWASP)</li>
+      </ol>
+    </li>
+    <li>9. Jeu d'essai</li>
+    <li>10. Documentation du déploiement</li>
+    <li>11. Veille technologique et sécurité</li>
+    <li>12. Difficultés rencontrées et solutions</li>
+    <li>13. Gestion de projet</li>
+    <li>14. Conclusion et perspectives</li>
+    <li>15. Annexes</li>
+  </ol>
+</section>
+
+<!-- ================= 1. INTRODUCTION ================= -->
+<section class="page">
+  <h1>1. Introduction et présentation du projet</h1>
+
+  <h2>1.1 Le candidat et le contexte</h2>
+  <p>Ce dossier présente <strong>Valentynia</strong>, le projet développé dans le cadre du titre
+  professionnel <em>Développeur Web et Web Mobile</em>. Il s'agit d'un projet complet, conçu et
+  réalisé individuellement, de la définition du besoin jusqu'à la mise en ligne.</p>
+  <p>Valentynia se positionne comme l'application d'un <strong>éditeur de logiciel SaaS</strong>
+  (Software as a Service) fictif destiné aux petites et moyennes entreprises. Pour illustrer le
+  fonctionnement, une entreprise cliente de démonstration a été modélisée : <strong>« Atelier
+  Lumen »</strong>, un bureau d'études techniques de 142 salariés relevant de la convention
+  collective Syntec.</p>
+
+  <h2>1.2 Présentation synthétique de Valentynia</h2>
+  <p>Valentynia réunit dans une plateforme unique quatre domaines habituellement éclatés entre
+  tableurs et prestataires distincts :</p>
+  <ul>
+    <li><strong>Ressources humaines</strong> — dossier salarié, absences et congés, planning et
+    temps de travail, onboarding / offboarding, documents RH, entretiens annuels et professionnels,
+    cartographie des compétences, portail salarié en libre-service.</li>
+    <li><strong>Facturation — réforme 2026</strong> — génération de factures au format
+    <strong>Factur-X</strong> (facture hybride PDF/XML, norme européenne EN 16931), transmission au
+    <strong>Portail Public de Facturation (PPF)</strong>, archivage à valeur probante pendant 10 ans,
+    <strong>journal anti-fraude à la TVA</strong> chaîné et inaltérable.</li>
+    <li><strong>Conformité légale</strong> — alertes réglementaires et échéances, vérification
+    automatique des clauses obligatoires des contrats, suivi des obligations RH et du registre RGPD.</li>
+    <li><strong>Assistant IA RH</strong> — assistant conversationnel au ton posé, génération de
+    documents RH à partir de modèles, restitution d'analyses agrégées et strictement anonymes.</li>
+  </ul>
+  <p>L'application distingue deux espaces : un <strong>espace entreprise</strong> pour les fonctions
+  RH et de direction, et un <strong>espace salarié</strong> autonome. L'accès est régi par un système
+  de rôles (administrateur, gestionnaire RH, manager, salarié).</p>
+
+  <figure>
+    <img src="../captures/01-accueil.png" alt="Page d'accueil de Valentynia" />
+    <figcaption>Figure 1 — Site vitrine : page d'accueil présentant la proposition de valeur.</figcaption>
+  </figure>
+
+  <h2>1.3 Compétences du référentiel couvertes</h2>
+  <table>
+    <tr><th>CCP</th><th>Activité type</th><th>Où elle est traitée dans ce dossier</th></tr>
+    <tr><td rowspan="3"><strong>CCP 1</strong><br />Front-end + sécurité</td>
+      <td>Maquetter des interfaces utilisateur web ou web mobile</td><td>§ 6 et § 7.1</td></tr>
+    <tr><td>Réaliser des interfaces utilisateur statiques web ou web mobile</td><td>§ 7.2</td></tr>
+    <tr><td>Développer la partie dynamique des interfaces utilisateur</td><td>§ 7.3</td></tr>
+    <tr><td rowspan="4"><strong>CCP 2</strong><br />Back-end + sécurité</td>
+      <td>Mettre en place une base de données relationnelle</td><td>§ 5 et § 8.1</td></tr>
+    <tr><td>Développer des composants d'accès aux données SQL et NoSQL</td><td>§ 8.2</td></tr>
+    <tr><td>Développer des composants métier côté serveur</td><td>§ 8.3</td></tr>
+    <tr><td>Documenter le déploiement d'une application dynamique web</td><td>§ 10</td></tr>
+  </table>
+  <p>Les <strong>recommandations de sécurité</strong> exigées par chaque CCP sont regroupées et
+  détaillées en § 7.4 (front) et § 8.4 (back), avec une correspondance explicite au référentiel
+  OWASP Top 10.</p>
+</section>
+
+<!-- ================= 2. BESOINS ================= -->
+<section class="page break">
+  <h1>2. Expression des besoins et cahier des charges</h1>
+
+  <h2>2.1 Problématique métier</h2>
+  <p>Deux constats sont à l'origine du projet :</p>
+  <ol>
+    <li><strong>La gestion RH des PME est fragmentée.</strong> Les dossiers du personnel, les
+    demandes de congés, les plannings, les entretiens et les documents sont répartis entre des
+    tableurs, des boîtes mail et des prestataires. L'information est difficile à retrouver, les
+    soldes de congés sont calculés à la main, et le salarié n'a pas d'accès direct à ses propres
+    données.</li>
+    <li><strong>La réforme de la facturation électronique impose de nouveaux outils.</strong> À
+    partir de 2026, la réception de factures électroniques au format structuré devient obligatoire
+    pour toutes les entreprises, et l'émission le devient progressivement. Les formats admis
+    (Factur-X, UBL, CII) et la transmission via une plateforme agréée nécessitent un logiciel
+    capable de générer le format normalisé, de suivre le cycle de vie de la facture et de conserver
+    une piste d'audit inaltérable pour l'administration fiscale.</li>
+  </ol>
+  <p>Valentynia répond aux deux à la fois : une seule plateforme, un seul point d'entrée, une
+  cohérence entre la donnée RH (les salariés, la masse salariale) et la donnée financière (les
+  factures, la TVA).</p>
+
+  <h2>2.2 Utilisateurs cibles et rôles</h2>
+  <table>
+    <tr><th>Rôle (code)</th><th>Profil</th><th>Droits</th></tr>
+    <tr><td><code>ADMIN</code></td><td>Dirigeant, DRH</td><td>Accès complet à l'espace entreprise, paramètres, gestion des offres et des utilisateurs.</td></tr>
+    <tr><td><code>HR</code></td><td>Gestionnaire RH</td><td>Gestion des salariés, absences, documents, facturation ; pas d'accès aux paramètres de l'entreprise.</td></tr>
+    <tr><td><code>MANAGER</code></td><td>Responsable d'équipe</td><td>Validation des demandes d'absence et des tâches d'onboarding de son périmètre.</td></tr>
+    <tr><td><code>EMPLOYEE</code></td><td>Salarié</td><td>Espace personnel : bulletins, documents, demandes, planning, profil, assistant. Accès limité à ses propres données.</td></tr>
+  </table>
+
+  <h2>2.3 Périmètre fonctionnel</h2>
+  <div class="grid2">
+    <div>
+      <h4>Espace entreprise</h4>
+      <ul>
+        <li>Tableau de bord (effectif, absences, encours client, conformité)</li>
+        <li>Dossiers salariés (création, recherche, filtre par département)</li>
+        <li>Absences : saisie, validation / refus, décompte automatique des soldes</li>
+        <li>Planning : créneaux par salarié et par jour</li>
+        <li>Onboarding / offboarding : parcours avec checklist</li>
+        <li>Documents RH : bibliothèque de modèles</li>
+        <li>Entretiens : campagnes et suivi</li>
+        <li>Compétences : matrice éditable, plans de développement</li>
+        <li>Facturation : création Factur-X, cycle PPF, journal TVA, archivage</li>
+        <li>Conformité : alertes, vérification de contrat</li>
+        <li>Assistant IA : conversation, génération de documents, analyses</li>
+        <li>Paramètres de l'entreprise</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Espace salarié</h4>
+      <ul>
+        <li>Accueil : soldes de congés, semaine, dernier bulletin</li>
+        <li>Mes documents</li>
+        <li>Mes bulletins de paie</li>
+        <li>Mes demandes (absence, attestation, note de frais)</li>
+        <li>Mon planning et mes absences</li>
+        <li>Mon profil (coordonnées modifiables, IBAN masqué)</li>
+        <li>Assistant IA personnel</li>
+      </ul>
+      <h4>Site vitrine</h4>
+      <ul>
+        <li>Accueil, tarifs, connexion</li>
+        <li>Page 404 dédiée</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>2.4 Exigences non fonctionnelles et contraintes</h2>
+  <table>
+    <tr><th>Exigence</th><th>Réponse apportée</th></tr>
+    <tr><td>Sécurité des accès</td><td>Authentification JWT, mots de passe hachés bcrypt, rôles, limitation de débit anti-force brute.</td></tr>
+    <tr><td>Protection des données sensibles</td><td>Chiffrement AES-256-GCM au repos (IBAN, n° de sécurité sociale), affichage masqué.</td></tr>
+    <tr><td>Conformité RGPD</td><td>Cloisonnement par entreprise, minimisation des données, registre suivi dans l'application.</td></tr>
+    <tr><td>Inaltérabilité fiscale</td><td>Journal TVA chaîné par empreinte cryptographique.</td></tr>
+    <tr><td>Fiabilité</td><td>TypeScript strict des deux côtés, validation Zod, 23 tests automatisés.</td></tr>
+    <tr><td>Réactivité de l'interface</td><td>Application monopage, cache serveur TanStack Query, retours de chargement et d'erreur systématiques.</td></tr>
+    <tr><td>Responsive</td><td>Conception <em>desktop-first</em> (usage RH sur poste) avec adaptation mobile du site vitrine et des écrans salarié.</td></tr>
+    <tr><td>Coût</td><td>Hébergement sur offres gratuites (Netlify, Render, Neon).</td></tr>
+  </table>
+</section>
+
+<!-- ================= 3. SPECS FONCTIONNELLES ================= -->
+<section class="page break">
+  <h1>3. Spécifications fonctionnelles</h1>
+
+  <h2>3.1 Acteurs et cas d'usage</h2>
+  <p>Le diagramme ci-dessous synthétise les principaux cas d'usage par acteur.</p>
+  <pre class="mermaid">
+flowchart LR
+  RH([RH / Admin]):::a
+  MG([Manager]):::a
+  SA([Salarié]):::a
+  RH --- U1[Dossiers salariés] &amp; U2[Facture Factur-X] &amp; U3[Suivi PPF] &amp; U4[Onboarding] &amp; U5[Campagnes d'entretiens] &amp; U6[Alertes conformité]
+  MG --- U7[Valider une absence] &amp; U8[Tâches d'un parcours]
+  SA --- U9[Déposer une demande] &amp; U10[Bulletins / documents] &amp; U11[Mettre à jour son profil] &amp; U12[Assistant IA]
+  classDef a fill:#f7e9ed,stroke:#c25a76,color:#232022;
+  </pre>
+
+  <h2>3.2 User stories principales</h2>
+  <table>
+    <tr><th>#</th><th>En tant que…</th><th>je veux…</th><th>afin de…</th></tr>
+    <tr><td>US-01</td><td>gestionnaire RH</td><td>créer un dossier salarié avec son contrat et ses coordonnées bancaires</td><td>centraliser l'information et sécuriser les données sensibles</td></tr>
+    <tr><td>US-02</td><td>salarié</td><td>déposer une demande de congés en indiquant les dates</td><td>obtenir une validation sans passer par l'e-mail</td></tr>
+    <tr><td>US-03</td><td>manager</td><td>valider ou refuser une demande en un clic</td><td>que le solde de congés du salarié soit mis à jour automatiquement</td></tr>
+    <tr><td>US-04</td><td>gestionnaire RH</td><td>générer une facture au format Factur-X</td><td>être conforme à la réforme 2026 et disposer du XML normalisé</td></tr>
+    <tr><td>US-05</td><td>gestionnaire RH</td><td>transmettre la facture au PPF et suivre son statut</td><td>savoir si elle est reçue, acceptée, rejetée ou encaissée</td></tr>
+    <tr><td>US-06</td><td>administrateur</td><td>consulter un journal TVA inaltérable</td><td>répondre à un contrôle de l'administration fiscale</td></tr>
+    <tr><td>US-07</td><td>gestionnaire RH</td><td>lancer un parcours d'intégration pour un nouvel arrivant</td><td>ne rien oublier grâce à une checklist type</td></tr>
+    <tr><td>US-08</td><td>salarié</td><td>consulter mes bulletins et télécharger mes documents</td><td>ne plus solliciter le service RH pour ces demandes courantes</td></tr>
+  </table>
+
+  <h2>3.3 Arborescence des écrans</h2>
+  <pre>
+/                         Accueil (vitrine)
+/tarifs                   Offres
+/connexion                Authentification
+/app                      Espace entreprise (rôle != EMPLOYEE)
+  /                        Tableau de bord
+  /salaries                Dossiers salariés
+  /absences                Absences & congés
+  /planning                Planning & temps de travail
+  /onboarding              Onboarding / offboarding
+  /documents               Documents RH
+  /entretiens              Entretiens
+  /competences             Compétences
+  /facturation             Facturation 2026
+  /conformite              Conformité légale
+  /ia                      Assistant IA RH
+  /parametres              Paramètres entreprise
+/espace                   Espace salarié
+  /                        Accueil personnel
+  /documents  /bulletins  /demandes  /planning  /profil  /assistant
+/404                      Page non trouvée
+  </pre>
+  <p>Les routes <code>/app/*</code> et <code>/espace/*</code> sont protégées par un composant de
+  garde (<code>RequireAuth</code>) qui vérifie la session et le rôle, et redirige vers l'écran
+  approprié le cas échéant.</p>
+</section>
+
+<!-- ================= 4. SPECS TECHNIQUES ================= -->
+<section class="page break">
+  <h1>4. Spécifications techniques</h1>
+
+  <h2>4.1 Choix de la pile technologique</h2>
+  <table>
+    <tr><th>Couche</th><th>Technologie</th><th>Justification</th></tr>
+    <tr><td rowspan="5">Front-end</td><td>React 18</td><td>Bibliothèque de référence, composants réutilisables, large écosystème.</td></tr>
+    <tr><td>TypeScript</td><td>Typage statique : erreurs détectées à la compilation, meilleure maintenabilité.</td></tr>
+    <tr><td>Vite 5</td><td>Serveur de développement instantané (HMR), build de production optimisé.</td></tr>
+    <tr><td>Tailwind CSS 3</td><td>Design system cohérent par classes utilitaires, pas de CSS mort, rapidité d'intégration.</td></tr>
+    <tr><td>React Router 6 · TanStack&nbsp;Query 5</td><td>Routage déclaratif ; gestion professionnelle du cache de données serveur (invalidation ciblée, états de chargement/erreur, dé-duplication des requêtes).</td></tr>
+    <tr><td rowspan="4">Back-end</td><td>Node.js + Express 4</td><td>Même langage que le front (une seule stack), framework minimaliste et maîtrisé.</td></tr>
+    <tr><td>TypeScript</td><td>Cohérence avec le front, sécurité de typage jusqu'aux requêtes SQL.</td></tr>
+    <tr><td>Prisma 5 (ORM)</td><td>Schéma unique, migrations versionnées, requêtes typées et <strong>paramétrées</strong> (protection contre l'injection SQL).</td></tr>
+    <tr><td>PostgreSQL</td><td>SGBD relationnel robuste : contraintes d'intégrité, transactions, types précis (<code>Decimal</code> pour les montants), hébergement managé Neon.</td></tr>
+    <tr><td rowspan="2">Sécurité</td><td>jsonwebtoken · bcryptjs · Helmet · CORS · Zod · express-rate-limit</td><td>Authentification, hachage, en-têtes de sécurité, validation d'entrée, anti-force-brute.</td></tr>
+    <tr><td><code>node:crypto</code> (AES-256-GCM)</td><td>Chiffrement authentifié des données sensibles au repos.</td></tr>
+    <tr><td rowspan="2">Qualité</td><td>ESLint · <code>tsc --noEmit</code></td><td>Analyse statique et vérification de types en intégration continue.</td></tr>
+    <tr><td>Vitest · Supertest</td><td>Tests unitaires (fonctions pures) et tests d'intégration HTTP de l'API.</td></tr>
+    <tr><td>Déploiement</td><td>Netlify · Render · Neon</td><td>Trois offres gratuites, déploiement automatique à chaque <code>git push</code>.</td></tr>
+  </table>
+
+  <h2>4.2 Architecture applicative</h2>
+  <pre class="mermaid">
+flowchart TD
+  B["Navigateur<br/>SPA React (Netlify)"] -->|HTTPS / JSON + JWT| A["API REST<br/>Express + Prisma (Render)"]
+  A -->|TLS| D[("PostgreSQL<br/>Neon")]
+  A -.->|mode simulation| P["Portail Public<br/>de Facturation"]
+  subgraph API["API modulaire (un routeur par domaine)"]
+    M1[auth] --- M2[hr] --- M3[billing]
+    M4[compliance] --- M5[ai] --- M6[dashboard] --- M7[company]
+  end
+  </pre>
+  <p>L'architecture est une <strong>application monopage</strong> qui consomme une <strong>API REST
+  sans état</strong>. L'API est organisée en <strong>modules par domaine métier</strong> ; chaque
+  module expose un routeur Express indépendant monté sous un préfixe (<code>/api/hr</code>,
+  <code>/api/billing</code>…). Le client PPF fonctionne en mode simulation tant que les accès de
+  production ne sont pas fournis : il fait progresser le cycle de vie de la facture sans appel
+  réseau réel.</p>
+
+  <h2>4.3 Organisation du code</h2>
+  <p>Le dépôt est un <em>monorepo</em> à deux paquets.</p>
+  <pre>
+valentynia/
+├─ frontend/
+│  └─ src/
+│     ├─ pages/            19 écrans (company/ · employee/ · vitrine)
+│     ├─ components/       design system (ui.tsx), layouts, navigation, icônes
+│     ├─ lib/
+│     │  ├─ http.ts        client fetch typé (JWT, erreurs, base d'URL)
+│     │  ├─ auth.tsx       contexte de session + garde de route
+│     │  ├─ api/           hooks par domaine (useQuery / useMutation)
+│     │  ├─ query.ts       instance TanStack Query
+│     │  ├─ labels.ts      libellés FR des énumérations
+│     │  └─ format.ts      formatage (€, dates, jours ouvrés)
+│     └─ data/content.ts   contenu éditorial du site vitrine
+└─ backend/
+   ├─ prisma/
+   │  ├─ schema.prisma     23 modèles
+   │  └─ migrations/       migrations SQL versionnées
+   └─ src/
+      ├─ app.ts            assemblage Express (middlewares, routeurs)
+      ├─ config/env.ts     validation des variables d'environnement (Zod)
+      ├─ middleware/        authenticate, authorize, gestion d'erreurs
+      ├─ lib/              prisma, crypto, jwt, facturx, ppf, vatJournal, serialize
+      ├─ modules/          auth · hr · billing · compliance · ai · dashboard · company
+      └─ seed/seed.ts      jeu de données de démonstration ré-exécutable
+  </pre>
+</section>
+
+<!-- ================= 5. BDD ================= -->
+<section class="page break">
+  <h1>5. Conception de la base de données</h1>
+
+  <h2>5.1 Modèle conceptuel</h2>
+  <p>La base compte 23 entités. Le diagramme entités-associations ci-dessous présente les
+  principales et leurs cardinalités.</p>
+  <pre class="mermaid">
+erDiagram
+  Company ||--o{ User : "emploie"
+  Company ||--o{ Employee : "regroupe"
+  Company ||--o{ Invoice : "émet"
+  Company ||--o{ LegalAlert : "surveille"
+  Company ||--o{ VatJournalEntry : "consigne"
+  Company ||--o{ AiInsight : "reçoit"
+  Company ||--o{ ActivityLog : "journalise"
+  Company ||--o{ DocumentTemplate : "possède"
+  Company ||--o{ ReviewCampaign : "organise"
+  User ||--o| Employee : "rattaché à"
+  Employee ||--o{ Absence : "pose"
+  Employee ||--o{ Shift : "planifié sur"
+  Employee ||--o{ Payslip : "reçoit"
+  Employee ||--o{ HrDocument : "détient"
+  Employee ||--o{ EmployeeRequest : "formule"
+  Employee ||--o{ OnboardingJourney : "suit"
+  Employee ||--o{ DevelopmentPlan : "bénéficie de"
+  Employee ||--o{ Review : "passe"
+  Employee ||--o{ EmployeeSkill : "évalué sur"
+  Skill ||--o{ EmployeeSkill : "mesurée par"
+  Employee ||--o{ Employee : "manage"
+  Invoice ||--o{ InvoiceLine : "détaille"
+  Invoice ||--o{ PpfEvent : "trace"
+  OnboardingJourney ||--o{ OnboardingTask : "compose"
+  </pre>
+
+  <h2>5.2 Dictionnaire de données (extrait)</h2>
+  <table>
+    <tr><th>Table</th><th>Champ</th><th>Type</th><th>Contraintes / rôle</th></tr>
+    <tr><td rowspan="3">Employee</td><td><code>id</code></td><td>String (cuid)</td><td>Clé primaire</td></tr>
+    <tr><td><code>ibanEncrypted</code></td><td>String</td><td>IBAN chiffré AES-256-GCM (base64), jamais stocké en clair</td></tr>
+    <tr><td><code>paidLeaveBalance</code></td><td>Float</td><td>Solde de congés payés (jours), décrémenté à la validation</td></tr>
+    <tr><td rowspan="4">Invoice</td><td><code>number</code></td><td>String</td><td>Unique par entreprise (<code>@@unique([companyId, number])</code>)</td></tr>
+    <tr><td><code>totalInclVat</code></td><td>Decimal(12,2)</td><td>Montant TTC — type décimal exact (pas de flottant)</td></tr>
+    <tr><td><code>ppfStatus</code></td><td>Enum PpfStatus</td><td>DRAFT · DEPOSITED · RECEIVED_BY_PPF · REJECTED · ACCEPTED · DISPUTED · PAID</td></tr>
+    <tr><td><code>facturxSha256</code></td><td>String</td><td>Empreinte du XML Factur-X généré</td></tr>
+    <tr><td rowspan="3">VatJournalEntry</td><td><code>sequence</code></td><td>Int</td><td>Numéro d'ordre, unique par entreprise</td></tr>
+    <tr><td><code>previousHash</code></td><td>String</td><td>Empreinte de l'écriture précédente (chaînage)</td></tr>
+    <tr><td><code>entryHash</code></td><td>String</td><td>SHA-256 de (companyId | sequence | event | payloadHash | previousHash)</td></tr>
+  </table>
+
+  <h2>5.3 Choix de conception</h2>
+  <ul>
+    <li><strong>Cloisonnement multi-entreprise</strong> : presque toutes les tables portent un
+    <code>companyId</code>. Chaque requête de l'API filtre systématiquement sur l'entreprise de
+    l'utilisateur authentifié.</li>
+    <li><strong>Suppressions en cascade</strong> (<code>onDelete: Cascade</code>) depuis
+    <code>Company</code> et <code>Employee</code> pour garantir la cohérence référentielle.</li>
+    <li><strong>Types exacts pour la monnaie</strong> : <code>Decimal(12,2)</code> pour éviter les
+    erreurs d'arrondi des nombres à virgule flottante.</li>
+    <li><strong>Énumérations</strong> pour les statuts (absence, PPF, demande, alerte), garantissant
+    des valeurs contrôlées côté base.</li>
+    <li><strong>Auto-relation</strong> sur <code>Employee</code> (<code>manager</code> /
+    <code>reports</code>) pour la hiérarchie.</li>
+    <li><strong>Deux URL de connexion</strong> : une connexion <em>pooled</em> (PgBouncer) pour
+    l'application, une connexion directe (<code>directUrl</code>) réservée aux migrations Prisma.</li>
+  </ul>
+
+  <figure>
+    <img src="../captures/09-entreprise-journal-tva.png" alt="Journal anti-fraude TVA" />
+    <figcaption>Figure 2 — Le journal anti-fraude TVA : chaque écriture affiche son empreinte et
+    celle de la précédente.</figcaption>
+  </figure>
+</section>
+
+<!-- ================= 6. MAQUETTAGE ================= -->
+<section class="page break">
+  <h1>6. Maquettage et design system</h1>
+  <p>Le maquettage a été mené directement sous forme d'un <strong>design system codé</strong> :
+  plutôt qu'un jeu de maquettes statiques, un ensemble de composants réutilisables a été défini,
+  documenté par une charte et éprouvé sur les écrans réels. Cette approche « atomic » garantit la
+  cohérence visuelle de bout en bout.</p>
+
+  <h2>Charte graphique</h2>
+  <table>
+    <tr><th>Rôle</th><th>Jeton</th><th>Valeur</th></tr>
+    <tr><td>Fond de page</td><td><code>cream</code></td><td>#FAF9F8</td></tr>
+    <tr><td>Surfaces secondaires</td><td><code>wash</code></td><td>#F2EFEC</td></tr>
+    <tr><td>Bordures fines</td><td><code>line</code></td><td>#E9E5E2</td></tr>
+    <tr><td>Texte et titres</td><td><code>prune</code></td><td>#232022</td></tr>
+    <tr><td>Texte secondaire</td><td><code>mauve</code></td><td>#6E655C</td></tr>
+    <tr><td>Accent (boutons, liens, état actif)</td><td><code>powder</code></td><td>#C25A76</td></tr>
+    <tr><td>Succès / validation</td><td><code>sage</code></td><td>#D8E7DE</td></tr>
+  </table>
+  <p><strong>Typographies :</strong> Montserrat SemiBold (titres), Playfair Display Medium
+  (sous-titres premium), Inter (texte courant), Roboto Mono (chiffres et tableaux).<br />
+  <strong>Formes :</strong> arrondis généreux (boutons en pilule, cartes 16&nbsp;px), ombres douces
+  et diffuses, iconographie au trait fin. <strong>Ton :</strong> calme, rassurant, professionnel.</p>
+
+  <h2>Bibliothèque de composants (<code>src/components/ui.tsx</code>)</h2>
+  <p><span class="tag">Button</span><span class="tag">Card</span><span class="tag">Table</span>
+  <span class="tag">Modal</span><span class="tag">Field</span><span class="tag">Badge</span>
+  <span class="tag">StatusBadge</span><span class="tag">Stat</span><span class="tag">Progress</span>
+  <span class="tag">Avatar</span><span class="tag">PageIntro</span><span class="tag">EmptyState</span>
+  <span class="tag">Spinner</span><span class="tag">IconBubble</span></p>
+  <p>Chaque composant encapsule les jetons de la charte. Par exemple, le composant
+  <code>Field</code> imbrique l'<code>&lt;input&gt;</code> dans son <code>&lt;label&gt;</code>, ce
+  qui garantit l'association accessible (nom du champ annoncé par les lecteurs d'écran, conformité
+  RGAA).</p>
+
+  <h2>Responsive</h2>
+  <p>Le parti pris est <em>desktop-first</em> : l'usage RH principal se fait sur poste de travail.
+  Les points de rupture Tailwind (<code>sm</code>, <code>lg</code>, <code>xl</code>) adaptent les
+  grilles ; la barre latérale de l'application devient un menu escamotable sous <code>lg</code> ; le
+  site vitrine et l'espace salarié sont pleinement utilisables sur mobile.</p>
+  <div class="grid2">
+    <figure><img src="../captures/18-mobile-accueil.png" alt="Vue mobile de l'accueil" />
+      <figcaption>Figure 3 — Accueil en 390&nbsp;px de large (mobile).</figcaption></figure>
+    <figure><img src="../captures/03-connexion.png" alt="Écran de connexion" />
+      <figcaption>Figure 4 — Écran de connexion, double onglet entreprise / salarié.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================= 7. FRONT-END ================= -->
+<section class="page break">
+  <h1>7. Réalisation — partie front-end (CCP&nbsp;1)</h1>
+
+  <h2>7.1 Maquettage des interfaces</h2>
+  <p>Voir § 6. Le maquettage a produit : la charte, la bibliothèque de composants,
+  l'arborescence des écrans (§ 3.3) et les gabarits de page (<code>SiteLayout</code> pour la
+  vitrine, <code>AppShell</code> pour les espaces authentifiés avec barre latérale, en-tête
+  contextuel et zone de contenu).</p>
+
+  <h2>7.2 Interfaces statiques</h2>
+  <p>Le site vitrine (accueil, tarifs) et les gabarits sont des interfaces statiques intégrées en
+  React + Tailwind : structure sémantique HTML, sections, grilles responsives, composants de
+  présentation (héros, cartes de modules, grille tarifaire, FAQ en
+  <code>&lt;details&gt;</code>). Le contenu éditorial est isolé dans
+  <code>src/data/content.ts</code>.</p>
+  <figure>
+    <img src="../captures/02-tarifs.png" alt="Page tarifs" />
+    <figcaption>Figure 5 — Page « Tarifs » : trois offres, options, FAQ.</figcaption>
+  </figure>
+
+  <h2>7.3 Interfaces dynamiques</h2>
+  <p>Les 17 écrans applicatifs sont dynamiques : ils lisent et écrivent des données via l'API.</p>
+  <h4>a) Client HTTP typé</h4>
+  <p><code>src/lib/http.ts</code> centralise les appels : construction de l'URL de base
+  (<code>VITE_API_URL</code> en production, proxy <code>/api</code> en développement), ajout
+  automatique du jeton JWT, transformation des réponses non-2xx en <code>ApiError</code> portant le
+  message serveur.</p>
+  <pre>
+export async function api&lt;T&gt;(path: string, opts: Options = {}): Promise&lt;T&gt; {
+  const token = getToken();
+  const headers: Record&lt;string, string&gt; = {};
+  if (opts.body !== undefined) headers['Content-Type'] = 'application/json';
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`${BASE}${path}`, {
+    method: opts.method ?? (opts.body !== undefined ? 'POST' : 'GET'),
+    headers,
+    body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+    signal: opts.signal,
+  });
+  const data = res.status === 204 ? null : await res.json().catch(() =&gt; null);
+  if (!res.ok) {
+    if (res.status === 401) setToken(null);
+    throw new ApiError(res.status, data?.error ?? `Erreur ${res.status}`);
+  }
+  return data as T;
+}
+  </pre>
+
+  <h4>b) Gestion du cache serveur avec TanStack Query</h4>
+  <p>Chaque domaine expose des <em>hooks</em> (<code>src/lib/api/hr.ts</code>,
+  <code>billing.ts</code>, <code>misc.ts</code>). Les lectures utilisent <code>useQuery</code> ; les
+  écritures <code>useMutation</code> avec <strong>invalidation ciblée</strong> du cache, ce qui
+  déclenche le rafraîchissement automatique des écrans concernés.</p>
+  <pre>
+export function useCreateAbsence() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: NewAbsence) =&gt; api&lt;Absence&gt;('/hr/absences', { body }),
+    onSuccess: () =&gt; {
+      qc.invalidateQueries({ queryKey: ['hr', 'absences'] });
+      qc.invalidateQueries({ queryKey: ['dashboard'] });
+    },
+  });
+}
+  </pre>
+
+  <h4>c) Session et routes protégées</h4>
+  <p><code>src/lib/auth.tsx</code> fournit un contexte React : connexion
+  (<code>POST /api/auth/login</code>), récupération de la session (<code>/api/auth/me</code> via
+  <code>useQuery</code>), jeton conservé dans un état réactif et dans le <code>localStorage</code>,
+  synchronisation entre onglets. <code>RequireAuth</code> garde les routes selon la session et le
+  rôle et affiche un état de chargement pendant la vérification.</p>
+
+  <h4>d) Formulaires, retours et libellés</h4>
+  <p>Formulaires entièrement contrôlés, boutons avec état <code>loading</code>, messages d'erreur
+  issus de l'API, confirmations visuelles. Les valeurs d'énumération renvoyées par l'API sont
+  traduites en français par <code>src/lib/labels.ts</code> (séparation donnée / présentation).</p>
+  <figure>
+    <img src="../captures/06-entreprise-absences.png" alt="Écran des absences" />
+    <figcaption>Figure 6 — Absences : file de validation, saisie en modale, décompte du solde.</figcaption>
+  </figure>
+  <figure>
+    <img src="../captures/08-entreprise-facture-modal.png" alt="Création d'une facture Factur-X" />
+    <figcaption>Figure 7 — Création d'une facture : total HT / TVA / TTC calculé en direct.</figcaption>
+  </figure>
+
+  <h2>7.4 Sécurité côté front-end</h2>
+  <table>
+    <tr><th>Risque</th><th>Mesure mise en œuvre</th></tr>
+    <tr><td>Injection de scripts (XSS)</td><td>Rendu React échappant par défaut ; aucun
+      <code>dangerouslySetInnerHTML</code> ; en-têtes de sécurité servis par l'API (Helmet).</td></tr>
+    <tr><td>Exposition de données sensibles</td><td>L'IBAN n'est jamais transmis en clair : l'API
+      n'expose que les 4 derniers chiffres (<code>ibanLast4</code>).</td></tr>
+    <tr><td>Contrôle d'accès contourné</td><td>Garde <code>RequireAuth</code> par rôle + double
+      contrôle systématique côté serveur (le front ne fait pas autorité).</td></tr>
+    <tr><td>Vol de session</td><td>Jeton court (1 jour) ; suppression immédiate du jeton sur réponse
+      401. <em>Évolution prévue :</em> cookie <code>httpOnly</code> + jeton de rafraîchissement.</td></tr>
+    <tr><td>Saisies invalides</td><td>Contraintes HTML (<code>required</code>, <code>type</code>) +
+      validation stricte côté serveur (Zod) — la validation front n'est qu'un confort.</td></tr>
+    <tr><td>Dépendances</td><td>Versions épinglées, <code>npm audit</code> suivi.</td></tr>
+  </table>
+</section>
+
+<!-- ================= 8. BACK-END ================= -->
+<section class="page break">
+  <h1>8. Réalisation — partie back-end (CCP&nbsp;2)</h1>
+
+  <h2>8.1 Mise en place de la base de données relationnelle</h2>
+  <p>Le schéma est décrit dans un fichier unique <code>prisma/schema.prisma</code> (23 modèles,
+  énumérations, index, contraintes). Les évolutions passent par des <strong>migrations
+  versionnées</strong> et rejouables :</p>
+  <pre>
+$ npx prisma migrate dev --name init
+$ npx prisma migrate dev --name expand_hr_billing_models
+# en production :
+$ npx prisma migrate deploy
+  </pre>
+  <p>Extrait du schéma (source de connexion et modèle Absence) :</p>
+  <pre>
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // connexion "pooled" (PgBouncer)
+  directUrl = env("DIRECT_URL")   // connexion directe pour `prisma migrate`
+}
+
+model Absence {
+  id          String        @id @default(cuid())
+  employeeId  String
+  employee    Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  type        AbsenceType
+  startDate   DateTime
+  endDate     DateTime
+  days        Float
+  status      AbsenceStatus @default(PENDING)
+  decidedById String?
+  decidedAt   DateTime?
+  createdAt   DateTime      @default(now())
+  @@index([employeeId, status])
+}
+  </pre>
+
+  <h2>8.2 Composants d'accès aux données</h2>
+  <p>Toutes les lectures et écritures passent par <strong>Prisma Client</strong>, qui génère des
+  requêtes <strong>paramétrées</strong> (aucune concaténation de chaîne SQL &rarr; injection SQL
+  neutralisée). Une couche de <strong>sérialisation</strong> (<code>src/lib/serialize.ts</code>)
+  transforme les entités Prisma en objets de transfert (DTO) : valeurs d'énumération brutes, dates
+  ISO, montants numériques, et déchiffrement <em>tolérant</em> de l'IBAN pour l'affichage masqué.</p>
+  <pre>
+export function employeeDTO(e: Employee &amp; { manager?: ... }) {
+  return {
+    id: e.id,
+    fullName: `${e.firstName} ${e.lastName}`,
+    jobTitle: e.jobTitle,
+    status: e.status,
+    managerName: e.manager ? `${e.manager.firstName} ${e.manager.lastName}` : null,
+    leave: { paidLeave: e.paidLeaveBalance, rtt: e.rttBalance, recovery: e.recoveryBalance },
+    ibanLast4: (() =&gt; { const iban = tryDecrypt(e.ibanEncrypted); return iban ? mask(iban).slice(-4) : null; })(),
+  };
+}
+  </pre>
+  <p>Exemple de composant d'accès avec agrégation (tableau de bord) : <code>Promise.all</code> de
+  plusieurs <code>count()</code> et <code>findMany()</code>, puis calcul des indicateurs.</p>
+
+  <h2>8.3 Composants métier côté serveur</h2>
+  <p>Chaque module encapsule sa logique. Points remarquables :</p>
+  <ul>
+    <li><strong>Authentification</strong> (<code>modules/auth</code>) : inscription et connexion
+    avec <code>bcrypt</code> (coût 12), délivrance d'un JWT signé, endpoint <code>/me</code>
+    renvoyant l'utilisateur, l'entreprise et le salarié rattaché.</li>
+    <li><strong>Absences</strong> : à la validation d'un congé payé ou d'un RTT, le solde du salarié
+    est décrémenté <strong>dans une transaction</strong> (<code>prisma.$transaction</code>) pour
+    garantir l'atomicité.</li>
+    <li><strong>Factur-X</strong> (<code>lib/facturx.ts</code>) : calcul des totaux avec arrondi au
+    centime, génération du <strong>XML Cross-Industry Invoice</strong> (UN/CEFACT, profil EN 16931),
+    empreinte SHA-256 du document.</li>
+    <li><strong>Cycle de vie PPF</strong> (<code>lib/ppf.ts</code>) : un client qui, en l'absence
+    d'accès de production, fait progresser la facture d'un statut normalisé à l'autre
+    (DRAFT → DEPOSITED → RECEIVED_BY_PPF → ACCEPTED → PAID), avec renvoi possible après rejet.</li>
+    <li><strong>Journal anti-fraude TVA</strong> (<code>lib/vatJournal.ts</code>) : chaque écriture
+    intègre l'empreinte de la précédente ; une fonction de vérification recalcule toute la chaîne et
+    signale la première rupture éventuelle.</li>
+  </ul>
+  <pre>
+export async function appendVatJournal(companyId, event, payload) {
+  const last = await prisma.vatJournalEntry.findFirst({ where: { companyId }, orderBy: { sequence: 'desc' } });
+  const sequence = (last?.sequence ?? 0) + 1;
+  const previousHash = last?.entryHash ?? '0'.repeat(64);
+  const payloadHash = sha256(JSON.stringify(payload));
+  const entryHash = sha256(`${companyId}|${sequence}|${event}|${payloadHash}|${previousHash}`);
+  return prisma.vatJournalEntry.create({ data: { companyId, sequence, event, payloadHash, previousHash, entryHash } });
+}
+  </pre>
+  <figure>
+    <img src="../captures/07-entreprise-facturation.png" alt="Module de facturation" />
+    <figcaption>Figure 8 — Facturation : liste des factures, suivi PPF, archivage, journal, relances.</figcaption>
+  </figure>
+
+  <h2>8.4 Sécurité côté back-end (OWASP Top 10)</h2>
+  <table>
+    <tr><th>Catégorie OWASP</th><th>Mesure</th></tr>
+    <tr><td>A01 — Contrôle d'accès défaillant</td><td>Middleware <code>authenticate</code> (JWT) +
+      <code>authorize(...roles)</code> ; <strong>cloisonnement multi-entreprise</strong> sur chaque
+      requête ; périmètre « soi-même » forcé pour les comptes <code>EMPLOYEE</code>.</td></tr>
+    <tr><td>A02 — Défaillances cryptographiques</td><td>Mots de passe <code>bcrypt</code> ;
+      <strong>AES-256-GCM</strong> (chiffrement authentifié) pour l'IBAN et le n° de sécurité
+      sociale au repos ; TLS assuré par les hébergeurs.</td></tr>
+    <tr><td>A03 — Injection</td><td>Requêtes Prisma paramétrées ; validation systématique du corps
+      et des paramètres avec <strong>Zod</strong> (réponse 422 détaillée).</td></tr>
+    <tr><td>A05 — Mauvaise configuration</td><td><strong>Helmet</strong> (en-têtes de sécurité),
+      <code>x-powered-by</code> désactivé, <strong>CORS</strong> restreint au domaine du front,
+      secrets en variables d'environnement, messages d'erreur génériques en production.</td></tr>
+    <tr><td>A07 — Identification / authentification</td><td><strong>Limitation de débit</strong>
+      globale et renforcée sur <code>/api/auth</code> (anti-force-brute), JWT signé et daté, mot de
+      passe d'au moins 8 caractères.</td></tr>
+    <tr><td>A09 — Journalisation</td><td>Journal d'activité applicatif (<code>ActivityLog</code>) et
+      journal HTTP (<code>morgan</code>).</td></tr>
+  </table>
+  <pre>
+export function authorize(...roles: Role[]) {
+  return (req, res, next) =&gt; {
+    if (!req.auth) return res.status(401).json({ error: 'Non authentifié' });
+    if (roles.length &amp;&amp; !roles.includes(req.auth.role))
+      return res.status(403).json({ error: 'Accès refusé' });
+    next();
+  };
+}
+  </pre>
+</section>
+
+<!-- ================= 9. JEU D'ESSAI ================= -->
+<section class="page break">
+  <h1>9. Jeu d'essai</h1>
+  <p>La stratégie de test combine <strong>tests automatisés</strong> (exécutés en continu) et
+  <strong>tests manuels de parcours</strong> dans le navigateur.</p>
+
+  <h2>9.1 Tests automatisés</h2>
+  <p>Outils : <strong>Vitest</strong> (exécuteur) et <strong>Supertest</strong> (requêtes HTTP sur
+  l'API assemblée en mémoire). Les tests d'intégration s'exécutent sur une <strong>branche
+  PostgreSQL dédiée</strong> (Neon), amorcée avant la suite. Résultat : <strong>23 tests, tous au
+  vert</strong> (<code>npm test</code>).</p>
+  <table>
+    <tr><th>#</th><th>Cas testé</th><th>Données d'entrée</th><th>Résultat attendu</th><th>Obtenu</th></tr>
+    <tr><td>T1</td><td>Chiffrement : aller-retour</td><td>IBAN « FR76… »</td><td><code>decrypt(encrypt(x)) === x</code></td><td>OK</td></tr>
+    <tr><td>T2</td><td>Chiffrement : IV aléatoire</td><td>2 chiffrements du même texte</td><td>Résultats différents</td><td>OK</td></tr>
+    <tr><td>T3</td><td>Chiffrement : altération</td><td>1 bit modifié dans le chiffré</td><td>Exception (authenticité GCM)</td><td>OK</td></tr>
+    <tr><td>T4</td><td>Masquage IBAN</td><td>IBAN complet</td><td>Seuls les 4 derniers visibles</td><td>OK</td></tr>
+    <tr><td>T5</td><td>Factur-X : totaux</td><td>2 lignes (TVA 20 % et 10 %)</td><td>HT 249,99 / TVA 45,00 / TTC 294,99</td><td>OK</td></tr>
+    <tr><td>T6</td><td>Factur-X : facture vide</td><td>0 ligne</td><td>Totaux à 0</td><td>OK</td></tr>
+    <tr><td>T7</td><td>XML CII : profil</td><td>Facture standard</td><td>Contient <code>EN16931</code> et <code>TypeCode 380</code></td><td>OK</td></tr>
+    <tr><td>T8</td><td>XML CII : échappement</td><td>Client « Client &amp; Co »</td><td><code>&amp;amp;</code> dans le XML</td><td>OK</td></tr>
+    <tr><td>T9</td><td>Empreinte Factur-X</td><td>2 factures différentes</td><td>SHA-256 différents, 64 hex</td><td>OK</td></tr>
+    <tr><td>T10</td><td>Santé de l'API</td><td><code>GET /api/health</code></td><td>200, service « valentynia-api »</td><td>OK</td></tr>
+    <tr><td>T11</td><td>Connexion : mauvais mot de passe</td><td>mot de passe erroné (≥ 8 car.)</td><td>401</td><td>OK</td></tr>
+    <tr><td>T12</td><td>Connexion : identifiants valides</td><td>compte de démo ADMIN</td><td>JWT + rôle ADMIN</td><td>OK</td></tr>
+    <tr><td>T13</td><td>Route protégée sans jeton</td><td><code>GET /api/hr/employees</code></td><td>401</td><td>OK</td></tr>
+    <tr><td>T14</td><td>Autorisation par rôle</td><td>salarié → <code>POST /api/hr/employees</code></td><td>403</td><td>OK</td></tr>
+    <tr><td>T15</td><td>Cloisonnement salarié</td><td>salarié → liste des absences</td><td>Uniquement ses propres absences</td><td>OK</td></tr>
+    <tr><td>T16</td><td>Liste des salariés</td><td>compte ADMIN</td><td>8 salariés, IBAN masqué (4 chiffres)</td><td>OK</td></tr>
+    <tr><td>T17</td><td>Décompte du solde de congés</td><td>congé payé de 3 jours ouvrés validé</td><td>Solde diminué de 3</td><td>OK</td></tr>
+    <tr><td>T18</td><td>Intégrité du journal TVA</td><td><code>GET /vat-journal/verify</code></td><td><code>{ ok: true }</code></td><td>OK</td></tr>
+    <tr><td>T19</td><td>Création facture Factur-X</td><td>1 ligne, 1000 € HT, TVA 20 %</td><td>201, XML renvoyé, TTC 1200, statut DRAFT</td><td>OK</td></tr>
+    <tr><td>T20</td><td>Journal TVA étendu</td><td>après création de facture</td><td>+1 écriture, chaîne toujours valide</td><td>OK</td></tr>
+    <tr><td>T21</td><td>Avancement du cycle PPF</td><td>facture DRAFT → envoi</td><td>Statut ≠ DRAFT, mode simulation</td><td>OK</td></tr>
+    <tr><td>T22</td><td>Agrégats du tableau de bord</td><td>compte ADMIN</td><td>effectif 8, indice conformité 0–100</td><td>OK</td></tr>
+    <tr><td>T23</td><td>Entreprise : entité de démo</td><td>—</td><td>Nom « Atelier Lumen »</td><td>OK</td></tr>
+  </table>
+
+  <h2>9.2 Tests manuels de parcours (navigateur)</h2>
+  <p>Chaque écran a été vérifié interactivement (connexion des deux rôles, création / modification /
+  suppression via chaque bouton et formulaire, rafraîchissement du cache après mutation). Les
+  parcours suivants ont été validés : création de salarié, dépôt et validation d'absence, ajout de
+  créneau au planning, lancement d'un parcours d'onboarding et cochage des tâches, création de
+  campagne d'entretiens, ajout de compétence et notation de la matrice, création de facture
+  Factur-X et téléchargement du XML, avancement PPF, vérification de contrat, conversation et
+  génération de document avec l'assistant, enregistrement des paramètres, dépôt de demande et mise à
+  jour du profil côté salarié.</p>
+</section>
+
+<!-- ================= 10. DEPLOIEMENT ================= -->
+<section class="page break">
+  <h1>10. Documentation du déploiement</h1>
+
+  <h2>10.1 Architecture d'hébergement</h2>
+  <table>
+    <tr><th>Composant</th><th>Hébergeur</th><th>Rôle</th></tr>
+    <tr><td>Frontend (<code>frontend/</code>)</td><td>Netlify</td><td>Distribution du bundle statique, réécriture SPA vers <code>index.html</code>.</td></tr>
+    <tr><td>API (<code>backend/</code>)</td><td>Render (Web Service)</td><td>Exécution du serveur Node, health check <code>/api/health</code>.</td></tr>
+    <tr><td>Base de données</td><td>Neon</td><td>PostgreSQL managé, connexions <em>pooled</em> et directe.</td></tr>
+  </table>
+
+  <h2>10.2 Procédure</h2>
+  <h4>Base — Neon</h4>
+  <p>Projet <code>valentynia</code>, branche <code>production</code>. Deux chaînes de connexion
+  récupérées : <em>pooled</em> (<code>DATABASE_URL</code>) et directe (<code>DIRECT_URL</code>).</p>
+  <h4>API — Render (via <code>render.yaml</code>)</h4>
+  <pre>
+buildCommand:  npm ci --include=dev &amp;&amp; npx prisma generate
+               &amp;&amp; npx prisma migrate deploy &amp;&amp; npm run build
+startCommand:  npm start          # node dist/server.cjs
+healthCheckPath: /api/health
+  </pre>
+  <p>Variables à renseigner dans le tableau de bord : <code>DATABASE_URL</code>,
+  <code>DIRECT_URL</code>, <code>AES_KEY</code> (64 hexadécimaux), <code>CORS_ORIGIN</code> (domaine
+  Netlify) ; <code>JWT_SECRET</code> généré automatiquement. Le <code>build</code> exécute la
+  vérification de types puis un <strong>bundle esbuild</strong> vers <code>dist/server.cjs</code>
+  (fichier unique, sans dépendance à la résolution des modules).</p>
+  <h4>Frontend — Netlify</h4>
+  <p>Répertoire de base <code>frontend</code>, commande <code>npm run build</code>, dossier publié
+  <code>frontend/dist</code>. Variable <code>VITE_API_URL</code> = URL de l'API Render suivie de
+  <code>/api</code>. Le fichier <code>public/_redirects</code> assure le routage côté client.</p>
+
+  <h2>10.3 Intégration continue</h2>
+  <p>Le déploiement est <strong>automatique à chaque <code>git push</code></strong> sur
+  <code>main</code> : Render reconstruit et redéploie l'API (avec migration), Netlify reconstruit le
+  frontend. La vérification de types et le bundle échouent le déploiement en cas d'erreur.</p>
+
+  <div class="callout">La procédure complète, y compris la commande d'amorçage
+  (<code>npm run seed</code>) et le tableau exhaustif des variables d'environnement, figure dans le
+  fichier <code>DEPLOYMENT.md</code> du dépôt.</div>
+</section>
+
+<!-- ================= 11. VEILLE ================= -->
+<section class="page break">
+  <h1>11. Veille technologique et sécurité</h1>
+
+  <h2>11.1 Réforme de la facturation électronique 2026</h2>
+  <p>Sujet central du projet, suivi via <strong>impots.gouv.fr</strong> (rubrique « facturation
+  électronique »), les spécifications externes de la <strong>DGFiP</strong>, la norme européenne
+  <strong>EN&nbsp;16931</strong> et le format <strong>Factur-X</strong> (spécification FNFE-MPE).
+  Points retenus et implémentés : formats structurés admis (Factur-X / CII), notion de plateforme
+  de transmission, cycle de vie normalisé de la facture, obligation de conservation et de piste
+  d'audit fiable, journal des opérations inaltérable.</p>
+
+  <h2>11.2 Sécurité applicative</h2>
+  <ul>
+    <li><strong>OWASP Top 10 (2021)</strong> — grille de lecture des risques, appliquée en § 8.4.</li>
+    <li><strong>ANSSI</strong> — recommandations sur l'authentification, la journalisation et le
+    stockage des secrets.</li>
+    <li><strong>CNIL</strong> — guide de la sécurité des données personnelles : chiffrement des
+    données RH sensibles, minimisation, durée de conservation.</li>
+  </ul>
+
+  <h2>11.3 Écosystème front-end</h2>
+  <p>Suivi des évolutions React (arrivée de React 19, hooks), et surtout adoption de
+  <strong>TanStack Query v5</strong> pour la gestion de l'état serveur — une bascule structurante
+  du projet (voir § 12). Méthode de veille : documentation officielle, pages « Releases » GitHub des
+  bibliothèques utilisées, lettres d'information hebdomadaires (JavaScript Weekly, Bref.tech),
+  agrégateurs.</p>
+
+  <table>
+    <tr><th>Source</th><th>Type</th><th>Fréquence</th></tr>
+    <tr><td>impots.gouv.fr / DGFiP</td><td>Réglementaire</td><td>Mensuelle</td></tr>
+    <tr><td>owasp.org, cheatsheetseries.owasp.org</td><td>Sécurité</td><td>Ponctuelle (conception)</td></tr>
+    <tr><td>Releases GitHub (React, Prisma, Vite, TanStack)</td><td>Technique</td><td>Hebdomadaire</td></tr>
+    <tr><td>JavaScript Weekly, Bref.tech</td><td>Généraliste</td><td>Hebdomadaire</td></tr>
+  </table>
+</section>
+
+<!-- ================= 12. DIFFICULTES ================= -->
+<section class="page break">
+  <h1>12. Difficultés rencontrées et solutions</h1>
+
+  <h3>12.1 Front-end initialement non connecté à l'API</h3>
+  <p><strong>Problème :</strong> la première version du front fonctionnait sur un magasin de données
+  simulé en <code>localStorage</code> ; le back-end existait mais n'était jamais appelé.<br />
+  <strong>Solution :</strong> refonte complète vers une couche <strong>TanStack Query</strong> et
+  des appels REST réels, sur une branche dédiée pour garder <code>main</code> fonctionnel. Les 19
+  écrans ont été recâblés, l'authentification réécrite, le magasin simulé supprimé.</p>
+
+  <h3>12.2 Le serveur compilé ne démarrait pas en production</h3>
+  <p><strong>Problème :</strong> <code>node dist/server.js</code> échouait
+  (<code>ERR_MODULE_NOT_FOUND</code>) car TypeScript n'ajoute pas l'extension <code>.js</code> aux
+  imports relatifs, ce que le résolveur ESM de Node exige. En développement, <code>tsx</code>
+  masquait le problème.<br />
+  <strong>Solution :</strong> remplacer l'émission <code>tsc</code> par un <strong>bundle
+  esbuild</strong> en un fichier <code>dist/server.cjs</code> unique.</p>
+
+  <h3>12.3 Contraintes de l'offre gratuite Render</h3>
+  <p><strong>Problème :</strong> la commande <em>pre-deploy</em> n'est pas disponible en offre
+  gratuite ; de plus <code>npm ci</code> ignore les <em>devDependencies</em> quand
+  <code>NODE_ENV=production</code>, or le build a besoin de <code>prisma</code>,
+  <code>typescript</code> et <code>esbuild</code>.<br />
+  <strong>Solution :</strong> intégrer <code>prisma migrate deploy</code> à la commande de
+  <em>build</em> et forcer <code>npm ci --include=dev</code>.</p>
+
+  <h3>12.4 Clé de chiffrement différente entre environnements</h3>
+  <p><strong>Problème :</strong> les IBAN de la base de production avaient été chiffrés avec une clé
+  <code>AES_KEY</code> différente de celle configurée sur Render → le déchiffrement levait une
+  exception et renvoyait une erreur 500 sur la liste des salariés.<br />
+  <strong>Solution :</strong> (1) alignement des secrets entre environnements et ré-amorçage ; (2)
+  ajout d'un <strong>déchiffrement tolérant</strong> (<code>tryDecrypt</code>) qui renvoie
+  <code>null</code> au lieu de propager l'exception — une donnée illisible ne casse plus la
+  réponse. Leçon retenue : la gestion des secrets doit être pensée <em>par environnement</em> dès
+  le départ.</p>
+
+  <h3>12.5 <code>useEffect</code> renvoyant une valeur</h3>
+  <p><strong>Problème :</strong> un <code>useEffect</code> à corps concis
+  (<code>() =&gt; ref.current?.scrollIntoView(...)</code>) renvoyait implicitement une valeur ;
+  sous <em>StrictMode</em> de React 18, React tentait de l'utiliser comme fonction de nettoyage et
+  la page se vidait.<br />
+  <strong>Solution :</strong> passer à un corps de bloc explicite ne renvoyant rien.</p>
+</section>
+
+<!-- ================= 13. GESTION DE PROJET ================= -->
+<section class="page break">
+  <h1>13. Gestion de projet</h1>
+
+  <h2>13.1 Méthode</h2>
+  <p>Développement <strong>itératif et incrémental</strong>, par lots livrables et testables :
+  renommage et mise en place → base de données → API REST complète → refonte du front → sécurité et
+  tests → déploiement → documentation. Chaque lot se termine par une vérification (tests, audit
+  navigateur) avant de passer au suivant.</p>
+
+  <h2>13.2 Versionnement</h2>
+  <p><strong>Git + GitHub</strong>, dépôt public. Commits atomiques à message explicite en français
+  (une intention par commit), branche de fonctionnalité (<code>feat/frontend-api</code>) fusionnée
+  sans <em>fast-forward</em> pour tracer l'historique. Le fichier <code>.gitignore</code> exclut les
+  secrets (<code>.env</code>, <code>.env.test</code>) et les artefacts de build.</p>
+  <table>
+    <tr><th>Commit (extrait)</th><th>Objet</th></tr>
+    <tr><td>Import initial de Valentynia</td><td>Base du monorepo</td></tr>
+    <tr><td>Connexion à PostgreSQL (Neon), migration initiale</td><td>Mise en place BDD</td></tr>
+    <tr><td>Extension du modèle de données + seed complet</td><td>Modèle et jeu de données</td></tr>
+    <tr><td>API REST complète (HR, dashboard, entreprise, facturation)</td><td>Back-end</td></tr>
+    <tr><td>Câblage complet des 19 pages sur l'API (TanStack Query)</td><td>Front-end</td></tr>
+    <tr><td>Durcissement sécurité, tests automatisés, build de production</td><td>Sécurité / tests</td></tr>
+    <tr><td>Configuration de déploiement (Render + Netlify + Neon)</td><td>Déploiement</td></tr>
+  </table>
+
+  <h2>13.3 Outils</h2>
+  <p><span class="tag">VS Code</span><span class="tag">Git / GitHub</span>
+  <span class="tag">Neon CLI</span><span class="tag">Prisma Studio</span>
+  <span class="tag">Playwright (tests navigateur)</span><span class="tag">Vitest</span>
+  <span class="tag">Render</span><span class="tag">Netlify</span></p>
+</section>
+
+<!-- ================= 14. CONCLUSION ================= -->
+<section class="page break">
+  <h1>14. Conclusion et perspectives</h1>
+  <p>Le projet a atteint ses objectifs : une <strong>application web full-stack fonctionnelle et
+  déployée</strong>, couvrant la gestion RH, la facturation conforme à la réforme 2026, le suivi de
+  la conformité et un assistant IA, avec deux espaces et quatre rôles. L'ensemble des compétences du
+  référentiel a été mis en œuvre : maquettage et design system, interfaces statiques et dynamiques,
+  base de données relationnelle, composants d'accès aux données et composants métier, sécurité
+  front et back, jeu d'essai automatisé, et documentation du déploiement.</p>
+  <p>Le développement a aussi été l'occasion d'affronter des problèmes réalistes de mise en
+  production (résolution des modules, contraintes d'hébergement, gestion des secrets) et d'y
+  apporter des solutions durables.</p>
+
+  <h3>Perspectives d'évolution</h3>
+  <ul>
+    <li>Intégration réelle de l'API du Portail Public de Facturation (en attente des accès de
+    production).</li>
+    <li>Connexion de l'assistant IA à un fournisseur de modèle de langage (clé côté serveur).</li>
+    <li>Passage à un cookie <code>httpOnly</code> + jeton de rafraîchissement pour la session.</li>
+    <li>Tests de bout en bout Playwright intégrés à une chaîne d'intégration continue (GitHub
+    Actions).</li>
+    <li>Module de paie connecté, export comptable, application mobile dédiée au salarié.</li>
+  </ul>
+</section>
+
+<!-- ================= 15. ANNEXES ================= -->
+<section class="page break">
+  <h1>15. Annexes</h1>
+
+  <h2>A. Accès</h2>
+  <table>
+    <tr><th>Élément</th><th>Adresse</th></tr>
+    <tr><td>Code source</td><td>https://github.com/thrax28700/valentynia</td></tr>
+    <tr><td>API (production)</td><td>https://valentynia-api.onrender.com/api/health</td></tr>
+    <tr><td>Application (production)</td><td>Frontend hébergé sur Netlify</td></tr>
+  </table>
+  <h4>Comptes de démonstration</h4>
+  <table>
+    <tr><th>Rôle</th><th>Identifiant</th><th>Mot de passe</th></tr>
+    <tr><td>Entreprise (ADMIN)</td><td>camille.ferrand@atelier-lumen.fr</td><td>demo1234</td></tr>
+    <tr><td>Gestionnaire RH (HR)</td><td>sofia.renault@atelier-lumen.fr</td><td>demo1234</td></tr>
+    <tr><td>Salarié (EMPLOYEE)</td><td>yanis.moreau@atelier-lumen.fr</td><td>demo1234</td></tr>
+  </table>
+
+  <h2>B. Glossaire</h2>
+  <table>
+    <tr><th>Terme</th><th>Définition</th></tr>
+    <tr><td>SaaS</td><td><em>Software as a Service</em> — logiciel accessible en ligne par abonnement.</td></tr>
+    <tr><td>SPA</td><td><em>Single Page Application</em> — application web à page unique, navigation côté client.</td></tr>
+    <tr><td>Factur-X</td><td>Facture hybride : un PDF lisible contenant un fichier XML structuré ; conforme à EN 16931.</td></tr>
+    <tr><td>PPF</td><td>Portail Public de Facturation — plateforme publique de transmission des factures électroniques.</td></tr>
+    <tr><td>CII</td><td><em>Cross-Industry Invoice</em> — norme XML de facture d'UN/CEFACT.</td></tr>
+    <tr><td>JWT</td><td><em>JSON Web Token</em> — jeton signé transportant l'identité et le rôle de l'utilisateur.</td></tr>
+    <tr><td>ORM</td><td><em>Object-Relational Mapping</em> — couche qui traduit objets et tables (ici Prisma).</td></tr>
+    <tr><td>AES-256-GCM</td><td>Chiffrement symétrique authentifié (confidentialité + intégrité).</td></tr>
+    <tr><td>DTO</td><td><em>Data Transfer Object</em> — objet de sortie de l'API, distinct de l'entité en base.</td></tr>
+    <tr><td>RGAA</td><td>Référentiel général d'amélioration de l'accessibilité.</td></tr>
+  </table>
+
+  <h2>C. Table des figures</h2>
+  <ol>
+    <li>Site vitrine — accueil</li>
+    <li>Journal anti-fraude TVA</li>
+    <li>Accueil en vue mobile</li>
+    <li>Écran de connexion</li>
+    <li>Page « Tarifs »</li>
+    <li>Absences — file de validation</li>
+    <li>Création d'une facture Factur-X</li>
+    <li>Module de facturation</li>
+  </ol>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  window.mermaid && mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+</script>
+</body>
+</html>
