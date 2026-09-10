@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-prune font-sans antialiased;
+  }
+
+  /* Titres : Montserrat SemiBold, anthracite */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-semibold text-prune;
+  }
+
+  ::selection {
+    @apply bg-powder/20 text-prune;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-cream;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-line rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-mauve/40;
+  }
+}
+
+@layer components {
+  .v-container {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-10;
+  }
+
+  /* Sous-titres élégants : Playfair Display Medium */
+  .v-subtitle {
+    @apply font-serif font-medium text-mauve;
+  }
+
+  .v-card {
+    @apply rounded-2xl border border-line bg-white shadow-soft;
+  }
+
+  .v-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5
+      font-heading text-sm font-semibold transition-all duration-200
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+      focus-visible:ring-powder/40 disabled:opacity-50;
+  }
+
+  /* Bouton principal : accent rose plein, texte blanc */
+  .v-btn-primary {
+    @apply v-btn bg-powder text-white shadow-soft hover:bg-powderdark;
+  }
+
+  /* Bouton secondaire : blanc, bordure fine */
+  .v-btn-secondary {
+    @apply v-btn border border-line bg-white text-prune hover:bg-wash;
+  }
+
+  .v-btn-ghost {
+    @apply v-btn text-mauve hover:bg-wash hover:text-prune;
+  }
+
+  .v-input {
+    @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm
+      text-prune placeholder:text-mauve/60 transition
+      focus:border-powder focus:outline-none focus:ring-2 focus:ring-powder/20;
+  }
+
+  .v-label {
+    @apply mb-1.5 block font-heading text-xs font-semibold uppercase tracking-wide text-mauve;
+  }
+
+  .v-badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1
+      font-heading text-xs font-semibold;
+  }
+
+  .v-stat {
+    @apply font-mono text-3xl font-medium text-prune;
+  }
+
+  .v-nav-link {
+    @apply flex items-center gap-3 rounded-xl px-3.5 py-2.5 font-heading text-sm
+      text-mauve transition hover:bg-wash hover:text-prune;
+  }
+
+  .v-nav-link-active {
+    @apply bg-white text-prune shadow-soft;
+  }
+}
