@@ -67,20 +67,42 @@ authRouter.get(
   asyncHandler(async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { id: req.auth!.sub },
-      include: { company: true },
+      include: {
+        company: true,
+        employee: { select: { id: true, jobTitle: true, department: true } },
+      },
     });
     if (!user) throw new HttpError(404, 'Compte introuvable');
-    res.json({ user: publicUser(user), company: user.company });
+    res.json({
+      user: publicUser(user),
+      company: {
+        id: user.company.id,
+        name: user.company.name,
+        siren: user.company.siren,
+        plan: user.company.plan,
+      },
+      employee: user.employee,
+    });
   }),
 );
 
-function publicUser(u: { id: string; email: string; firstName: string; lastName: string; role: string; companyId: string }) {
+function publicUser(u: {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  companyId: string;
+  employeeId?: string | null;
+}) {
   return {
     id: u.id,
     email: u.email,
     firstName: u.firstName,
     lastName: u.lastName,
+    name: `${u.firstName} ${u.lastName}`,
     role: u.role,
     companyId: u.companyId,
+    employeeId: u.employeeId ?? null,
   };
 }
