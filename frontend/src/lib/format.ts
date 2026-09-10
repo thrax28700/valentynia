@@ -28,3 +28,20 @@ export const initials = (name: string) =>
     .slice(0, 2)
     .join('')
     .toUpperCase();
+
+/** Nombre de jours ouvrés (lun-ven) entre deux dates ISO incluses. */
+export function businessDays(fromISO: string, toISO: string): number {
+  const from = new Date(fromISO);
+  const to = new Date(toISO);
+  if (Number.isNaN(+from) || Number.isNaN(+to) || to < from) return 1;
+  let n = 0;
+  for (const c = new Date(from); c <= to; c.setDate(c.getDate() + 1)) {
+    const day = c.getDay();
+    if (day !== 0 && day !== 6) n++;
+  }
+  return n || 1;
+}
+
+/** Heure courte (HH:MM) d'une date ISO. */
+export const timeShort = (iso: string) =>
+  new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });

@@ -1,5 +1,5 @@
 import { Button, Card, IconBubble, IconEl, SectionTitle, Badge } from '../components/ui';
-import { hrModules, billingModules, aiFeatures, testimonials } from '../data/mock';
+import { hrModules, billingModules, aiFeatures, testimonials } from '../data/content';
 
 function Hero() {
   return (
