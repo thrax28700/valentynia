@@ -9,7 +9,7 @@ import type {
   HrDocument,
   EmployeeRequest,
 } from '@prisma/client';
-import { mask, decrypt } from './crypto';
+import { mask, tryDecrypt } from './crypto';
 
 /**
  * Sérialisation Prisma -> DTO d'API.
@@ -44,7 +44,10 @@ export function employeeDTO(
       rtt: e.rttBalance,
       recovery: e.recoveryBalance,
     },
-    ibanLast4: e.ibanEncrypted ? mask(decrypt(e.ibanEncrypted)).slice(-4) : null,
+    ibanLast4: (() => {
+      const iban = tryDecrypt(e.ibanEncrypted);
+      return iban ? mask(iban).slice(-4) : null;
+    })(),
     socialNumberSet: Boolean(e.socialNumberEncrypted),
   };
 }

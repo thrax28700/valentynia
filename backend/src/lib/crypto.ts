@@ -29,6 +29,20 @@ export function decrypt(payload: string): string {
   return Buffer.concat([decipher.update(data), decipher.final()]).toString('utf8');
 }
 
+/**
+ * Déchiffrement tolérant : renvoie `null` si la donnée est illisible
+ * (clé pivotée, donnée corrompue) au lieu de propager une exception.
+ * Utilisé lors de la sérialisation pour ne jamais faire échouer une réponse.
+ */
+export function tryDecrypt(payload: string | null | undefined): string | null {
+  if (!payload) return null;
+  try {
+    return decrypt(payload);
+  } catch {
+    return null;
+  }
+}
+
 /** Masque une donnée déchiffrée pour l'affichage (ex. IBAN). */
 export function mask(value: string, visible = 4): string {
   const clean = value.replace(/\s+/g, '');
