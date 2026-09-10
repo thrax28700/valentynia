@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Card, PageIntro, Button, Badge, IconEl } from '../../components/ui';
-import { company } from '../../data/mock';
-import { store, useStore } from '../../lib/store';
+import { useCompany, useUpdateCompany } from '../../lib/api';
+import { planLabel } from '../../lib/labels';
 
 const modules = [
   { name: 'Modules RH', on: true },
@@ -13,62 +13,118 @@ const modules = [
 ];
 
 export default function Settings() {
-  const navigate = useNavigate();
-  const employees = useStore((d) => d.employees);
-  const invoices = useStore((d) => d.invoices);
+  const { data: company } = useCompany();
+  const update = useUpdateCompany();
 
-  const resetDemo = () => {
-    store.reset();
-    navigate('/app');
+  const [form, setForm] = useState({ name: '', siren: '', collectiveAgreement: '' });
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (company) {
+      setForm({
+        name: company.name,
+        siren: company.siren,
+        collectiveAgreement: company.collectiveAgreement ?? '',
+      });
+    }
+  }, [company]);
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await update.mutateAsync({
+      name: form.name,
+      siren: form.siren,
+      collectiveAgreement: form.collectiveAgreement || null,
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
   };
 
   return (
     <div className="space-y-6">
-      <PageIntro title="Paramètres entreprise" text="Identité, offre, modules activés et sécurité de l’espace." />
+      <PageIntro
+        title="Paramètres entreprise"
+        text="Identité, offre, modules activés et sécurité de l’espace."
+      />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <h3 className="text-lg">Identité</h3>
-          <div className="mt-4 space-y-4">
+          <form className="mt-4 space-y-4" onSubmit={save}>
             <div>
               <label className="v-label">Raison sociale</label>
-              <input className="v-input" defaultValue={company.name} />
+              <input
+                className="v-input"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="v-label">SIREN</label>
-                <input className="v-input font-mono" defaultValue={company.siren} />
+                <input
+                  className="v-input font-mono"
+                  value={form.siren}
+                  onChange={(e) => setForm({ ...form, siren: e.target.value })}
+                  required
+                />
               </div>
               <div>
                 <label className="v-label">Effectif</label>
-                <input className="v-input font-mono" defaultValue={employees.length} readOnly />
+                <input className="v-input font-mono" value={company?.headcount ?? '—'} readOnly />
               </div>
             </div>
             <div>
               <label className="v-label">Convention collective</label>
-              <input className="v-input" defaultValue="Bureaux d’études techniques (Syntec)" />
+              <input
+                className="v-input"
+                value={form.collectiveAgreement}
+                onChange={(e) => setForm({ ...form, collectiveAgreement: e.target.value })}
+              />
             </div>
-            <Button icon="Check">Enregistrer</Button>
-          </div>
+            <div className="flex items-center gap-3">
+              <Button type="submit" icon="Check" loading={update.isPending}>
+                Enregistrer
+              </Button>
+              {saved && <span className="text-sm text-prune">✓ Enregistré.</span>}
+              {update.isError && (
+                <span className="text-sm text-powderdark">{(update.error as Error).message}</span>
+              )}
+            </div>
+          </form>
         </Card>
 
         <Card>
           <h3 className="text-lg">Offre & facturation</h3>
           <div className="mt-4 flex items-center justify-between rounded-xl bg-wash p-4">
             <div>
-              <p className="font-heading text-sm text-prune">Offre {company.plan}</p>
-              <p className="text-xs text-mauve">11 € / salarié / mois · renouvellement le 1er janvier</p>
+              <p className="font-heading text-sm text-prune">
+                Offre {company ? (planLabel[company.plan] ?? company.plan) : '…'}
+              </p>
+              <p className="text-xs text-mauve">
+                11 € / salarié / mois · renouvellement le 1er janvier
+              </p>
             </div>
             <Badge tone="powder">Active</Badge>
           </div>
-          <Button variant="secondary" className="mt-4" to="/tarifs">Changer d’offre</Button>
+          <Button variant="secondary" className="mt-4" to="/tarifs">
+            Changer d’offre
+          </Button>
 
           <h3 className="mt-8 text-lg">Sécurité</h3>
           <ul className="mt-3 space-y-2 text-sm text-mauve">
-            <li className="flex items-center gap-2"><IconEl name="Check" size={15} className="text-powder" /> Authentification JWT + double facteur</li>
-            <li className="flex items-center gap-2"><IconEl name="Check" size={15} className="text-powder" /> Chiffrement AES-256 des données sensibles</li>
-            <li className="flex items-center gap-2"><IconEl name="Check" size={15} className="text-powder" /> Hébergement France · sauvegardes quotidiennes</li>
-            <li className="flex items-center gap-2"><IconEl name="Check" size={15} className="text-powder" /> Journal d’accès et piste d’audit</li>
+            {[
+              'Authentification JWT + hachage bcrypt',
+              'Chiffrement AES-256-GCM des données sensibles',
+              'En-têtes de sécurité (Helmet) & limitation de débit',
+              'Journal d’activité et piste d’audit',
+            ].map((s) => (
+              <li key={s} className="flex items-center gap-2">
+                <IconEl name="Check" size={15} className="text-powder" />
+                {s}
+              </li>
+            ))}
           </ul>
         </Card>
       </div>
@@ -77,7 +133,10 @@ export default function Settings() {
         <h3 className="mb-4 text-lg">Modules accessibles</h3>
         <div className="grid gap-3 sm:grid-cols-2">
           {modules.map((m) => (
-            <div key={m.name} className="flex items-center justify-between rounded-xl bg-wash p-4">
+            <div
+              key={m.name}
+              className="flex items-center justify-between rounded-xl bg-wash p-4"
+            >
               <span className="font-heading text-sm text-prune">{m.name}</span>
               <span
                 className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${
@@ -89,17 +148,6 @@ export default function Settings() {
             </div>
           ))}
         </div>
-      </Card>
-
-      <Card className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h3 className="text-lg">Données de démonstration</h3>
-          <p className="mt-1 text-sm text-mauve">
-            {employees.length} salariés · {invoices.length} factures. Vos actions sont enregistrées
-            dans ce navigateur. Réinitialiser rétablit le jeu de données d'origine.
-          </p>
-        </div>
-        <Button variant="secondary" icon="Bolt" onClick={resetDemo}>Réinitialiser la démo</Button>
       </Card>
     </div>
   );
