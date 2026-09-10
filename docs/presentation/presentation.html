@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Valentynia — Support de présentation</title>
+<style>
+  :root { --ink:#232022; --mut:#5b5551; --accent:#b3325a; --wash:#f6f3f0; --line:#e3ded9; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Inter","Segoe UI",system-ui,sans-serif; color: var(--ink); }
+  .slide {
+    width: 297mm; height: 209mm; padding: 16mm 20mm; position: relative;
+    display: flex; flex-direction: column; page-break-after: always; overflow: hidden;
+    background: #fff;
+  }
+  .slide::after {
+    content: attr(data-n) " / 16"; position: absolute; right: 12mm; bottom: 9mm;
+    font-size: 9pt; color: var(--mut); font-family: "Roboto Mono", monospace;
+  }
+  .slide::before {
+    content: "Valentynia"; position: absolute; left: 20mm; bottom: 9mm;
+    font-size: 9pt; color: var(--mut); font-family: "Montserrat", sans-serif; font-weight: 600;
+  }
+  h1 { font-family:"Montserrat",sans-serif; font-size: 30pt; line-height: 1.15; }
+  h2 { font-family:"Montserrat",sans-serif; font-size: 21pt; color: var(--ink); margin-bottom: 4mm;
+       padding-bottom: 3mm; border-bottom: 3px solid var(--accent); }
+  h3 { font-family:"Montserrat",sans-serif; font-size: 13pt; color: var(--accent); margin: 5mm 0 2mm; }
+  p { font-size: 12.5pt; line-height: 1.6; margin-bottom: 3mm; }
+  ul { margin: 0 0 3mm 6mm; }
+  li { font-size: 12pt; line-height: 1.7; margin: 1mm 0; }
+  .lead { font-size: 14pt; color: var(--mut); }
+  .cover { justify-content: center; background: linear-gradient(135deg,#fdf6f2,#f9edf1); }
+  .cover .logo { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg,#f4c9a9,#e7b7c8);
+    display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:26pt;
+    font-family:"Montserrat"; margin-bottom: 8mm; }
+  .cover h1 { font-size: 42pt; }
+  .cover .sub { font-family:"Playfair Display",Georgia,serif; font-style: italic; color: var(--accent); font-size: 18pt; margin-top: 4mm; }
+  .cover .meta { margin-top: 14mm; font-size: 11pt; color: var(--mut); line-height: 1.9; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; flex: 1; }
+  .card { background: var(--wash); border: 1px solid var(--line); border-radius: 10px; padding: 6mm 7mm; }
+  .card h3 { margin-top: 0; }
+  .tag { display:inline-block; background: var(--wash); border:1px solid var(--line); border-radius: 999px;
+    padding: 2px 10px; font-size: 9.5pt; margin: 2px 4px 2px 0; }
+  .big { font-size: 34pt; font-family:"Roboto Mono",monospace; color: var(--accent); font-weight: 500; }
+  .kpi { display:flex; gap: 10mm; margin-top: 6mm; }
+  .kpi div { text-align: center; }
+  .kpi .n { font-size: 30pt; font-family:"Roboto Mono",monospace; color: var(--accent); }
+  .kpi .l { font-size: 10pt; color: var(--mut); }
+  figure { flex: 1; display:flex; flex-direction: column; align-items:center; justify-content:center; }
+  figure img { max-width: 100%; max-height: 145mm; border: 1px solid var(--line); border-radius: 8px; }
+  figcaption { font-size: 9.5pt; color: var(--mut); margin-top: 3mm; font-style: italic; }
+  pre { background:#1f1d1f; color:#f2ede8; font-family:"Roboto Mono",monospace; font-size: 9pt;
+    padding: 5mm; border-radius: 8px; line-height: 1.6; white-space: pre-wrap; }
+  .two { display:flex; gap: 8mm; flex: 1; }
+  .two > div { flex: 1; }
+  table { width:100%; border-collapse: collapse; font-size: 10.5pt; }
+  td, th { border: 1px solid var(--line); padding: 3mm 4mm; text-align: left; }
+  th { background: var(--wash); font-family:"Montserrat"; font-size: 9pt; text-transform: uppercase; }
+  @page { size: A4 landscape; margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide cover" data-n="1">
+  <div class="logo">V</div>
+  <h1>Valentynia</h1>
+  <p class="sub">L'humain, simplement.</p>
+  <p class="lead" style="margin-top:8mm; max-width: 200mm">Plateforme SaaS de gestion RH et de
+  facturation électronique conforme à la réforme 2026.</p>
+  <div class="meta">
+    <div>Soutenance du titre professionnel <strong>Développeur Web et Web Mobile</strong></div>
+    <div>Renaud Vaillant — session 2026</div>
+    <div>github.com/thrax28700/valentynia</div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-n="2">
+  <h2>Le problème</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>La RH des PME est éclatée</h3>
+      <ul>
+        <li>Dossiers, congés, plannings, entretiens dispersés entre tableurs et e-mails</li>
+        <li>Soldes de congés calculés à la main</li>
+        <li>Le salarié n'a pas accès à ses propres données</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>La réforme 2026 impose de nouveaux outils</h3>
+      <ul>
+        <li>Réception de factures électroniques structurées obligatoire</li>
+        <li>Formats normalisés (Factur-X / CII), transmission par plateforme</li>
+        <li>Piste d'audit et journal inaltérable exigés par le fisc</li>
+      </ul>
+    </div>
+  </div>
+  <p class="lead">→ Une seule plateforme, cohérente entre la donnée RH et la donnée financière.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-n="3">
+  <h2>La solution — 4 domaines, 2 espaces</h2>
+  <div class="grid">
+    <div class="card"><h3>Ressources humaines</h3><p style="font-size:11pt">Dossiers salariés, absences &amp; congés, planning, onboarding / offboarding, documents, entretiens, compétences, portail salarié.</p></div>
+    <div class="card"><h3>Facturation — réforme 2026</h3><p style="font-size:11pt">Génération Factur-X (EN 16931), transmission PPF, archivage 10 ans, journal anti-fraude TVA chaîné.</p></div>
+    <div class="card"><h3>Conformité légale</h3><p style="font-size:11pt">Alertes et échéances, vérification des clauses de contrat, suivi des obligations RH et du registre RGPD.</p></div>
+    <div class="card"><h3>Assistant IA RH</h3><p style="font-size:11pt">Assistant conversationnel, génération de documents RH, analyses agrégées et strictement anonymes.</p></div>
+  </div>
+  <p><strong>Espace entreprise</strong> (12 écrans) &nbsp;·&nbsp; <strong>Espace salarié</strong> (7 écrans) &nbsp;·&nbsp; 4 rôles : ADMIN, HR, MANAGER, EMPLOYEE.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-n="4">
+  <h2>Démo — espace entreprise</h2>
+  <figure>
+    <img src="../captures/04-entreprise-dashboard.png" alt="Tableau de bord" />
+    <figcaption>Tableau de bord : effectif, absences à valider, encours client, indice de conformité, recommandations de l'assistant, activité récente.</figcaption>
+  </figure>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-n="5">
+  <h2>Démo — facturation Factur-X</h2>
+  <figure>
+    <img src="../captures/07-entreprise-facturation.png" alt="Facturation" />
+    <figcaption>Création d'une facture → XML Factur-X (EN 16931) généré et empreinté SHA-256 → transmission au PPF, suivi du cycle de vie, archivage et journal anti-fraude TVA.</figcaption>
+  </figure>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-n="6">
+  <h2>Démo — espace salarié</h2>
+  <figure>
+    <img src="../captures/14-salarie-dashboard.png" alt="Espace salarié" />
+    <figcaption>Le salarié gère ses congés, consulte ses bulletins et documents, met à jour son profil (IBAN affiché masqué) et interroge l'assistant — sans solliciter le service RH.</figcaption>
+  </figure>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-n="7">
+  <h2>Architecture</h2>
+  <pre class="mermaid" style="background:#fff;border:1px solid var(--line);color:var(--ink);text-align:center;padding:6mm">
+flowchart LR
+  B["Navigateur — SPA React<br/>(Netlify)"] -->|HTTPS · JSON · JWT| A["API REST<br/>Express + Prisma (Render)"]
+  A -->|TLS| D[("PostgreSQL<br/>Neon")]
+  A -.->|simulation| P["Portail Public<br/>de Facturation"]
+  </pre>
+  <ul>
+    <li>Application <strong>monopage</strong> consommant une <strong>API REST sans état</strong></li>
+    <li>API <strong>modulaire</strong> : un routeur par domaine (auth, hr, billing, compliance, ai, dashboard, company)</li>
+    <li>Monorepo <code>frontend/</code> + <code>backend/</code>, déploiement automatique à chaque <code>git push</code></li>
+  </ul>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-n="8">
+  <h2>Pile technologique</h2>
+  <div class="two">
+    <div>
+      <h3>Front-end</h3>
+      <p><span class="tag">React 18</span><span class="tag">TypeScript</span><span class="tag">Vite 5</span><span class="tag">Tailwind CSS</span><span class="tag">React Router 6</span><span class="tag">TanStack Query 5</span></p>
+      <p style="font-size:10.5pt">SPA réactive, typage fort, design system par classes utilitaires, gestion professionnelle du cache serveur.</p>
+      <h3>Sécurité</h3>
+      <p><span class="tag">JWT</span><span class="tag">bcrypt</span><span class="tag">Helmet</span><span class="tag">Zod</span><span class="tag">rate-limit</span><span class="tag">AES-256-GCM</span></p>
+    </div>
+    <div>
+      <h3>Back-end</h3>
+      <p><span class="tag">Node.js</span><span class="tag">Express 4</span><span class="tag">TypeScript</span><span class="tag">Prisma 5</span><span class="tag">PostgreSQL</span></p>
+      <p style="font-size:10.5pt">Une seule stack JS/TS, ORM à requêtes typées et paramétrées, migrations versionnées, SGBD relationnel.</p>
+      <h3>Qualité &amp; déploiement</h3>
+      <p><span class="tag">ESLint</span><span class="tag">Vitest</span><span class="tag">Supertest</span><span class="tag">Netlify</span><span class="tag">Render</span><span class="tag">Neon</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-n="9">
+  <h2>Base de données — 23 entités</h2>
+  <pre class="mermaid" style="background:#fff;border:1px solid var(--line);color:var(--ink);text-align:center;padding:5mm;font-size:8pt">
+erDiagram
+  Company ||--o{ Employee : regroupe
+  Company ||--o{ Invoice : émet
+  Company ||--o{ VatJournalEntry : consigne
+  User ||--o| Employee : "rattaché à"
+  Employee ||--o{ Absence : pose
+  Employee ||--o{ Payslip : reçoit
+  Employee ||--o{ EmployeeSkill : "évalué sur"
+  Skill ||--o{ EmployeeSkill : "mesurée par"
+  Invoice ||--o{ InvoiceLine : détaille
+  Invoice ||--o{ PpfEvent : trace
+  </pre>
+  <ul>
+    <li>Cloisonnement <strong>multi-entreprise</strong> systématique (<code>companyId</code>) · suppressions en cascade</li>
+    <li>Montants en <code>Decimal(12,2)</code> · statuts en énumérations · auto-relation manager / équipe</li>
+    <li>Connexion <em>pooled</em> pour l'app, connexion directe pour les migrations</li>
+  </ul>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-n="10">
+  <h2>CCP 1 — front-end</h2>
+  <div class="two">
+    <div>
+      <h3>Maquettage</h3>
+      <ul><li>Charte graphique (palette, typographies, formes)</li><li>Design system codé : 14 composants réutilisables</li><li>Arborescence des écrans, gabarits de page</li></ul>
+      <h3>Interfaces statiques</h3>
+      <ul><li>Site vitrine intégré en React + Tailwind</li><li>HTML sémantique, grilles responsives</li></ul>
+    </div>
+    <div>
+      <h3>Interfaces dynamiques</h3>
+      <ul>
+        <li>Client <code>fetch</code> typé (JWT, erreurs)</li>
+        <li><code>useQuery</code> / <code>useMutation</code> + invalidation ciblée du cache</li>
+        <li>Contexte de session, routes gardées par rôle</li>
+        <li>Formulaires contrôlés, états de chargement / erreur</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-n="11">
+  <h2>CCP 2 — back-end</h2>
+  <div class="two">
+    <div>
+      <h3>Base relationnelle</h3>
+      <ul><li>Schéma Prisma unique, migrations versionnées</li><li>Contraintes, index, énumérations, types exacts</li></ul>
+      <h3>Accès aux données</h3>
+      <ul><li>Prisma Client : requêtes typées et paramétrées</li><li>Couche de sérialisation entité → DTO</li></ul>
+    </div>
+    <div>
+      <h3>Composants métier</h3>
+      <ul>
+        <li>Décompte des soldes de congés en transaction</li>
+        <li>Génération XML Factur-X (CII / EN 16931)</li>
+        <li>Cycle de vie PPF normalisé</li>
+        <li><strong>Journal TVA chaîné</strong> : chaque écriture inclut l'empreinte de la précédente</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-n="12">
+  <h2>Sécurité — OWASP Top 10</h2>
+  <table>
+    <tr><th>Risque</th><th>Réponse</th></tr>
+    <tr><td>A01 Contrôle d'accès</td><td>Middleware JWT + rôles · cloisonnement multi-entreprise · périmètre « soi-même » pour les salariés</td></tr>
+    <tr><td>A02 Cryptographie</td><td>bcrypt (coût 12) · AES-256-GCM au repos (IBAN, n° SS) · TLS</td></tr>
+    <tr><td>A03 Injection</td><td>Requêtes Prisma paramétrées · validation Zod du corps et des paramètres</td></tr>
+    <tr><td>A05 Configuration</td><td>Helmet · CORS restreint · secrets en variables d'env · erreurs génériques en prod</td></tr>
+    <tr><td>A07 Authentification</td><td>Limitation de débit anti-force-brute · JWT signé et daté</td></tr>
+  </table>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-n="13">
+  <h2>Jeu d'essai</h2>
+  <div class="kpi">
+    <div><div class="n">23</div><div class="l">tests automatisés<br />(Vitest + Supertest)</div></div>
+    <div><div class="n">100 %</div><div class="l">au vert</div></div>
+    <div><div class="n">19</div><div class="l">écrans vérifiés<br />interactivement</div></div>
+  </div>
+  <h3>Couverture</h3>
+  <ul>
+    <li>Chiffrement : aller-retour, IV aléatoire, détection d'altération (GCM)</li>
+    <li>Factur-X : calcul des totaux, XML EN 16931, empreinte SHA-256</li>
+    <li>API : 401 sans jeton, 403 selon le rôle, cloisonnement des données</li>
+    <li>Métier : décompte des congés à la validation, intégrité du journal TVA, cycle PPF</li>
+  </ul>
+  <p style="font-size:10.5pt">Tests d'intégration exécutés sur une branche PostgreSQL dédiée (Neon).</p>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-n="14">
+  <h2>Déploiement</h2>
+  <div class="two">
+    <div>
+      <ul>
+        <li><strong>Frontend</strong> → Netlify (bundle statique, routage SPA)</li>
+        <li><strong>API</strong> → Render (Web Service, health check <code>/api/health</code>)</li>
+        <li><strong>Base</strong> → Neon (PostgreSQL managé)</li>
+        <li>Migrations appliquées au déploiement (<code>prisma migrate deploy</code>)</li>
+        <li>Bundle esbuild en un fichier · démarrage <code>npm start</code></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Intégration continue</h3>
+      <p style="font-size:11pt">Chaque <code>git push</code> sur <code>main</code> reconstruit et redéploie l'API et le frontend. La vérification de types et le bundle échouent le déploiement en cas d'erreur.</p>
+      <p style="font-size:11pt">Procédure complète : <code>DEPLOYMENT.md</code> + <code>render.yaml</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-n="15">
+  <h2>Difficultés &amp; enseignements</h2>
+  <ul>
+    <li><strong>Front sur magasin simulé</strong> → refonte complète vers TanStack Query + API réelle (19 écrans), sur une branche dédiée.</li>
+    <li><strong>Serveur compilé qui ne démarre pas</strong> (imports ESM sans extension) → bundle esbuild en un fichier.</li>
+    <li><strong>Contraintes de l'offre gratuite Render</strong> → migrations dans le build, <code>npm ci --include=dev</code>.</li>
+    <li><strong>Clé de chiffrement différente entre environnements</strong> → alignement des secrets + déchiffrement tolérant. <em>Leçon : gérer les secrets par environnement dès le départ.</em></li>
+    <li><strong><code>useEffect</code> renvoyant une valeur</strong> → crash sous StrictMode → corps de bloc explicite.</li>
+  </ul>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-n="16">
+  <h2>Bilan &amp; perspectives</h2>
+  <p class="lead">Application full-stack <strong>fonctionnelle et déployée</strong>, couvrant RH + facturation 2026 + conformité + IA, avec 2 espaces et 4 rôles. Toutes les compétences du référentiel mises en œuvre.</p>
+  <h3>Perspectives</h3>
+  <ul>
+    <li>Intégration réelle de l'API du PPF (accès de production)</li>
+    <li>Connexion de l'assistant IA à un modèle de langage</li>
+    <li>Session par cookie <code>httpOnly</code> + jeton de rafraîchissement</li>
+    <li>Tests de bout en bout en intégration continue · module de paie</li>
+  </ul>
+  <p style="margin-top:8mm; font-size:14pt; color:var(--accent); font-family:'Playfair Display',serif; font-style:italic">Merci — questions ?</p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>window.mermaid && mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });</script>
+</body>
+</html>
