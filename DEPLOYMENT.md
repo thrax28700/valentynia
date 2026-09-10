@@ -52,8 +52,9 @@ npx neon@latest connection-string production --project-id <ID>            # -> D
    | `JWT_SECRET` | généré automatiquement par Render |
 
 3. **Deploy**. Séquence exécutée :
-   - build : `npm ci && npx prisma generate && npm run build` (typecheck + bundle esbuild → `dist/server.cjs`)
-   - pre-deploy : `npx prisma migrate deploy` (applique les migrations)
+   - build : `npm ci --include=dev && npx prisma generate && npx prisma migrate deploy && npm run build`
+     (installe les devDependencies malgré `NODE_ENV=production`, applique les migrations,
+     typecheck + bundle esbuild → `dist/server.cjs`)
    - start : `npm start` (`node dist/server.cjs`)
 4. Vérifier `https://valentynia-api.onrender.com/api/health` → `{"status":"ok"}`.
 
