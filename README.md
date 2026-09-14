@@ -12,6 +12,14 @@ Mobile (DWWM)**.
 
 ---
 
+## 📎 Livrables de l'examen
+
+- **Dossier de projet (PDF)** : [`Vaillant_Renaud_Dossier_de_projet.pdf`](./Vaillant_Renaud_Dossier_de_projet.pdf)
+- **Support de présentation (PDF)** : [`Vaillant_Renaud_Support_de_presentation.pdf`](./Vaillant_Renaud_Support_de_presentation.pdf)
+- **Sources éditables** (HTML) : [`docs/dossier/`](./docs/dossier/) et [`docs/presentation/`](./docs/presentation/)
+
+---
+
 ## Monorepo
 
 | Dossier      | Rôle                                                                   |
