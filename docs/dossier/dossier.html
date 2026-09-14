@@ -31,28 +31,37 @@
     margin: 26pt 0 8pt;
     padding-bottom: 4pt;
     border-bottom: 2px solid var(--accent);
-    page-break-after: avoid;
+    page-break-after: avoid; break-after: avoid;
+    page-break-inside: avoid; break-inside: avoid;
   }
-  h3 { font-size: 12.5pt; margin: 16pt 0 4pt; color: var(--accent); page-break-after: avoid; }
-  h4 { font-size: 11pt; margin: 12pt 0 3pt; page-break-after: avoid; }
-  p { margin: 0 0 7pt; text-align: justify; }
-  ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
-  li { margin: 2pt 0; }
+  h3 { font-size: 12.5pt; margin: 16pt 0 4pt; color: var(--accent);
+    page-break-after: avoid; break-after: avoid; page-break-inside: avoid; break-inside: avoid; }
+  h4 { font-size: 11pt; margin: 12pt 0 3pt;
+    page-break-after: avoid; break-after: avoid; page-break-inside: avoid; break-inside: avoid; }
+  p { margin: 0 0 7pt; text-align: justify; orphans: 3; widows: 3; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; orphans: 3; widows: 3; }
+  li { margin: 2pt 0; page-break-inside: avoid; break-inside: avoid; }
   code, .mono { font-family: "Roboto Mono", ui-monospace, Consolas, monospace; font-size: 9.2pt; background: var(--wash); padding: 1px 4px; border-radius: 3px; }
   pre {
     background: #1f1d1f; color: #f2ede8; font-family: "Roboto Mono", ui-monospace, Consolas, monospace;
     font-size: 8.4pt; line-height: 1.5; padding: 10pt 12pt; border-radius: 6px; overflow-x: auto;
-    white-space: pre-wrap; word-break: break-word; page-break-inside: avoid; margin: 6pt 0 10pt;
+    white-space: pre-wrap; word-break: break-word; margin: 6pt 0 10pt;
+    page-break-inside: avoid; break-inside: avoid;
   }
   pre.mermaid {
     background: #fff; color: var(--ink); border: 1px solid var(--line);
     padding: 10pt; text-align: center; white-space: normal;
   }
-  pre.mermaid svg { max-width: 100%; height: auto; }
-  table { width: 100%; border-collapse: collapse; margin: 6pt 0 12pt; font-size: 9.4pt; page-break-inside: avoid; }
+  pre.mermaid svg { max-width: 100%; max-height: 210mm; width: auto; height: auto; }
+  table {
+    width: 100%; border-collapse: collapse; margin: 6pt 0 12pt; font-size: 9.4pt;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  thead { display: table-header-group; } /* répète l'en-tête si un grand tableau doit malgré tout se poursuivre */
+  tr { page-break-inside: avoid; break-inside: avoid; }
   th, td { border: 1px solid var(--line); padding: 5pt 7pt; text-align: left; vertical-align: top; }
   th { background: var(--wash); font-family: "Montserrat", sans-serif; font-size: 8.6pt; text-transform: uppercase; letter-spacing: .04em; }
-  figure { margin: 10pt 0; page-break-inside: avoid; text-align: center; }
+  figure { margin: 10pt 0; page-break-inside: avoid; break-inside: avoid; text-align: center; }
   figure img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; }
   figcaption { font-size: 8.8pt; color: var(--mut); margin-top: 4pt; font-style: italic; }
   .lead { font-size: 11.5pt; color: var(--mut); }
@@ -71,12 +80,22 @@
   .toc ol { list-style: none; padding-left: 0; }
   .toc > ol > li { margin: 5pt 0; font-family: "Montserrat"; font-weight: 600; }
   .toc ol ol { padding-left: 14pt; font-weight: 400; font-family: "Inter"; }
-  .callout { border-left: 3px solid var(--accent); background: var(--wash); padding: 8pt 12pt; border-radius: 0 6px 6px 0; margin: 8pt 0 12pt; font-size: 10pt; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; }
-  .break { page-break-before: always; }
-  .compet { background: var(--wash); border: 1px solid var(--line); border-radius: 8px; padding: 10pt 12pt; margin: 4pt 0; }
+  .callout {
+    border-left: 3px solid var(--accent); background: var(--wash); padding: 8pt 12pt;
+    border-radius: 0 6px 6px 0; margin: 8pt 0 12pt; font-size: 10pt;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; page-break-inside: avoid; break-inside: avoid; }
+  .break { page-break-before: always; break-before: page; }
+  .compet {
+    background: var(--wash); border: 1px solid var(--line); border-radius: 8px; padding: 10pt 12pt; margin: 4pt 0;
+    page-break-inside: avoid; break-inside: avoid;
+  }
   .compet h4 { margin: 0 0 4pt; }
-  .webmob { display: flex; gap: 8pt; align-items: flex-start; justify-content: center; }
+  .webmob {
+    display: flex; gap: 8pt; align-items: flex-start; justify-content: center;
+    page-break-inside: avoid; break-inside: avoid;
+  }
   .webmob .w { flex: 1.6; }
   .webmob .m { flex: 1; }
   .webmob img { width: 100%; }
@@ -260,16 +279,12 @@
   <h1>3. Spécifications fonctionnelles</h1>
 
   <h2>3.1 Acteurs et cas d'usage</h2>
-  <pre class="mermaid">
-flowchart LR
-  RH([RH / Admin]):::a
-  MG([Manager]):::a
-  SA([Salarié]):::a
-  RH --- U1[Dossiers salariés] &amp; U2[Facture Factur-X] &amp; U3[Suivi PPF] &amp; U4[Onboarding] &amp; U5[Campagnes d'entretiens] &amp; U6[Alertes conformité]
-  MG --- U7[Valider une absence] &amp; U8[Tâches d'un parcours]
-  SA --- U9[Déposer une demande] &amp; U10[Bulletins / documents] &amp; U11[Mettre à jour son profil] &amp; U12[Assistant IA]
-  classDef a fill:#f7e9ed,stroke:#c25a76,color:#232022;
-  </pre>
+  <table>
+    <tr><th>Acteur</th><th>Cas d'usage principaux</th></tr>
+    <tr><td>Gestionnaire RH / Administrateur</td><td>Gérer les dossiers salariés · Émettre une facture Factur-X · Transmettre au PPF et suivre le cycle · Lancer un parcours d'onboarding · Piloter les campagnes d'entretiens · Traiter les alertes de conformité</td></tr>
+    <tr><td>Manager</td><td>Valider une demande d'absence · Cocher les tâches d'un parcours d'intégration</td></tr>
+    <tr><td>Salarié</td><td>Déposer une demande d'absence · Consulter bulletins et documents · Mettre à jour ses coordonnées · Interroger l'assistant IA</td></tr>
+  </table>
 
   <h2>3.2 User stories principales</h2>
   <table>
