@@ -25,8 +25,7 @@ backend/prisma/migrations/dev/
 # Déploiement
 .netlify/
 
-# Outillage agent / Neon CLI (hors périmètre du projet)
-.claude/
+# Outillage CLI tiers (hors périmètre du projet)
 .neon
 skills-lock.json
 
