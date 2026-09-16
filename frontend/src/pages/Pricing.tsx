@@ -5,7 +5,7 @@ import { pricingPlans, addOnOptions } from '../data/content';
 const faq = [
   { q: 'La facturation Factur-X est-elle vraiment incluse ?', a: 'Oui. La génération Factur-X (PDF/A-3 + XML) est incluse dès l’offre Essentiel. L’envoi au PPF et l’archivage légal 10 ans sont inclus à partir de Business.' },
   { q: 'Puis-je changer d’offre en cours d’année ?', a: 'À tout moment. La facturation est ajustée au prorata, sans frais de changement.' },
-  { q: 'Où sont hébergées les données ?', a: 'En France, chez un hébergeur certifié. Chiffrement AES-256 au repos et TLS en transit.' },
+  { q: 'Où sont hébergées les données ?', a: 'En Europe (Allemagne pour l’API, Royaume-Uni pour la base de données). Chiffrement AES-256 au repos et TLS en transit.' },
   { q: 'L’assistant IA a-t-il accès aux données individuelles ?', a: 'L’analyse du moral et des signaux faibles est strictement anonyme et agrégée. Aucune réponse individuelle n’est exposée.' },
 ];
 

@@ -51,10 +51,10 @@ export default function Login() {
           <p className="font-heading text-3xl font-semibold leading-snug text-prune">« L'humain, simplement. »</p>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-mauve">
             Démo interactive : vos actions (validations, factures, demandes…) sont réellement
-            enregistrées dans votre navigateur.
+            enregistrées en base de données.
           </p>
         </div>
-        <p className="text-xs text-mauve">RGPD · Hébergement France · Chiffrement AES-256</p>
+        <p className="text-xs text-mauve">RGPD · Hébergement européen · Chiffrement AES-256</p>
       </div>
 
       <div className="flex items-center justify-center p-6 sm:p-12">

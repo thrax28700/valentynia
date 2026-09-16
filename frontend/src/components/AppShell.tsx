@@ -112,6 +112,10 @@ export default function AppShell({ nav, space }: { nav: NavItem[]; space: 'entre
             Voir l'espace salarié
           </Link>
         )}
+        <Link to="/aide" className="v-nav-link">
+          <IconEl name="Chat" size={18} />
+          Guide d'utilisation
+        </Link>
         <button onClick={doLogout} className="v-nav-link w-full">
           <IconEl name="Logout" size={18} />
           Se déconnecter

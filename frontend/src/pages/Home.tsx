@@ -26,7 +26,7 @@ function Hero() {
             <Button variant="secondary" to="/tarifs">Voir les tarifs</Button>
           </div>
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-mauve">
-            {['Sans engagement', 'RGPD & hébergement France', 'Mise en route en 48 h'].map((t) => (
+            {['Sans engagement', 'RGPD · hébergement européen', 'Mise en route en 48 h'].map((t) => (
               <span key={t} className="flex items-center gap-2">
                 <IconEl name="Check" size={16} className="text-powder" />
                 {t}
@@ -129,7 +129,7 @@ function ModuleGrid({ id, eyebrow, title, subtitle, modules, tone = 'powder' }: 
 
 function AISection() {
   return (
-    <section className="v-container py-20">
+    <section id="assistant-ia" className="v-container py-20">
       <div className="v-card overflow-hidden p-0">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
           <div className="bg-gradient-to-br from-wash via-wash to-violetwash p-10 lg:p-12">

@@ -16,7 +16,9 @@ Mobile (DWWM)**.
 
 - **Dossier de projet (PDF)** : [`Vaillant_Renaud_Dossier_de_projet.pdf`](./Vaillant_Renaud_Dossier_de_projet.pdf)
 - **Support de présentation (PDF)** : [`Vaillant_Renaud_Support_de_presentation.pdf`](./Vaillant_Renaud_Support_de_presentation.pdf)
-- **Sources éditables** (HTML) : [`docs/dossier/`](./docs/dossier/) et [`docs/presentation/`](./docs/presentation/)
+- **Guide d'utilisation (PDF)** : [`Vaillant_Renaud_Guide_utilisateur.pdf`](./Vaillant_Renaud_Guide_utilisateur.pdf) — également disponible en ligne sur `/aide`
+- **Sources éditables** (HTML) : [`docs/dossier/`](./docs/dossier/), [`docs/presentation/`](./docs/presentation/) et [`docs/guide/`](./docs/guide/)
+- **Pages légales** (site en ligne) : `/mentions-legales`, `/cgu`, `/confidentialite`
 
 ---
 

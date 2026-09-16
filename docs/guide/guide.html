@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Valentynia — Guide d'utilisation</title>
+<style>
+  :root {
+    --ink: #1c1e21; --mut: #5b6169; --accent: #24272c; --line: #e3e5e8; --wash: #f1f2f4;
+    --gold: #f0b429; --gold-dark: #d69e1d; --gold-wash: #fbf1d6;
+    --orange: #f2762e; --orange-dark: #d9631f; --orange-wash: #fde7d8;
+    --violet: #6c2e90; --violet-wash: #efe1f5;
+    --teal: #2fb1c7; --teal-dark: #268fa1; --teal-wash: #def3f6;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 11pt; }
+  body { font-family: "Inter", "Segoe UI", system-ui, sans-serif; color: var(--ink); line-height: 1.55; margin: 0; }
+  .page { padding: 20mm 18mm; max-width: 210mm; margin: 0 auto; }
+  h1, h2, h3, h4 { font-family: "Montserrat", "Segoe UI", sans-serif; line-height: 1.25; color: var(--ink); }
+  h1 { font-size: 22pt; margin: 0 0 4pt; }
+  h2 { font-size: 15pt; margin: 22pt 0 8pt; padding-bottom: 4pt; border-bottom: 2px solid var(--accent);
+    page-break-after: avoid; break-after: avoid; page-break-inside: avoid; break-inside: avoid; }
+  h3 { font-size: 12pt; margin: 10pt 0 4pt; page-break-after: avoid; break-after: avoid; }
+  p { margin: 0 0 7pt; }
+  ul { margin: 0 0 8pt; padding-left: 18pt; }
+  li { margin: 2pt 0; page-break-inside: avoid; break-inside: avoid; }
+  code, .mono { font-family: "Roboto Mono", ui-monospace, Consolas, monospace; font-size: 9.2pt; background: var(--wash); padding: 1px 4px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 12pt; font-size: 9.6pt; page-break-inside: avoid; break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 5pt 7pt; text-align: left; vertical-align: top; }
+  th { background: var(--wash); font-family: "Montserrat", sans-serif; font-size: 8.6pt; text-transform: uppercase; letter-spacing: .04em; }
+  .lead { font-size: 11.5pt; color: var(--mut); }
+  .tag { display: inline-block; background: var(--wash); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; font-size: 8.6pt; }
+  .cover-lead { margin-top: 14pt; }
+  .cover { height: 257mm; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+  .cover .brand { display: flex; align-items: center; gap: 10px; font-family: "Montserrat"; font-weight: 600; font-size: 14pt; }
+  .cover .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #f0b429, #e9435a); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+  .cover h1 { font-size: 30pt; margin-top: 8pt; }
+  .cover .sub { font-family: "Montserrat", sans-serif; font-weight: 600; color: var(--accent); font-size: 15pt; }
+  .cover .meta { font-size: 10.5pt; color: var(--mut); }
+  .break { page-break-before: always; break-before: page; }
+  .module { border: 1px solid var(--line); border-radius: 8px; padding: 8pt 10pt; margin: 5pt 0; page-break-inside: avoid; break-inside: avoid; }
+  .module .name { font-family: "Montserrat", sans-serif; font-weight: 600; font-size: 10.5pt; }
+  .module .desc { color: var(--mut); font-size: 9.4pt; margin-top: 2pt; }
+  .group-label { display: inline-block; font-family: "Montserrat", sans-serif; font-weight: 600; font-size: 8.6pt; text-transform: uppercase; letter-spacing: .04em;
+    padding: 2pt 8pt; border-radius: 999px; margin: 14pt 0 6pt; }
+  .g-gold { background: var(--gold-wash); color: var(--gold-dark); }
+  .g-orange { background: var(--orange-wash); color: var(--orange-dark); }
+  .g-violet { background: var(--violet-wash); color: var(--violet); }
+  .g-teal { background: var(--teal-wash); color: var(--teal-dark); }
+  .callout { border-left: 3px solid var(--accent); background: var(--wash); padding: 8pt 12pt; border-radius: 0 6px 6px 0; margin: 8pt 0 12pt; font-size: 10pt; page-break-inside: avoid; break-inside: avoid; }
+  @page { size: A4; margin: 0; }
+  @media print { .page { padding: 18mm 16mm; } }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div><div class="brand"><span class="logo">V</span> Valentynia</div></div>
+  <div>
+    <p class="tag">Documentation utilisateur</p>
+    <h1>Guide d'utilisation</h1>
+    <p class="sub">Valentynia — L'humain, simplement.</p>
+    <p class="lead cover-lead">Prise en main de l'espace entreprise et de l'espace salarié —
+    comptes de démonstration, tour des modules, limites connues de la démo.</p>
+  </div>
+  <div class="meta">
+    <p>Application en ligne : https://valentynia.netlify.app</p>
+    <p>Version du 16 septembre 2026</p>
+  </div>
+</section>
+
+<section class="page">
+  <h1>1. Se connecter</h1>
+  <p>Rendez-vous sur la page de connexion, choisissez l'onglet « Entreprise » ou « Salarié », puis
+  utilisez l'un des comptes de démonstration ci-dessous. Le mot de passe est identique pour tous :
+  <code>demo1234</code>.</p>
+  <table>
+    <tr><th>Rôle</th><th>Identifiant</th></tr>
+    <tr><td>Entreprise (admin)</td><td><code>camille.ferrand@atelier-lumen.fr</code></td></tr>
+    <tr><td>RH</td><td><code>sofia.renault@atelier-lumen.fr</code></td></tr>
+    <tr><td>Salarié</td><td><code>yanis.moreau@atelier-lumen.fr</code></td></tr>
+  </table>
+  <div class="callout">Le service gratuit peut se mettre en veille après 15 minutes d'inactivité : la
+  première action peut prendre 30 à 50 secondes le temps qu'il redémarre. C'est normal, pas un bug.</div>
+
+  <h1 class="break">2. Espace entreprise</h1>
+  <p>Chaque domaine a sa couleur dans la barre latérale : doré pour les ressources humaines, orange pour
+  la finance et la conformité, violet pour l'assistant IA, turquoise pour les paramètres.</p>
+
+  <span class="group-label g-gold">Ressources humaines</span>
+  <div class="module"><div class="name">Vue globale</div><div class="desc">Effectif, absences en attente, encours de facturation et indice de conformité, en un coup d'œil.</div></div>
+  <div class="module"><div class="name">Salariés</div><div class="desc">Dossiers salariés : contrat, poste, coordonnées, données sensibles chiffrées.</div></div>
+  <div class="module"><div class="name">Absences / congés</div><div class="desc">Poser, valider ou refuser une demande ; soldes calculés automatiquement.</div></div>
+  <div class="module"><div class="name">Planning / temps</div><div class="desc">Vue hebdomadaire des équipes, télétravail et présentiel.</div></div>
+  <div class="module"><div class="name">On / Offboarding</div><div class="desc">Suivi des parcours d'intégration avec checklist type.</div></div>
+  <div class="module"><div class="name">Documents RH</div><div class="desc">Coffre-fort de documents et modèles.</div></div>
+  <div class="module"><div class="name">Entretiens</div><div class="desc">Campagnes d'entretiens annuels et professionnels.</div></div>
+  <div class="module"><div class="name">Compétences</div><div class="desc">Cartographie des compétences par salarié.</div></div>
+
+  <span class="group-label g-orange">Finance &amp; conformité</span>
+  <div class="module"><div class="name">Facturation 2026</div><div class="desc">Créer une facture Factur-X, suivre son statut PPF, consulter le journal anti-fraude TVA.</div></div>
+  <div class="module"><div class="name">Conformité légale</div><div class="desc">Alertes réglementaires, vérification automatique de clauses de contrat, registre RGPD.</div></div>
+
+  <span class="group-label g-violet">Intelligence</span>
+  <div class="module"><div class="name">Assistant IA RH</div><div class="desc">Assistant conversationnel, génération de documents, analyses agrégées et anonymes.</div></div>
+
+  <span class="group-label g-teal">Entreprise</span>
+  <div class="module"><div class="name">Paramètres</div><div class="desc">Informations de l'entreprise, offre en cours.</div></div>
+</section>
+
+<section class="page">
+  <h1>3. Espace salarié</h1>
+  <p>Depuis l'espace entreprise, le lien « Voir l'espace salarié » en bas de la barre latérale permet de
+  basculer sans se reconnecter.</p>
+
+  <span class="group-label g-gold">Ressources humaines</span>
+  <div class="module"><div class="name">Accueil</div><div class="desc">Résumé personnel : solde de congés, prochains événements, accès rapide à l'assistant.</div></div>
+  <div class="module"><div class="name">Documents</div><div class="desc">Vos documents personnels et modèles RH.</div></div>
+  <div class="module"><div class="name">Bulletins</div><div class="desc">Historique et téléchargement de vos bulletins de paie.</div></div>
+  <div class="module"><div class="name">Demandes</div><div class="desc">Déposer une demande (congé, remboursement…) et suivre son statut.</div></div>
+  <div class="module"><div class="name">Planning</div><div class="desc">Votre planning personnel.</div></div>
+
+  <span class="group-label g-violet">Intelligence</span>
+  <div class="module"><div class="name">Assistant IA</div><div class="desc">Poser une question RH, 24h/24, en toute confidentialité.</div></div>
+
+  <span class="group-label g-teal">Entreprise</span>
+  <div class="module"><div class="name">Profil</div><div class="desc">Vos informations personnelles (IBAN affiché masqué).</div></div>
+
+  <h2>4. Limites connues de la démo</h2>
+  <ul>
+    <li>L'assistant IA répond aujourd'hui à partir de règles prédéfinies, pas d'un modèle de langage externe.</li>
+    <li>La transmission au Portail Public de Facturation est simulée (accès de production non fournis).</li>
+    <li>Toutes les données (salariés, factures, montants) sont fictives.</li>
+  </ul>
+
+  <h2>5. Donner votre retour</h2>
+  <p>Vos remarques nous intéressent particulièrement sur : la clarté des écrans, ce qui manque pour votre
+  usage RH quotidien, et tout point bloquant ou confus. Écrivez à
+  <code>vaillant.r78@gmail.com</code>.</p>
+</section>
+
+</body>
+</html>

@@ -5,6 +5,7 @@ import { Button, IconEl, cx } from './ui';
 const links = [
   { to: '/', label: 'Accueil', end: true },
   { to: '/tarifs', label: 'Tarifs' },
+  { to: '/aide', label: 'Aide' },
 ];
 
 function Wordmark() {
@@ -62,10 +63,25 @@ function Navbar() {
 }
 
 function Footer() {
-  const cols = [
-    { title: 'Produit', items: ['Modules RH', 'Facturation 2026', 'Assistant IA RH', 'Conformité légale', 'Tarifs'] },
-    { title: 'Ressources', items: ['Centre d’aide', 'Guide réforme 2026', 'Statut du service', 'Journal des versions'] },
-    { title: 'Entreprise', items: ['À propos', 'Sécurité & RGPD', 'Nous contacter', 'Mentions légales'] },
+  const cols: { title: string; items: { label: string; href: string; external?: boolean }[] }[] = [
+    { title: 'Produit', items: [
+      { label: 'Modules RH', href: '/#rh' },
+      { label: 'Facturation 2026', href: '/#facturation' },
+      { label: 'Assistant IA RH', href: '/#assistant-ia' },
+      { label: 'Tarifs', href: '/tarifs' },
+    ] },
+    { title: 'Ressources', items: [
+      { label: 'Centre d’aide', href: '/aide' },
+      { label: 'Statut du service', href: 'https://valentynia-api.onrender.com/api/health', external: true },
+      { label: 'Journal des versions', href: 'https://github.com/thrax28700/valentynia/commits/main', external: true },
+      { label: 'Code source', href: 'https://github.com/thrax28700/valentynia', external: true },
+    ] },
+    { title: 'Légal', items: [
+      { label: 'Mentions légales', href: '/mentions-legales' },
+      { label: 'CGU', href: '/cgu' },
+      { label: 'Confidentialité', href: '/confidentialite' },
+      { label: 'Nous contacter', href: 'mailto:vaillant.r78@gmail.com', external: true },
+    ] },
   ];
   return (
     <footer className="mt-24 border-t border-line bg-white">
@@ -82,7 +98,19 @@ function Footer() {
             <h4 className="font-heading text-sm font-semibold text-prune">{c.title}</h4>
             <ul className="mt-4 space-y-2.5 text-sm text-mauve">
               {c.items.map((i) => (
-                <li key={i}><a href="#" className="transition hover:text-prune">{i}</a></li>
+                <li key={i.href}>
+                  {i.external ? (
+                    <a
+                      href={i.href}
+                      {...(i.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+                      className="transition hover:text-prune"
+                    >
+                      {i.label}
+                    </a>
+                  ) : (
+                    <Link to={i.href} className="transition hover:text-prune">{i.label}</Link>
+                  )}
+                </li>
               ))}
             </ul>
           </div>

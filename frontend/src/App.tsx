@@ -8,6 +8,10 @@ import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import Legal from './pages/Legal';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Help from './pages/Help';
 
 import Dashboard from './pages/company/Dashboard';
 import Employees from './pages/company/Employees';
@@ -36,6 +40,10 @@ export default function App() {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/tarifs" element={<Pricing />} />
+        <Route path="/aide" element={<Help />} />
+        <Route path="/mentions-legales" element={<Legal />} />
+        <Route path="/cgu" element={<Terms />} />
+        <Route path="/confidentialite" element={<Privacy />} />
       </Route>
       <Route path="/connexion" element={<Login />} />
 
