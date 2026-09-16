@@ -2,9 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Valentynia — Support de présentation</title>
 <style>
-  :root { --ink:#232022; --mut:#5b5551; --accent:#b3325a; --wash:#f6f3f0; --line:#e3ded9; }
+  :root { --ink:#1c1e21; --mut:#5b6169; --accent:#24272c; --wash:#f1f2f4; --line:#e3e5e8; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: "Inter","Segoe UI",system-ui,sans-serif; color: var(--ink); }
   .slide {
@@ -28,12 +29,12 @@
   ul { margin: 0 0 3mm 6mm; }
   li { font-size: 12pt; line-height: 1.7; margin: 1mm 0; }
   .lead { font-size: 14pt; color: var(--mut); }
-  .cover { justify-content: center; background: linear-gradient(135deg,#fdf6f2,#f9edf1); }
-  .cover .logo { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg,#f4c9a9,#e7b7c8);
+  .cover { justify-content: center; background: linear-gradient(135deg,#ffffff,#f1f2f4); }
+  .cover .logo { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg,#f0b429,#e9435a);
     display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:26pt;
     font-family:"Montserrat"; margin-bottom: 8mm; }
   .cover h1 { font-size: 42pt; }
-  .cover .sub { font-family:"Playfair Display",Georgia,serif; font-style: italic; color: var(--accent); font-size: 18pt; margin-top: 4mm; }
+  .cover .sub { font-family:"Montserrat",sans-serif; font-weight: 600; color: var(--accent); font-size: 18pt; margin-top: 4mm; }
   .cover .meta { margin-top: 14mm; font-size: 11pt; color: var(--mut); line-height: 1.9; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; flex: 1; }
   .card { background: var(--wash); border: 1px solid var(--line); border-radius: 10px; padding: 6mm 7mm; }
@@ -60,6 +61,17 @@
   .webmob .m { flex: 1; }
   .webmob img { width: 100%; max-height: 130mm; object-fit: contain; border: 1px solid var(--line); border-radius: 8px; }
   .webmob p { text-align: center; font-size: 9.5pt; color: var(--mut); margin-top: 2mm; }
+
+  /* Utilitaires (remplacent les styles en ligne) */
+  .text-note { font-size: 11pt; }
+  .text-sm { font-size: 10.5pt; }
+  .mt-2 { margin-top: 2mm; }
+  .mt-3 { margin-top: 3mm; }
+  .mt-4 { margin-top: 4mm; }
+  .hero-lead { margin-top: 8mm; max-width: 200mm; }
+  .closing { margin-top: 6mm; font-size: 14pt; color: var(--accent); font-family: "Montserrat", sans-serif; font-weight: 600; }
+  pre.mermaid { background: #fff; border: 1px solid var(--line); color: var(--ink); text-align: center; padding: 5mm; font-size: 8pt; }
+
   @page { size: A4 landscape; margin: 0; }
 </style>
 </head>
@@ -70,7 +82,7 @@
   <div class="logo">V</div>
   <h1>Valentynia</h1>
   <p class="sub">L'humain, simplement.</p>
-  <p class="lead" style="margin-top:8mm; max-width: 200mm">Plateforme SaaS de gestion RH et de
+  <p class="lead hero-lead">Plateforme SaaS de gestion RH et de
   facturation électronique conforme à la réforme 2026 — adaptée web et web mobile.</p>
   <div class="meta">
     <div>Présentation d'un projet réalisé en amont de la session — Titre professionnel <strong>Développeur Web et Web Mobile</strong></div>
@@ -107,10 +119,10 @@
 <section class="slide" data-n="3">
   <h2>La solution — 4 domaines, 2 espaces</h2>
   <div class="grid">
-    <div class="card"><h3>Ressources humaines</h3><p style="font-size:11pt">Dossiers salariés, absences &amp; congés, planning, onboarding / offboarding, documents, entretiens, compétences, portail salarié.</p></div>
-    <div class="card"><h3>Facturation — réforme 2026</h3><p style="font-size:11pt">Génération Factur-X (EN 16931), transmission PPF, archivage 10 ans, journal anti-fraude TVA chaîné.</p></div>
-    <div class="card"><h3>Conformité légale</h3><p style="font-size:11pt">Alertes et échéances, vérification des clauses de contrat, suivi des obligations RH et du registre RGPD.</p></div>
-    <div class="card"><h3>Assistant IA RH</h3><p style="font-size:11pt">Assistant conversationnel, génération de documents RH, analyses agrégées et strictement anonymes.</p></div>
+    <div class="card"><h3>Ressources humaines</h3><p class="text-note">Dossiers salariés, absences &amp; congés, planning, onboarding / offboarding, documents, entretiens, compétences, portail salarié.</p></div>
+    <div class="card"><h3>Facturation — réforme 2026</h3><p class="text-note">Génération Factur-X (EN 16931), transmission PPF, archivage 10 ans, journal anti-fraude TVA chaîné.</p></div>
+    <div class="card"><h3>Conformité légale</h3><p class="text-note">Alertes et échéances, vérification des clauses de contrat, suivi des obligations RH et du registre RGPD.</p></div>
+    <div class="card"><h3>Assistant IA RH</h3><p class="text-note">Assistant conversationnel, génération de documents RH, analyses agrégées et strictement anonymes.</p></div>
   </div>
   <p><strong>Espace entreprise</strong> (12 écrans) &nbsp;·&nbsp; <strong>Espace salarié</strong> (7 écrans) &nbsp;·&nbsp; 4 rôles : ADMIN, HR, MANAGER, EMPLOYEE &nbsp;·&nbsp; web et web mobile.</p>
 </section>
@@ -136,7 +148,7 @@
       </ul>
     </div>
   </div>
-  <p style="font-size:11pt;margin-top:4mm">Complémentaires, également illustrées : installation et
+  <p class="text-note mt-4">Complémentaires, également illustrées : installation et
   configuration de l'environnement de travail · documentation du déploiement.</p>
 </section>
 
@@ -147,14 +159,14 @@
     <div class="w"><img src="../captures/04-entreprise-dashboard.png" alt="Web" /><p>Web (poste de travail)</p></div>
     <div class="m"><img src="../captures/19-mobile-entreprise-dashboard.png" alt="Mobile" /><p>Web mobile (390 px)</p></div>
   </div>
-  <p style="font-size:10.5pt;margin-top:3mm">Même application, même code : adaptation par CSS
+  <p class="text-sm mt-3">Même application, même code : adaptation par CSS
   responsive (Tailwind). Vérifiée sans débordement horizontal sur les 19 écrans applicatifs.</p>
 </section>
 
 <!-- 6 -->
 <section class="slide" data-n="6">
   <h2>Schéma de l'enchaînement des maquettes</h2>
-  <pre class="mermaid" style="background:#fff;border:1px solid var(--line);color:var(--ink);text-align:center;padding:5mm;font-size:8pt">
+  <pre class="mermaid">
 flowchart TD
   ACC["Accueil"] --> CNX["Connexion"]
   CNX -->|entreprise| DASH["Tableau de bord"]
@@ -162,7 +174,7 @@ flowchart TD
   DASH --> SAL["Salariés"] &amp; ABS["Absences"] &amp; FAC["Facturation"] &amp; ONB["Onboarding"]
   EDASH --> EBUL["Bulletins"] &amp; EDEM["Demandes"] &amp; EPRO["Profil"]
   </pre>
-  <p style="font-size:10.5pt">Identique en web et en web mobile : seule la barre de navigation change
+  <p class="text-sm">Identique en web et en web mobile : seule la barre de navigation change
   de présentation (barre latérale fixe en web, menu « burger » en web mobile).</p>
 </section>
 
@@ -187,7 +199,7 @@ flowchart TD
 <!-- 9 -->
 <section class="slide" data-n="9">
   <h2>Architecture</h2>
-  <pre class="mermaid" style="background:#fff;border:1px solid var(--line);color:var(--ink);text-align:center;padding:6mm">
+  <pre class="mermaid">
 flowchart LR
   B["Navigateur — SPA React<br/>(Netlify) — web &amp; web mobile"] -->|HTTPS · JSON · JWT| A["API REST<br/>Express + Prisma (Render)"]
   A -->|TLS| D[("PostgreSQL<br/>Neon")]
@@ -207,14 +219,14 @@ flowchart LR
     <div>
       <h3>Front-end</h3>
       <p><span class="tag">React 18</span><span class="tag">TypeScript</span><span class="tag">Vite 5</span><span class="tag">Tailwind CSS</span><span class="tag">React Router 6</span><span class="tag">TanStack Query 5</span></p>
-      <p style="font-size:10.5pt">SPA réactive, typage fort, design system par classes utilitaires, gestion professionnelle du cache serveur.</p>
+      <p class="text-sm">SPA réactive, typage fort, design system par classes utilitaires, gestion professionnelle du cache serveur.</p>
       <h3>Sécurité</h3>
       <p><span class="tag">JWT</span><span class="tag">bcrypt</span><span class="tag">Helmet</span><span class="tag">Zod</span><span class="tag">rate-limit</span><span class="tag">AES-256-GCM</span></p>
     </div>
     <div>
       <h3>Back-end</h3>
       <p><span class="tag">Node.js</span><span class="tag">Express 4</span><span class="tag">TypeScript</span><span class="tag">Prisma 5</span><span class="tag">PostgreSQL</span></p>
-      <p style="font-size:10.5pt">Une seule stack JS/TS, ORM à requêtes typées et paramétrées, migrations versionnées, SGBD relationnel.</p>
+      <p class="text-sm">Une seule stack JS/TS, ORM à requêtes typées et paramétrées, migrations versionnées, SGBD relationnel.</p>
       <h3>Qualité &amp; déploiement</h3>
       <p><span class="tag">ESLint</span><span class="tag">Vitest</span><span class="tag">Supertest</span><span class="tag">Netlify</span><span class="tag">Render</span><span class="tag">Neon</span></p>
     </div>
@@ -224,7 +236,7 @@ flowchart LR
 <!-- 11 -->
 <section class="slide" data-n="11">
   <h2>Base de données — 23 entités</h2>
-  <pre class="mermaid" style="background:#fff;border:1px solid var(--line);color:var(--ink);text-align:center;padding:5mm;font-size:8pt">
+  <pre class="mermaid">
 erDiagram
   Company ||--o{ Employee : regroupe
   Company ||--o{ Invoice : émet
@@ -250,7 +262,7 @@ erDiagram
   <div class="two">
     <div>
       <h3>Maquettage</h3>
-      <ul><li>Charte graphique (palette, typographies, formes)</li><li>Design system codé : 14 composants réutilisables</li><li>Arborescence des écrans, gabarits de page</li></ul>
+      <ul><li>Charte graphique itérée sur retour utilisateur : ton neutre, une couleur par domaine métier</li><li>Design system codé : 14 composants réutilisables</li><li>Arborescence des écrans, gabarits de page</li></ul>
       <h3>Interfaces statiques</h3>
       <ul><li>Site vitrine intégré en React + Tailwind</li><li>HTML sémantique, grilles responsives</li></ul>
     </div>
@@ -304,7 +316,7 @@ erDiagram
 <!-- 15 -->
 <section class="slide" data-n="15">
   <h2>Jeu d'essai — fonctionnalité la plus représentative</h2>
-  <p style="font-size:11pt">Facture Factur-X : formulaire → XML → PPF → journal TVA (front + back + sécurité).</p>
+  <p class="text-note">Facture Factur-X : formulaire → XML → PPF → journal TVA (front + back + sécurité).</p>
   <table>
     <tr><th>Entrée</th><th>Attendu</th><th>Obtenu</th></tr>
     <tr><td>1 ligne, 1000 € HT, TVA 20 %</td><td>TTC 1200,00 €</td><td>1200,00 €</td></tr>
@@ -312,7 +324,7 @@ erDiagram
     <tr><td>Compte salarié → créer une facture</td><td>403</td><td>403</td></tr>
     <tr><td>Vérification du journal TVA après création</td><td><code>{ ok: true }</code></td><td><code>{ ok: true }</code></td></tr>
   </table>
-  <p style="font-size:10.5pt;margin-top:2mm">Aucun écart constaté. Couverture complémentaire :
+  <p class="text-sm mt-2">Aucun écart constaté. Couverture complémentaire :
   <strong>23 tests automatisés</strong> (Vitest + Supertest), 100 % au vert, sur une branche
   PostgreSQL dédiée.</p>
 </section>
@@ -320,13 +332,13 @@ erDiagram
 <!-- 16 -->
 <section class="slide" data-n="16">
   <h2>Veille sur les vulnérabilités de sécurité</h2>
-  <p style="font-size:11pt"><strong>Trouvée et corrigée pendant le projet :</strong> après déploiement,
+  <p class="text-note"><strong>Trouvée et corrigée pendant le projet :</strong> après déploiement,
   une clé de chiffrement différente entre les environnements faisait échouer le déchiffrement d'un
   IBAN — l'exception non rattrapée faisait planter la réponse entière (risque de disponibilité).</p>
-  <p style="font-size:11pt"><strong>Correction :</strong> déchiffrement rendu tolérant
+  <p class="text-note"><strong>Correction :</strong> déchiffrement rendu tolérant
   (<code>tryDecrypt</code>, renvoie <code>null</code> au lieu de propager l'exception) + alignement
   strict des secrets entre environnements.</p>
-  <p style="font-size:10.5pt;margin-top:3mm">Veille continue : OWASP Top 10 &amp; Cheat Sheet Series,
+  <p class="text-sm mt-3">Veille continue : OWASP Top 10 &amp; Cheat Sheet Series,
   <code>npm audit</code>, recommandations ANSSI/CNIL sur le chiffrement des données RH.</p>
 </section>
 
@@ -345,8 +357,10 @@ erDiagram
     </div>
     <div>
       <h3>Intégration continue</h3>
-      <p style="font-size:11pt">Chaque <code>git push</code> sur <code>main</code> reconstruit et redéploie l'API et le frontend. La vérification de types et le bundle échouent le déploiement en cas d'erreur.</p>
-      <p style="font-size:11pt">Procédure complète : <code>DEPLOYMENT.md</code> + <code>render.yaml</code>.</p>
+      <p class="text-note">Chaque <code>git push</code> sur <code>main</code> reconstruit et redéploie l'API et le frontend. La vérification de types et le bundle échouent le déploiement en cas d'erreur.</p>
+      <p class="text-note">Procédure complète : <code>DEPLOYMENT.md</code> + <code>render.yaml</code>.</p>
+      <h3>Vérifié en conditions réelles</h3>
+      <p class="text-note">Santé API, CORS, authentification bout-en-bout depuis le domaine Netlify et redéploiement automatique déclenché par un <code>git push</code> — tous contrôlés directement sur les services en ligne.</p>
     </div>
   </div>
 </section>
@@ -360,6 +374,7 @@ erDiagram
     <li><strong>Contraintes de l'offre gratuite Render</strong> → migrations dans le build, <code>npm ci --include=dev</code>.</li>
     <li><strong>Association label/champ manquante</strong> (accessibilité) → composant <code>Field</code> corrigé.</li>
     <li><strong><code>useEffect</code> renvoyant une valeur</strong> → crash sous StrictMode → corps de bloc explicite.</li>
+    <li><strong>Frontend et API déployés mais non reliés</strong> (<code>VITE_API_URL</code> absent du build Netlify) → site public muet côté données → diagnostic par vérification directe des requêtes, variable renseignée, CORS et authentification revérifiés depuis le domaine réel.</li>
   </ul>
 </section>
 
@@ -371,13 +386,14 @@ erDiagram
   référentiel mises en œuvre.</p>
   <h3>Satisfactions</h3>
   <ul>
-    <li>Une application réellement en ligne, pas seulement une démonstration locale</li>
+    <li>Une application réellement en ligne et vérifiée de bout en bout — pas seulement une démonstration locale</li>
     <li>Le journal anti-fraude TVA chaîné et vérifiable</li>
+    <li>Une charte graphique retravaillée sur retour utilisateur : ton neutre, une couleur par domaine</li>
   </ul>
   <h3>Difficultés rencontrées</h3>
-  <p style="font-size:11pt">Le passage d'une démonstration front-end isolée à une intégration complète
+  <p class="text-note">Le passage d'une démonstration front-end isolée à une intégration complète
   avec l'API, et la gestion des secrets entre environnements, ont demandé le plus de rigueur.</p>
-  <p style="margin-top:6mm; font-size:14pt; color:var(--accent); font-family:'Playfair Display',serif; font-style:italic">Merci — questions ?</p>
+  <p class="closing">Merci — questions ?</p>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>

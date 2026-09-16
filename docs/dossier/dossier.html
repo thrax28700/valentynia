@@ -2,14 +2,15 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dossier de projet — Valentynia</title>
 <style>
   :root {
-    --ink: #232022;
-    --mut: #5b5551;
-    --accent: #b3325a;
-    --line: #e3ded9;
-    --wash: #f6f3f0;
+    --ink: #1c1e21;
+    --mut: #5b6169;
+    --accent: #24272c;
+    --line: #e3e5e8;
+    --wash: #f1f2f4;
   }
   * { box-sizing: border-box; }
   html { font-size: 11pt; }
@@ -38,8 +39,8 @@
     page-break-after: avoid; break-after: avoid; page-break-inside: avoid; break-inside: avoid; }
   h4 { font-size: 11pt; margin: 12pt 0 3pt;
     page-break-after: avoid; break-after: avoid; page-break-inside: avoid; break-inside: avoid; }
-  p { margin: 0 0 7pt; text-align: justify; orphans: 3; widows: 3; }
-  ul, ol { margin: 0 0 8pt; padding-left: 18pt; orphans: 3; widows: 3; }
+  p { margin: 0 0 7pt; text-align: justify; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
   li { margin: 2pt 0; page-break-inside: avoid; break-inside: avoid; }
   code, .mono { font-family: "Roboto Mono", ui-monospace, Consolas, monospace; font-size: 9.2pt; background: var(--wash); padding: 1px 4px; border-radius: 3px; }
   pre {
@@ -71,9 +72,9 @@
     page-break-after: always;
   }
   .cover .brand { display: flex; align-items: center; gap: 10px; font-family: "Montserrat"; font-weight: 600; font-size: 14pt; }
-  .cover .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #f4c9a9, #e7b7c8); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+  .cover .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #f0b429, #e9435a); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
   .cover h1 { font-size: 30pt; margin-top: 8pt; }
-  .cover .sub { font-family: "Playfair Display", Georgia, serif; font-style: italic; color: var(--accent); font-size: 15pt; }
+  .cover .sub { font-family: "Montserrat", sans-serif; font-weight: 600; color: var(--accent); font-size: 15pt; }
   .cover .meta { font-size: 10.5pt; color: var(--mut); }
   .cover .meta strong { color: var(--ink); }
   .toc a { color: var(--ink); text-decoration: none; }
@@ -99,7 +100,15 @@
   .webmob .w { flex: 1.6; }
   .webmob .m { flex: 1; }
   .webmob img { width: 100%; }
+  .webmob p { text-align: center; font-size: 8.5pt; color: var(--mut); }
+  .fig-caption { text-align: center; font-size: 9pt; color: var(--mut); }
   .annexe-title { background: var(--accent); color: #fff; padding: 4pt 10pt; border-radius: 4px; display: inline-block; font-family: "Montserrat"; font-size: 9pt; margin-bottom: 6pt; }
+
+  /* Utilitaires (remplacent les styles en ligne) */
+  .cover-lead { margin-top: 14pt; }
+  .w-280 { max-width: 280px; }
+  .w-320 { max-width: 320px; }
+
   @page { size: A4; margin: 0; }
   @media print { .page { padding: 18mm 16mm; } }
 </style>
@@ -115,7 +124,7 @@
     <p class="tag">Titre professionnel Développeur Web et Web Mobile (DWWM) — Niveau 5</p>
     <h1>Dossier de projet</h1>
     <p class="sub">Valentynia — L'humain, simplement.</p>
-    <p class="lead" style="margin-top:14pt">Plateforme SaaS de gestion RH et de facturation électronique
+    <p class="lead cover-lead">Plateforme SaaS de gestion RH et de facturation électronique
     conforme à la réforme 2026 (Factur-X + Portail Public de Facturation), avec suivi de la conformité
     légale et assistant IA RH — adaptée web et web mobile.</p>
   </div>
@@ -386,15 +395,26 @@ valentynia/
   composants réutilisables (<code>src/components/ui.tsx</code>), documenté par une charte, et éprouvé
   directement sur les écrans réels — en web comme en web mobile.</p>
   <h4>Charte graphique</h4>
+  <p>Une première version (fond crème, accent rose unique) a été retravaillée après retour
+  utilisateur : fond blanc, neutres gris froids, accent principal neutre, et <strong>une couleur
+  dédiée par domaine métier</strong> — pour un ton professionnel et une navigation où le module actif
+  se reconnaît immédiatement. Le rouge est désormais réservé aux seuls refus et erreurs, jamais utilisé
+  comme couleur de marque.</p>
   <table>
     <tr><th>Rôle</th><th>Jeton</th><th>Valeur</th></tr>
-    <tr><td>Fond de page</td><td><code>cream</code></td><td>#FAF9F8</td></tr>
-    <tr><td>Texte et titres</td><td><code>prune</code></td><td>#232022</td></tr>
-    <tr><td>Accent (boutons, liens, état actif)</td><td><code>powder</code></td><td>#C25A76</td></tr>
+    <tr><td>Fond de page</td><td><code>cream</code></td><td>#FFFFFF</td></tr>
+    <tr><td>Texte et titres</td><td><code>prune</code></td><td>#1C1E21</td></tr>
+    <tr><td>Accent principal (boutons, liens, état actif)</td><td><code>powder</code></td><td>#24272C</td></tr>
+    <tr><td>Erreurs, refus, alertes critiques</td><td><code>danger</code></td><td>#E9435A</td></tr>
     <tr><td>Succès / validation</td><td><code>sage</code></td><td>#D8E7DE</td></tr>
+    <tr><td>Module Ressources humaines</td><td><code>gold</code></td><td>#F0B429</td></tr>
+    <tr><td>Module Finance &amp; conformité</td><td><code>orange</code></td><td>#F2762E</td></tr>
+    <tr><td>Module Intelligence (assistant IA)</td><td><code>violet</code></td><td>#6C2E90</td></tr>
+    <tr><td>Module Entreprise / accent secondaire</td><td><code>teal</code></td><td>#2FB1C7</td></tr>
   </table>
-  <p><strong>Typographies :</strong> Montserrat SemiBold (titres), Playfair Display Medium
-  (sous-titres), Inter (texte), Roboto Mono (chiffres). <strong>Formes :</strong> arrondis généreux,
+  <p><strong>Typographies :</strong> Montserrat SemiBold (titres), Inter (texte), Roboto Mono
+  (chiffres et tableaux) — une seule famille sans-serif par usage, pour un rendu net et neutre.
+  <strong>Formes :</strong> coins arrondis modérés (boutons rectangulaires, pas de forme en pilule),
   ombres douces, iconographie au trait fin.</p>
   <p><strong>Adaptation web mobile :</strong> parti pris <em>desktop-first</em> avec points de rupture
   Tailwind (<code>sm</code>, <code>lg</code>, <code>xl</code>) ; la barre latérale de l'application
@@ -404,16 +424,16 @@ valentynia/
 
   <h4>Comparatif web / web mobile — écrans représentatifs</h4>
   <div class="webmob">
-    <div class="w"><img src="../captures/04-entreprise-dashboard.png" alt="Tableau de bord — web" /><p style="text-align:center;font-size:8.5pt;color:var(--mut)">Web (1440 px)</p></div>
-    <div class="m"><img src="../captures/19-mobile-entreprise-dashboard.png" alt="Tableau de bord — mobile" /><p style="text-align:center;font-size:8.5pt;color:var(--mut)">Web mobile (390 px)</p></div>
+    <div class="w"><img src="../captures/04-entreprise-dashboard.png" alt="Tableau de bord — web" /><p>Web (1440 px)</p></div>
+    <div class="m"><img src="../captures/19-mobile-entreprise-dashboard.png" alt="Tableau de bord — mobile" /><p>Web mobile (390 px)</p></div>
   </div>
-  <p style="text-align:center;font-size:9pt;color:var(--mut)">Figure 2 — Tableau de bord entreprise, adaptation web et web mobile.</p>
+  <p class="fig-caption">Figure 2 — Tableau de bord entreprise, adaptation web et web mobile.</p>
 
   <div class="webmob">
-    <div class="w"><img src="../captures/03-connexion.png" alt="Connexion — web" /><p style="text-align:center;font-size:8.5pt;color:var(--mut)">Web</p></div>
-    <div class="m"><img src="../captures/23-mobile-connexion.png" alt="Connexion — mobile" /><p style="text-align:center;font-size:8.5pt;color:var(--mut)">Web mobile</p></div>
+    <div class="w"><img src="../captures/03-connexion.png" alt="Connexion — web" /><p>Web</p></div>
+    <div class="m"><img src="../captures/23-mobile-connexion.png" alt="Connexion — mobile" /><p>Web mobile</p></div>
   </div>
-  <p style="text-align:center;font-size:9pt;color:var(--mut)">Figure 3 — Écran de connexion, adaptation web et web mobile.</p>
+  <p class="fig-caption">Figure 3 — Écran de connexion, adaptation web et web mobile.</p>
 
   <h2>5.2 Schéma de l'enchaînement des maquettes</h2>
   <pre class="mermaid">
@@ -427,14 +447,14 @@ flowchart TD
   DASH --> FAC["Facturation 2026"] &amp; CNF["Conformité"] &amp; IA1["Assistant IA"] &amp; PAR["Paramètres"]
   EDASH --> EDOC["Documents"] &amp; EBUL["Bulletins"] &amp; EDEM["Demandes"]
   EDASH --> EPLN["Planning"] &amp; EPRO["Profil"] &amp; EIA["Assistant"]
-  classDef web fill:#f7e9ed,stroke:#c25a76;
+  classDef web fill:#eef0f2,stroke:#24272c;
   class ACC,TAR,CNX,DASH,EDASH web;
   </pre>
   <p>Ce schéma est identique en web et en web mobile : seule la présentation de la barre de navigation
   change (barre latérale fixe en web ≥ 1024&nbsp;px, menu « burger » en web mobile — figure 4), la
   logique de navigation et les routes restent les mêmes.</p>
   <figure>
-    <img src="../captures/26-mobile-menu-ouvert.png" alt="Menu de navigation ouvert en web mobile" style="max-width:280px" />
+    <img src="../captures/26-mobile-menu-ouvert.png" alt="Menu de navigation ouvert en web mobile" class="w-280" />
     <figcaption>Figure 4 — Menu de navigation ouvert en web mobile (icône « burger », 390 px).</figcaption>
   </figure>
 
@@ -767,6 +787,23 @@ healthCheckPath: /api/health
   <code>public/_redirects</code> assure le routage côté client sur Netlify. Le
   <strong>déploiement est automatique à chaque <code>git push</code></strong> sur <code>main</code>
   (API et frontend). Procédure complète : fichier <code>DEPLOYMENT.md</code> du dépôt.</p>
+
+  <h2>10.1 Vérification en conditions réelles</h2>
+  <p>Au-delà de la configuration initiale, chaque brique a été <strong>recontrôlée directement sur les
+  services en ligne</strong> plutôt que supposée fonctionnelle :</p>
+  <ul>
+    <li><code>GET /api/health</code> sur l'API Render → <code>{"status":"ok"}</code>, y compris après un
+    redémarrage à froid (offre gratuite, mise en veille après 15 min d'inactivité, ~30-50 s de réveil).</li>
+    <li>Authentification testée directement depuis l'origine du site (en-tête <code>Origin</code> du
+    domaine Netlify) pour confirmer que la politique <strong>CORS</strong> autorise réellement le
+    frontend déployé, et pas seulement <code>localhost</code>.</li>
+    <li>Migration Prisma appliquée à la base partagée puis <strong>revérifiée sans écriture</strong> : un
+    appel intentionnellement invalide déclenche une erreur de validation qui liste les valeurs
+    désormais acceptées, confirmant que le nouveau code tourne en production sans modifier de
+    donnée existante.</li>
+    <li>Redéploiement automatique confirmé de bout en bout : un <code>git push</code> sur
+    <code>main</code> déclenche effectivement un nouveau build sur Render, sans action manuelle.</li>
+  </ul>
   <p><strong>Application en ligne et vérifiée</strong> : https://valentynia.netlify.app (API :
   https://valentynia-api.onrender.com/api/health).</p>
 </section>
@@ -810,6 +847,18 @@ healthCheckPath: /api/health
 
   <h3>11.6 Clé de chiffrement différente entre environnements</h3>
   <p>Voir le détail en § 9.2 (traité comme vulnérabilité de disponibilité).</p>
+
+  <h3>11.7 Frontend et API déployés séparément mais jamais reliés</h3>
+  <p><strong>Problème :</strong> le frontend avait été publié une première fois sur Netlify par simple
+  dépôt manuel d'une archive, sans variable <code>VITE_API_URL</code> renseignée. Le site public
+  chargeait bien la page, mais tout appel à <code>/api/…</code> retombait sur la page HTML de la
+  <em>SPA</em> elle-même (redirection générique) au lieu d'atteindre l'API Render : aucune donnée
+  ne s'affichait, sans erreur visible immédiatement.<br />
+  <strong>Solution :</strong> diagnostic par appel direct de <code>/api/health</code> sur le domaine
+  Netlify pour confirmer l'absence de relais vers l'API ; variable <code>VITE_API_URL</code>
+  renseignée, site reconstruit et republié ; authentification et <em>CORS</em> revérifiés depuis
+  l'origine réelle du site (§ 10.1) plutôt que depuis un environnement local qui masquait le
+  problème.</p>
 </section>
 
 <!-- ================= 12. GESTION DE PROJET ================= -->
@@ -835,6 +884,7 @@ healthCheckPath: /api/health
     <tr><td>Durcissement sécurité, tests automatisés, build de production</td><td>Sécurité / tests</td></tr>
     <tr><td>Configuration de déploiement (Render + Netlify + Neon)</td><td>Déploiement</td></tr>
     <tr><td>Fonctionnel : brancher les actions restées décoratives</td><td>Audit fonctionnel complet</td></tr>
+    <tr><td>Refonte de la charte graphique (ton neutre, couleur par domaine) + vérification bout-en-bout du déploiement</td><td>Retour utilisateur, mise en production réelle</td></tr>
   </table>
 
   <h2>12.3 Environnement de travail</h2>
@@ -854,9 +904,12 @@ healthCheckPath: /api/health
 
   <h3>Satisfactions</h3>
   <ul>
-    <li>Une application réellement déployée et utilisable, pas seulement une démonstration locale.</li>
+    <li>Une application réellement déployée, utilisable et vérifiée de bout en bout en conditions
+    réelles — pas seulement une démonstration locale (§ 10.1).</li>
     <li>Le journal anti-fraude TVA chaîné et vérifiable, qui démontre une logique métier avancée.</li>
     <li>L'adaptation web mobile, vérifiée sans débordement sur les 19 écrans applicatifs.</li>
+    <li>Une charte graphique retravaillée après retour utilisateur vers un ton neutre et une couleur
+    par domaine métier, sans repartir de zéro grâce au design system codé (§ 5.1).</li>
   </ul>
   <h3>Difficultés</h3>
   <p>Le passage d'une démonstration front-end isolée à une intégration complète avec l'API a demandé
@@ -885,7 +938,7 @@ healthCheckPath: /api/health
     <figcaption>Annexe A — Écran « Facturation 2026 » : liste des factures, statut PPF, actions.</figcaption>
   </figure>
   <figure>
-    <img src="../captures/21-mobile-facturation.png" alt="Écran facturation en web mobile" style="max-width:320px" />
+    <img src="../captures/21-mobile-facturation.png" alt="Écran facturation en web mobile" class="w-320" />
     <figcaption>Annexe A bis — Même écran en web mobile.</figcaption>
   </figure>
 
