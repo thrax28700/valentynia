@@ -1,11 +1,25 @@
 import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import type { NavItem } from './nav';
+import { groupTone } from './nav';
 import { Avatar, IconEl, cx } from './ui';
 import { useAuth } from '../lib/auth';
 import { useCompany } from '../lib/api';
 import { canAccessCompany } from '../lib/roles';
 import { planLabel } from '../lib/labels';
+
+const toneText: Record<string, string> = {
+  gold: 'text-golddark',
+  orange: 'text-orangedark',
+  violet: 'text-violet',
+  teal: 'text-tealdark',
+};
+const toneBg: Record<string, string> = {
+  gold: 'bg-goldwash',
+  orange: 'bg-orangewash',
+  violet: 'bg-violetwash',
+  teal: 'bg-tealwash',
+};
 
 function groupItems(nav: NavItem[]) {
   const out: { group: string | null; items: NavItem[] }[] = [];
@@ -56,27 +70,37 @@ export default function AppShell({ nav, space }: { nav: NavItem[]; space: 'entre
       </div>
 
       <nav className="flex-1 space-y-5 overflow-y-auto pr-1">
-        {groupItems(nav).map((section, i) => (
-          <div key={i} className="space-y-1">
-            {section.group && (
-              <p className="px-3.5 pb-1 font-heading text-[11px] font-semibold uppercase tracking-wider text-mauve/70">
-                {section.group}
-              </p>
-            )}
-            {section.items.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) => cx('v-nav-link', isActive && 'v-nav-link-active')}
-              >
-                <IconEl name={item.icon} size={18} />
-                {item.label}
-              </NavLink>
-            ))}
-          </div>
-        ))}
+        {groupItems(nav).map((section, i) => {
+          const tone = section.group ? groupTone[section.group] : undefined;
+          return (
+            <div key={i} className="space-y-1">
+              {section.group && (
+                <p
+                  className={cx(
+                    'px-3.5 pb-1 font-heading text-[11px] font-semibold uppercase tracking-wider',
+                    tone ? toneText[tone] : 'text-mauve/70',
+                  )}
+                >
+                  {section.group}
+                </p>
+              )}
+              {section.items.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.end}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    cx('v-nav-link', isActive && (tone ? cx(toneBg[tone], toneText[tone], 'shadow-soft') : 'v-nav-link-active'))
+                  }
+                >
+                  <IconEl name={item.icon} size={18} />
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+          );
+        })}
       </nav>
 
       <div className="space-y-1">

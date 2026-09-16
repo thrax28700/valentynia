@@ -4,17 +4,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Valentynia — neutre chaud + un seul accent rose
-        cream: '#FAF9F8', // fond de page (blanc cassé chaud)
-        wash: '#F2EFEC', // remplissage subtil : tuiles, hover, onglets, lignes de tableau
+        // Valentynia — fond blanc + accent corail + une couleur par module
+        cream: '#FFFFFF', // fond de page (blanc)
+        wash: '#F4F3F2', // remplissage subtil : tuiles, hover, onglets, lignes de tableau
         line: '#E9E5E2', // bordures & séparateurs (hairline)
-        prune: '#232022', // texte courant + titres (anthracite chaud)
+        prune: '#211F21', // texte courant + titres (anthracite)
         mauve: '#6E655C', // texte secondaire (gris chaud)
-        powder: '#C25A76', // accent rose — boutons principaux, liens, état actif, icônes clés
-        powderdark: '#AB4A64', // hover de l'accent
-        rosewash: '#F7E9ED', // fond rose très clair — badges, surbrillance
-        peach: '#F2EFEC', // (déprécié — repointé sur le neutre)
+        powder: '#E9435A', // accent principal (corail) — boutons, liens, état actif
+        powderdark: '#CC3349', // hover de l'accent principal
+        rosewash: '#FBE6EA', // fond corail très clair — badges, surbrillance
+        peach: '#F4F3F2', // (déprécié — repointé sur le neutre)
         sage: '#D8E7DE', // succès / validation uniquement
+
+        // Couleurs de module (une par domaine applicatif)
+        gold: '#F0B429', // Ressources humaines
+        golddark: '#D69E1D',
+        goldwash: '#FBF1D6',
+        orange: '#F2762E', // Finance & conformité (facturation, conformité légale)
+        orangedark: '#D9631F',
+        orangewash: '#FDE7D8',
+        violet: '#6C2E90', // Intelligence (assistant IA)
+        violetdark: '#5A2478',
+        violetwash: '#EFE1F5',
+        teal: '#2FB1C7', // Entreprise / paramètres / site vitrine (accent secondaire)
+        tealdark: '#268FA1',
+        tealwash: '#DEF3F6',
       },
       fontFamily: {
         heading: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],

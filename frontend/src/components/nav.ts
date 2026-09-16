@@ -17,12 +17,20 @@ export const companyNav: NavItem[] = [
   { to: '/app/parametres', label: 'Paramètres', icon: 'Settings', group: 'Entreprise' },
 ];
 
+// Une couleur de module par groupe de navigation (icônes, libellés de section, lien actif)
+export const groupTone: Record<string, 'gold' | 'orange' | 'violet' | 'teal' | 'powder'> = {
+  'Ressources humaines': 'gold',
+  'Finance & conformité': 'orange',
+  Intelligence: 'violet',
+  Entreprise: 'teal',
+};
+
 export const employeeNav: NavItem[] = [
   { to: '/espace', label: 'Accueil', icon: 'Home', end: true },
-  { to: '/espace/documents', label: 'Documents', icon: 'DocText' },
-  { to: '/espace/bulletins', label: 'Bulletins', icon: 'Receipt' },
-  { to: '/espace/demandes', label: 'Demandes', icon: 'Clipboard' },
-  { to: '/espace/planning', label: 'Planning', icon: 'Clock' },
-  { to: '/espace/profil', label: 'Profil', icon: 'User' },
-  { to: '/espace/assistant', label: 'Assistant IA', icon: 'Sparkle' },
+  { to: '/espace/documents', label: 'Documents', icon: 'DocText', group: 'Ressources humaines' },
+  { to: '/espace/bulletins', label: 'Bulletins', icon: 'Receipt', group: 'Ressources humaines' },
+  { to: '/espace/demandes', label: 'Demandes', icon: 'Clipboard', group: 'Ressources humaines' },
+  { to: '/espace/planning', label: 'Planning', icon: 'Clock', group: 'Ressources humaines' },
+  { to: '/espace/profil', label: 'Profil', icon: 'User', group: 'Entreprise' },
+  { to: '/espace/assistant', label: 'Assistant IA', icon: 'Sparkle', group: 'Intelligence' },
 ];

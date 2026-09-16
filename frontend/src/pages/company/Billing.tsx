@@ -218,7 +218,7 @@ export default function Billing() {
               },
             ].map((c) => (
               <div key={c.t} className="flex gap-4 rounded-xl bg-wash p-4">
-                <IconBubble name={c.i} tone="sage" />
+                <IconBubble name={c.i} tone="orange" />
                 <div>
                   <p className="font-heading text-sm font-medium text-prune">{c.t}</p>
                   <p className="mt-1 text-xs leading-relaxed text-mauve">{c.d}</p>

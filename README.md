@@ -39,10 +39,10 @@ npm install
 npm run dev            # http://localhost:5173
 ```
 
-Le frontend fonctionne seul, avec un jeu de données de démonstration
-(`src/data/mock.ts`) et un store réactif persisté dans le `localStorage`.
-Quand le backend tourne, l'appel `/api` est relayé vers `http://localhost:4000`
-(proxy Vite).
+Le frontend interroge l'API réelle (React Query) : seul le jeton de session
+est gardé en `localStorage`. Il faut donc le backend démarré (voir
+ci-dessous) pour que les pages affichent des données — l'appel `/api` est
+relayé vers `http://localhost:4000` (proxy Vite).
 
 ### Backend
 
@@ -141,21 +141,26 @@ npm run seed             # amorçage des données de démonstration
 
 ## Identité visuelle
 
-Neutre chaud + un seul accent rose. Palette (`frontend/tailwind.config.js`) :
+Fond blanc, un accent corail et une couleur par module. Palette
+(`frontend/tailwind.config.js`) :
 
 | Nom          | Hex       | Usage                                             |
 |--------------|-----------|--------------------------------------------------|
-| `cream`      | `#FAF9F8` | Fond de page                                      |
-| `wash`       | `#F2EFEC` | Tuiles, hover, onglets, lignes de tableau         |
+| `cream`      | `#FFFFFF` | Fond de page                                      |
+| `wash`       | `#F4F3F2` | Tuiles, hover, onglets, lignes de tableau         |
 | `line`       | `#E9E5E2` | Bordures et séparateurs                           |
-| `prune`      | `#232022` | Texte courant et titres                           |
+| `prune`      | `#211F21` | Texte courant et titres                           |
 | `mauve`      | `#6E655C` | Texte secondaire                                  |
-| `powder`     | `#C25A76` | Accent : boutons principaux, liens, état actif    |
-| `powderdark` | `#AB4A64` | Hover de l'accent                                 |
+| `powder`     | `#E9435A` | Accent principal : boutons, liens, état actif     |
+| `powderdark` | `#CC3349` | Hover de l'accent principal                       |
 | `sage`       | `#D8E7DE` | Succès / validation                               |
+| `gold`       | `#F0B429` | Module Ressources humaines                        |
+| `orange`     | `#F2762E` | Module Finance & conformité                       |
+| `violet`     | `#6C2E90` | Module Intelligence (assistant IA)                |
+| `teal`       | `#2FB1C7` | Module Entreprise / accent secondaire             |
 
 Typographies : Montserrat SemiBold (titres), Playfair Display Medium
-(sous-titres premium), Inter (texte), Roboto Mono (chiffres et tableaux).
+(sous-titres élégants), Inter (texte), Roboto Mono (chiffres et tableaux).
 
 ---
 
@@ -169,7 +174,7 @@ Typographies : Montserrat SemiBold (titres), Playfair Display Medium
 - [x] Schéma PostgreSQL (Prisma) + API REST modulaire
 - [x] Factur-X (XML CII EN 16931) + client PPF (simulation) + journal TVA chaîné
 - [x] Chiffrement AES-256-GCM des données sensibles
-- [ ] Branchement complet du frontend sur l'API (aujourd'hui : store de démo)
+- [x] Branchement complet du frontend sur l'API (React Query, backend + PostgreSQL réels)
 - [ ] Intégration réelle de l'API PPF (en attente des accès de production)
 - [ ] Connexion de l'assistant IA à un fournisseur LLM
 - [ ] Tests automatisés (unitaires + e2e)

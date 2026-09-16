@@ -69,7 +69,7 @@ export default function AIAssistant() {
       <PageIntro
         title="Assistant IA RH"
         text="Ton calme, professionnel et rassurant. L'assistante prépare, éclaire et propose — vous décidez."
-        action={<Badge tone="powder">Confidentiel · aucune donnée partagée</Badge>}
+        action={<Badge tone="violet">Confidentiel · aucune donnée partagée</Badge>}
       />
 
       <div className="flex flex-wrap gap-1 rounded-full bg-wash p-1">
@@ -92,7 +92,7 @@ export default function AIAssistant() {
           <div className="flex-1 space-y-4 overflow-y-auto p-6">
             {msgs.map((m, i) => (
               <div key={i} className={cx('flex gap-3', m.from === 'me' && 'flex-row-reverse')}>
-                {m.from === 'ia' && <IconBubble name="Sparkle" tone="powder" />}
+                {m.from === 'ia' && <IconBubble name="Sparkle" tone="violet" />}
                 <div
                   className={cx(
                     'max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
@@ -105,7 +105,7 @@ export default function AIAssistant() {
             ))}
             {chat.isPending && (
               <div className="flex gap-3">
-                <IconBubble name="Sparkle" tone="powder" />
+                <IconBubble name="Sparkle" tone="violet" />
                 <div className="flex items-center rounded-2xl bg-wash px-4 py-3 text-mauve">
                   <Spinner />
                 </div>

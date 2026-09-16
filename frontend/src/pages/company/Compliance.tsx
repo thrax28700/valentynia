@@ -144,7 +144,7 @@ export default function Compliance() {
       <div className="grid gap-5 sm:grid-cols-2">
         {complianceItems.map((c) => (
           <Card key={c.title}>
-            <IconBubble name={c.icon} tone="sage" />
+            <IconBubble name={c.icon} tone="orange" />
             <h3 className="mt-4 text-base">{c.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-mauve">{c.desc}</p>
           </Card>

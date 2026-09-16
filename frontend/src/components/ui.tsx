@@ -68,11 +68,15 @@ export function SectionTitle({ eyebrow, title, subtitle, center }: { eyebrow?: s
 
 /* ---------- Badge ---------- */
 const tones: Record<string, string> = {
-  powder: 'bg-rosewash text-powderdark', // accent rose
+  powder: 'bg-rosewash text-powderdark', // accent principal (corail)
   rose: 'bg-rosewash text-powderdark',
   sage: 'bg-sage text-prune', // succès / validation
   neutral: 'bg-wash text-mauve border border-line',
   peach: 'bg-wash text-mauve border border-line', // (déprécié → neutre)
+  gold: 'bg-goldwash text-golddark', // Ressources humaines
+  orange: 'bg-orangewash text-orangedark', // Finance & conformité
+  violet: 'bg-violetwash text-violet', // Intelligence / IA
+  teal: 'bg-tealwash text-tealdark', // Entreprise / secondaire
 };
 export function Badge({ children, tone = 'neutral' }: { children: ReactNode; tone?: keyof typeof tones }) {
   return <span className={cx('v-badge', tones[tone] ?? tones.neutral)}>{children}</span>;
@@ -84,11 +88,15 @@ export function IconEl({ name, size = 20, className }: { name: IconName; size?: 
   return <C size={size} className={className} />;
 }
 
-export function IconBubble({ name, tone = 'powder' }: { name: IconName; tone?: 'peach' | 'powder' | 'sage' }) {
+export function IconBubble({ name, tone = 'powder' }: { name: IconName; tone?: 'peach' | 'powder' | 'sage' | 'gold' | 'orange' | 'violet' | 'teal' }) {
   const bg: Record<string, string> = {
     powder: 'bg-rosewash text-powderdark',
     sage: 'bg-sage text-prune',
     peach: 'bg-wash text-mauve',
+    gold: 'bg-goldwash text-golddark',
+    orange: 'bg-orangewash text-orangedark',
+    violet: 'bg-violetwash text-violet',
+    teal: 'bg-tealwash text-tealdark',
   };
   return (
     <span className={cx('flex h-10 w-10 items-center justify-center rounded-xl', bg[tone] ?? bg.powder)}>

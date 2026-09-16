@@ -5,20 +5,20 @@ function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-wash blur-3xl" />
+        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-goldwash blur-3xl" />
         <div className="absolute right-0 top-32 h-80 w-80 rounded-full bg-rosewash blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-wash blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-violetwash blur-3xl" />
       </div>
       <div className="v-container grid items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
         <div className="animate-fade-up">
-          <Badge tone="peach">Réforme facturation 2026 · Factur-X + PPF</Badge>
+          <Badge tone="orange">Réforme facturation 2026 · Factur-X + PPF</Badge>
           <h1 className="mt-5 text-4xl leading-[1.1] sm:text-5xl lg:text-6xl">
             L’humain,
             <span className="block v-subtitle text-4xl sm:text-5xl lg:text-6xl">simplement.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mauve">
             Valentynia réunit vos ressources humaines, votre facturation conforme 2026 et votre
-            conformité légale dans une plateforme calme, fluide et premium — avec un assistant
+            conformité légale dans une plateforme calme, fluide et soignée — avec un assistant
             IA RH qui vous accompagne au quotidien.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -42,7 +42,7 @@ function Hero() {
                 <p className="font-heading text-sm text-mauve">Tableau de bord RH</p>
                 <p className="font-serif text-xl italic text-prune">Bonjour, Camille</p>
               </div>
-              <IconBubble name="Sparkle" tone="powder" />
+              <IconBubble name="Sparkle" tone="violet" />
             </div>
             <div className="mt-5 grid grid-cols-2 gap-3">
               {[
@@ -59,7 +59,7 @@ function Hero() {
             </div>
             <div className="mt-4 rounded-xl border border-line bg-wash p-4">
               <p className="flex items-center gap-2 font-heading text-sm text-prune">
-                <IconEl name="Sparkle" size={16} className="text-powder" />
+                <IconEl name="Sparkle" size={16} className="text-violet" />
                 Assistant IA RH
               </p>
               <p className="mt-2 text-sm leading-relaxed text-mauve">
@@ -102,14 +102,14 @@ function Presentation() {
   );
 }
 
-function ModuleGrid({ id, eyebrow, title, subtitle, modules }: { id: string; eyebrow: string; title: string; subtitle: string; modules: typeof hrModules }) {
+function ModuleGrid({ id, eyebrow, title, subtitle, modules, tone = 'powder' }: { id: string; eyebrow: string; title: string; subtitle: string; modules: typeof hrModules; tone?: 'powder' | 'gold' | 'orange' }) {
   return (
     <section id={id} className="v-container py-20">
       <SectionTitle eyebrow={eyebrow} title={title} subtitle={subtitle} />
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {modules.map((m) => (
           <Card key={m.key} className="flex flex-col transition hover:-translate-y-1 hover:shadow-soft-lg">
-            <IconBubble name={m.icon} tone="powder" />
+            <IconBubble name={m.icon} tone={tone} />
             <h3 className="mt-4 text-lg">{m.name}</h3>
             <p className="mt-2 text-sm leading-relaxed text-mauve">{m.desc}</p>
             <ul className="mt-4 space-y-2 text-sm text-mauve">
@@ -132,8 +132,8 @@ function AISection() {
     <section className="v-container py-20">
       <div className="v-card overflow-hidden p-0">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="bg-gradient-to-br from-wash via-wash to-rosewash p-10 lg:p-12">
-            <Badge tone="powder">IA RH — incluse</Badge>
+          <div className="bg-gradient-to-br from-wash via-wash to-violetwash p-10 lg:p-12">
+            <Badge tone="violet">IA RH — incluse</Badge>
             <h2 className="mt-4 text-3xl leading-tight lg:text-4xl">Un assistant qui apaise la charge mentale RH</h2>
             <p className="mt-4 leading-relaxed text-mauve">
               L’IA de Valentynia parle avec calme et professionnalisme. Elle ne remplace pas
@@ -144,7 +144,7 @@ function AISection() {
           <div className="grid gap-4 p-8 sm:grid-cols-2 lg:p-12">
             {aiFeatures.slice(0, 6).map((f) => (
               <div key={f.title} className="rounded-xl bg-wash p-4">
-                <IconEl name={f.icon} size={20} className="text-powder" />
+                <IconEl name={f.icon} size={20} className="text-violet" />
                 <p className="mt-2 font-heading text-sm font-medium text-prune">{f.title}</p>
                 <p className="mt-1 text-xs leading-relaxed text-mauve">{f.desc}</p>
               </div>
@@ -219,6 +219,7 @@ export default function Home() {
         title="Toute la fonction RH, sans friction"
         subtitle="Huit modules qui couvrent le cycle de vie du collaborateur, de l’arrivée au départ."
         modules={hrModules}
+        tone="gold"
       />
       <ModuleGrid
         id="facturation"
@@ -226,6 +227,7 @@ export default function Home() {
         title="Conforme le jour J, sans stress"
         subtitle="Factur-X, PPF, archivage et anti-fraude : la facturation électronique obligatoire, gérée pour vous."
         modules={billingModules}
+        tone="orange"
       />
       <AISection />
       <Demo />

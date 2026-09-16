@@ -38,7 +38,7 @@ const companyUpdate = z.object({
   address: z.string().max(200).nullable().optional(),
   collectiveAgreement: z.string().max(200).nullable().optional(),
   weeklyHours: z.number().min(0).max(60).optional(),
-  plan: z.enum(['ESSENTIEL', 'BUSINESS', 'PREMIUM']).optional(),
+  plan: z.enum(['ESSENTIEL', 'BUSINESS', 'SUR_MESURE']).optional(),
 });
 
 companyRouter.patch(

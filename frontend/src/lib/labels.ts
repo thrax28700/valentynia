@@ -59,7 +59,7 @@ export const alertLevelLabel: Record<string, string> = {
 export const planLabel: Record<string, string> = {
   ESSENTIEL: 'Essentiel',
   BUSINESS: 'Business',
-  PREMIUM: 'Premium',
+  SUR_MESURE: 'Sur-mesure',
 };
 
 export const roleLabel: Record<string, string> = {

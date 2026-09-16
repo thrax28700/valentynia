@@ -72,7 +72,7 @@ export default function Dashboard() {
         <Card className="lg:col-span-2">
           <div className="flex items-center justify-between">
             <h3 className="text-lg">Recommandations de l'assistant IA</h3>
-            <Badge tone="powder">{data.insights.length}</Badge>
+            <Badge tone="violet">{data.insights.length}</Badge>
           </div>
           <div className="mt-4 space-y-3">
             {data.insights.map((i) => (
@@ -81,7 +81,7 @@ export default function Dashboard() {
                 className={cx('rounded-xl border p-4', severityRing[i.severity] ?? 'border-line bg-wash')}
               >
                 <p className="flex items-center gap-2 font-heading text-sm font-medium text-prune">
-                  <IconEl name="Sparkle" size={15} className="text-powder" />
+                  <IconEl name="Sparkle" size={15} className="text-violet" />
                   {i.title}
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-mauve">{i.body}</p>
@@ -112,7 +112,7 @@ export default function Dashboard() {
         <Card>
           <div className="flex items-center justify-between">
             <h3 className="text-lg">Absences à valider</h3>
-            <IconBubble name="Calendar" tone="sage" />
+            <IconBubble name="Calendar" tone="gold" />
           </div>
           {data.recentAbsences.length === 0 ? (
             <p className="py-8 text-center text-sm text-mauve">Rien à valider. 🌿</p>
@@ -140,7 +140,7 @@ export default function Dashboard() {
         <Card>
           <div className="flex items-center justify-between">
             <h3 className="text-lg">Facturation — suivi PPF</h3>
-            <IconBubble name="Receipt" tone="powder" />
+            <IconBubble name="Receipt" tone="orange" />
           </div>
           <ul className="mt-4 divide-y divide-line">
             {data.recentInvoices.map((inv) => (

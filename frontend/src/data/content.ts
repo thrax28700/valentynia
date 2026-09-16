@@ -75,7 +75,7 @@ export const pricingPlans = [
     highlight: true,
   },
   {
-    name: 'Premium',
+    name: 'Sur-mesure',
     price: null,
     unit: 'sur devis',
     tagline: 'Pour les groupes multi-entités.',
@@ -85,7 +85,7 @@ export const pricingPlans = [
   },
 ];
 
-export const premiumOptions = [
+export const addOnOptions = [
   'Module de paie connecté (partenaires agréés)',
   'Coffre-fort salarié à valeur probante étendu',
   'Connecteurs SIRH / comptabilité sur mesure',

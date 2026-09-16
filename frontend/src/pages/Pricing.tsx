@@ -1,6 +1,6 @@
 import { Button, Card, IconEl, SectionTitle, Badge, cx } from '../components/ui';
 import { eur } from '../lib/format';
-import { pricingPlans, premiumOptions } from '../data/content';
+import { pricingPlans, addOnOptions } from '../data/content';
 
 const faq = [
   { q: 'La facturation Factur-X est-elle vraiment incluse ?', a: 'Oui. La génération Factur-X (PDF/A-3 + XML) est incluse dès l’offre Essentiel. L’envoi au PPF et l’archivage légal 10 ans sont inclus à partir de Business.' },
@@ -60,10 +60,10 @@ export default function Pricing() {
 
       <div className="mt-16 grid gap-6 lg:grid-cols-2">
         <Card>
-          <h3 className="text-lg">Options premium</h3>
+          <h3 className="text-lg">Options complémentaires</h3>
           <p className="mt-1 text-sm text-mauve">À activer selon vos besoins, sur toutes les offres.</p>
           <ul className="mt-5 space-y-3 text-sm text-mauve">
-            {premiumOptions.map((o) => (
+            {addOnOptions.map((o) => (
               <li key={o} className="flex items-start gap-2">
                 <IconEl name="Sparkle" size={16} className="mt-0.5 shrink-0 text-powder" />
                 {o}

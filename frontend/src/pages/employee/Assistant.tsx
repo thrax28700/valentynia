@@ -43,14 +43,14 @@ export default function EmpAssistant() {
       <PageIntro
         title="Assistant IA"
         text="Vos réponses RH, 24h/24. Vos échanges restent confidentiels."
-        action={<Badge tone="powder">Confidentiel</Badge>}
+        action={<Badge tone="violet">Confidentiel</Badge>}
       />
 
       <Card className="flex h-[540px] flex-col p-0">
         <div className="flex-1 space-y-4 overflow-y-auto p-6">
           {msgs.map((m, i) => (
             <div key={i} className={cx('flex gap-3', m.from === 'me' && 'flex-row-reverse')}>
-              {m.from === 'ia' && <IconBubble name="Sparkle" tone="powder" />}
+              {m.from === 'ia' && <IconBubble name="Sparkle" tone="violet" />}
               <div
                 className={cx(
                   'max-w-[78%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
@@ -63,7 +63,7 @@ export default function EmpAssistant() {
           ))}
           {chat.isPending && (
             <div className="flex gap-3">
-              <IconBubble name="Sparkle" tone="powder" />
+              <IconBubble name="Sparkle" tone="violet" />
               <div className="flex items-center rounded-2xl bg-wash px-4 py-3 text-mauve">
                 <Spinner />
               </div>
