@@ -94,7 +94,7 @@ export default function Employees() {
         {isLoading ? (
           <p className="py-10 text-center text-sm text-mauve">Chargement…</p>
         ) : isError ? (
-          <p className="py-10 text-center text-sm text-powderdark">Impossible de charger les salariés.</p>
+          <p className="py-10 text-center text-sm text-dangerdark">Impossible de charger les salariés.</p>
         ) : rows.length === 0 ? (
           <EmptyState title="Aucun salarié" text="Ajustez la recherche ou ajoutez un nouveau dossier." />
         ) : (
@@ -180,7 +180,7 @@ export default function Employees() {
             />
           </div>
           {create.isError && (
-            <p className="text-xs text-powderdark">
+            <p className="text-xs text-dangerdark">
               {(create.error as Error).message}
             </p>
           )}

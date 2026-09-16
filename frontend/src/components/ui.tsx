@@ -68,8 +68,9 @@ export function SectionTitle({ eyebrow, title, subtitle, center }: { eyebrow?: s
 
 /* ---------- Badge ---------- */
 const tones: Record<string, string> = {
-  powder: 'bg-rosewash text-powderdark', // accent principal (corail)
+  powder: 'bg-rosewash text-powderdark', // accent neutre
   rose: 'bg-rosewash text-powderdark',
+  danger: 'bg-dangerwash text-dangerdark', // refus / échec / alerte critique
   sage: 'bg-sage text-prune', // succès / validation
   neutral: 'bg-wash text-mauve border border-line',
   peach: 'bg-wash text-mauve border border-line', // (déprécié → neutre)
@@ -88,9 +89,10 @@ export function IconEl({ name, size = 20, className }: { name: IconName; size?: 
   return <C size={size} className={className} />;
 }
 
-export function IconBubble({ name, tone = 'powder' }: { name: IconName; tone?: 'peach' | 'powder' | 'sage' | 'gold' | 'orange' | 'violet' | 'teal' }) {
+export function IconBubble({ name, tone = 'powder' }: { name: IconName; tone?: 'peach' | 'powder' | 'danger' | 'sage' | 'gold' | 'orange' | 'violet' | 'teal' }) {
   const bg: Record<string, string> = {
     powder: 'bg-rosewash text-powderdark',
+    danger: 'bg-dangerwash text-dangerdark',
     sage: 'bg-sage text-prune',
     peach: 'bg-wash text-mauve',
     gold: 'bg-goldwash text-golddark',
@@ -112,7 +114,7 @@ export function Stat({ label, value, delta, tone }: { label: string; value: stri
       <span className="font-heading text-xs uppercase tracking-wide text-mauve">{label}</span>
       <span className="v-stat">{value}</span>
       {delta && (
-        <span className={cx('font-heading text-xs', tone === 'down' ? 'text-powder' : 'text-mauve')}>
+        <span className={cx('font-heading text-xs', tone === 'down' ? 'text-danger' : 'text-mauve')}>
           {delta}
         </span>
       )}
@@ -188,16 +190,16 @@ export function Table({ head, children }: { head: string[]; children: ReactNode 
 /* ---------- Badge de statut (mapping centralisé) ---------- */
 const STATUS_TONE: Record<string, keyof typeof tones> = {
   // absences
-  'À valider': 'neutral', Validé: 'sage', Refusé: 'powder', Enregistré: 'neutral',
+  'À valider': 'neutral', Validé: 'sage', Refusé: 'danger', Enregistré: 'neutral',
   // demandes salarié
   Traité: 'sage', Remboursé: 'sage', 'En cours': 'neutral',
   // PPF / factures
   Acceptée: 'sage', Encaissée: 'sage', 'Reçue par le PPF': 'neutral', Déposée: 'neutral',
-  Brouillon: 'neutral', Rejetée: 'powder', Payée: 'sage', 'En attente': 'neutral',
+  Brouillon: 'neutral', Rejetée: 'danger', Payée: 'sage', 'En attente': 'neutral',
   // salariés
-  Actif: 'sage', Congé: 'neutral', Onboarding: 'powder', "Période d’essai": 'powder',
+  Actif: 'sage', Congé: 'neutral', Onboarding: 'gold', "Période d’essai": 'gold',
   // conformité
-  Conforme: 'sage', Active: 'powder',
+  Conforme: 'sage', Active: 'sage',
 };
 export const toneFor = (status: string): keyof typeof tones => STATUS_TONE[status] ?? 'neutral';
 export function StatusBadge({ status }: { status: string }) {

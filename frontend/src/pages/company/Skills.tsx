@@ -77,7 +77,7 @@ export default function Skills() {
               </thead>
               <tbody className="divide-y divide-line">
                 {rows.map((p) => (
-                  <tr key={p.id}>
+                  <tr key={p.id} className="transition hover:bg-wash">
                     <td className="px-3 py-3 font-heading text-sm text-prune">{p.name}</td>
                     {skills.map((s) => {
                       const lvl = p.levels[s.id] ?? 0;
@@ -136,7 +136,7 @@ export default function Skills() {
             placeholder="Accessibilité web (RGAA)"
           />
           {addSkill.isError && (
-            <p className="text-xs text-powderdark">{(addSkill.error as Error).message}</p>
+            <p className="text-xs text-dangerdark">{(addSkill.error as Error).message}</p>
           )}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" onClick={() => setModal(false)}>

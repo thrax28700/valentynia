@@ -235,7 +235,7 @@ export default function Billing() {
             </p>
             <Table head={['#', 'Événement', 'Empreinte écriture', 'Empreinte précédente', 'Date']}>
               {journal.map((e) => (
-                <tr key={e.id} className="text-prune">
+                <tr key={e.id} className="text-prune transition hover:bg-wash">
                   <td className="px-3 py-3 font-mono text-sm">{e.sequence}</td>
                   <td className="px-3 py-3 text-xs">{e.event}</td>
                   <td className="px-3 py-3 font-mono text-xs text-mauve">
@@ -380,7 +380,7 @@ export default function Billing() {
           </div>
 
           {create.isError && (
-            <p className="text-xs text-powderdark">{(create.error as Error).message}</p>
+            <p className="text-xs text-dangerdark">{(create.error as Error).message}</p>
           )}
           <div className="flex justify-end gap-2 pt-1">
             <Button variant="secondary" onClick={() => setModal(false)}>

@@ -114,9 +114,9 @@ export default function EmpDashboard() {
         )}
       </Card>
 
-      <Card className="bg-gradient-to-r from-wash to-rosewash">
+      <Card className="bg-gradient-to-r from-wash to-violetwash">
         <div className="flex flex-wrap items-center gap-3">
-          <IconEl name="Sparkle" size={20} className="text-powder" />
+          <IconEl name="Sparkle" size={20} className="text-violet" />
           <div>
             <p className="font-heading text-sm font-medium text-prune">Assistant IA</p>
             <p className="text-sm text-mauve">Une question RH ? Réponse immédiate et confidentielle.</p>

@@ -83,7 +83,7 @@ export default function Planning() {
             </thead>
             <tbody className="divide-y divide-line">
               {rows.map((r) => (
-                <tr key={r.name}>
+                <tr key={r.name} className="transition hover:bg-wash">
                   <td className="px-3 py-3 font-heading text-sm text-prune">{r.name}</td>
                   {days.map((d) => {
                     const loc = r.cells[d];
@@ -155,7 +155,7 @@ export default function Planning() {
             options={LOCATIONS}
           />
           {create.isError && (
-            <p className="text-xs text-powderdark">{(create.error as Error).message}</p>
+            <p className="text-xs text-dangerdark">{(create.error as Error).message}</p>
           )}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" onClick={() => setModal(false)}>

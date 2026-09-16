@@ -4,17 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Valentynia — fond blanc + accent corail + une couleur par module
+        // Valentynia — fond blanc, neutres gris (froids, non chaleureux), accent neutre graphite
+        // + une couleur par module. Le rouge/corail est réservé aux états d'erreur (`danger`).
         cream: '#FFFFFF', // fond de page (blanc)
-        wash: '#F4F3F2', // remplissage subtil : tuiles, hover, onglets, lignes de tableau
-        line: '#E9E5E2', // bordures & séparateurs (hairline)
-        prune: '#211F21', // texte courant + titres (anthracite)
-        mauve: '#6E655C', // texte secondaire (gris chaud)
-        powder: '#E9435A', // accent principal (corail) — boutons, liens, état actif
-        powderdark: '#CC3349', // hover de l'accent principal
-        rosewash: '#FBE6EA', // fond corail très clair — badges, surbrillance
-        peach: '#F4F3F2', // (déprécié — repointé sur le neutre)
+        wash: '#F1F2F4', // remplissage subtil : tuiles, hover, onglets, lignes de tableau
+        line: '#E3E5E8', // bordures & séparateurs (hairline)
+        prune: '#1C1E21', // texte courant + titres (quasi-noir neutre)
+        mauve: '#5B6169', // texte secondaire (gris neutre)
+        powder: '#24272C', // accent principal neutre (graphite) — boutons, liens, état actif
+        powderdark: '#3A3F46', // hover de l'accent principal (plus clair)
+        rosewash: '#EEF0F2', // fond neutre très clair — badges, surbrillance
+        peach: '#F1F2F4', // (déprécié — repointé sur le neutre)
         sage: '#D8E7DE', // succès / validation uniquement
+
+        // Rouge/corail — réservé aux erreurs, refus, alertes critiques (jamais l'accent principal)
+        danger: '#E9435A',
+        dangerdark: '#CC3349',
+        dangerwash: '#FBE6EA',
 
         // Couleurs de module (une par domaine applicatif)
         gold: '#F0B429', // Ressources humaines

@@ -40,7 +40,7 @@ function Hero() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-heading text-sm text-mauve">Tableau de bord RH</p>
-                <p className="font-serif text-xl italic text-prune">Bonjour, Camille</p>
+                <p className="font-heading text-xl font-semibold text-prune">Bonjour, Camille</p>
               </div>
               <IconBubble name="Sparkle" tone="violet" />
             </div>
@@ -178,7 +178,7 @@ function Testimonials() {
         {testimonials.map((t) => (
           <Card key={t.name} className="flex flex-col">
             <IconEl name="Chat" size={22} className="text-powder" />
-            <p className="mt-4 flex-1 font-serif text-lg italic leading-relaxed text-prune">“{t.quote}”</p>
+            <p className="mt-4 flex-1 text-base leading-relaxed text-prune">“{t.quote}”</p>
             <div className="mt-5">
               <p className="font-heading text-sm font-medium text-prune">{t.name}</p>
               <p className="text-xs text-mauve">{t.role}</p>

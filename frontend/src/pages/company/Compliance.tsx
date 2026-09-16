@@ -16,13 +16,13 @@ import { complianceItems } from '../../data/content';
 import { dateShort } from '../../lib/format';
 
 const levelText: Record<string, string> = {
-  HIGH: 'text-powderdark',
-  MEDIUM: 'text-powder',
+  HIGH: 'text-dangerdark',
+  MEDIUM: 'text-orangedark',
   LOW: 'text-mauve',
 };
-const levelBadge: Record<string, 'powder' | 'peach' | 'sage'> = {
-  HIGH: 'powder',
-  MEDIUM: 'peach',
+const levelBadge: Record<string, 'danger' | 'orange' | 'sage'> = {
+  HIGH: 'danger',
+  MEDIUM: 'orange',
   LOW: 'sage',
 };
 
@@ -132,7 +132,7 @@ export default function Compliance() {
             Analyser
           </Button>
           {check.data && (
-            <span className={cx('text-sm', check.data.compliant ? 'text-prune' : 'text-powderdark')}>
+            <span className={cx('text-sm', check.data.compliant ? 'text-prune' : 'text-dangerdark')}>
               {check.data.compliant
                 ? '✓ Toutes les clauses obligatoires sont présentes.'
                 : `${check.data.missingClauses.length} clause(s) manquante(s) : ${check.data.missingClauses.join(', ')}`}

@@ -90,7 +90,7 @@ function Footer() {
       </div>
       <div className="v-container flex flex-col items-center justify-between gap-3 border-t border-line py-6 text-xs text-mauve md:flex-row">
         <p>© {new Date().getFullYear()} Valentynia. Tous droits réservés.</p>
-        <p className="font-serif italic">« Valentynia — L’humain, simplement. »</p>
+        <p className="font-heading font-medium">« Valentynia — L’humain, simplement. »</p>
       </div>
     </footer>
   );

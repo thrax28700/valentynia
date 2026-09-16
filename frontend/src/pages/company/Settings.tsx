@@ -82,7 +82,7 @@ export default function Settings() {
               </Button>
               {saved && <span className="text-sm text-prune">✓ Enregistré.</span>}
               {update.isError && (
-                <span className="text-sm text-powderdark">{(update.error as Error).message}</span>
+                <span className="text-sm text-dangerdark">{(update.error as Error).message}</span>
               )}
             </div>
           </form>
@@ -99,7 +99,7 @@ export default function Settings() {
                 11 € / salarié / mois · renouvellement le 1er janvier
               </p>
             </div>
-            <Badge tone="powder">Active</Badge>
+            <Badge tone="sage">Active</Badge>
           </div>
           <Button variant="secondary" className="mt-4" to="/tarifs">
             Changer d’offre

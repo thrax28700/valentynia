@@ -79,7 +79,7 @@ export default function Absences() {
         ) : (
           <Table head={['Salarié', 'Type', 'Période', 'Jours', 'Statut', 'Action']}>
             {absences.map((a) => (
-              <tr key={a.id} className="text-prune">
+              <tr key={a.id} className="text-prune transition hover:bg-wash">
                 <td className="px-3 py-3 font-heading text-sm font-medium">{a.employeeName}</td>
                 <td className="px-3 py-3 text-mauve">{absenceTypeLabel[a.type] ?? a.type}</td>
                 <td className="px-3 py-3 font-mono text-xs text-mauve">
@@ -160,7 +160,7 @@ export default function Absences() {
             </p>
           )}
           {create.isError && (
-            <p className="text-xs text-powderdark">{(create.error as Error).message}</p>
+            <p className="text-xs text-dangerdark">{(create.error as Error).message}</p>
           )}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" onClick={() => setModal(false)}>

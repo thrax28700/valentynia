@@ -15,7 +15,7 @@ import { eur, dateShort, timeShort } from '../../lib/format';
 import { absenceStatusLabel, absenceTypeLabel, ppfStatusLabel } from '../../lib/labels';
 
 const severityRing: Record<string, string> = {
-  HIGH: 'border-powder/30 bg-rosewash',
+  HIGH: 'border-danger/30 bg-dangerwash',
   MEDIUM: 'border-line bg-wash',
   LOW: 'border-line bg-wash',
 };
@@ -27,7 +27,7 @@ export default function Dashboard() {
     return <p className="py-16 text-center text-sm text-mauve">Chargement du tableau de bord…</p>;
   }
   if (isError || !data) {
-    return <p className="py-16 text-center text-sm text-powderdark">Tableau de bord indisponible.</p>;
+    return <p className="py-16 text-center text-sm text-dangerdark">Tableau de bord indisponible.</p>;
   }
 
   const stats = [

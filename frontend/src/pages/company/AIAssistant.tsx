@@ -201,7 +201,7 @@ export default function AIAssistant() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {insights.map((i) => (
             <Card key={i.id}>
-              <IconEl name="Sparkle" size={18} className="text-powder" />
+              <IconEl name="Sparkle" size={18} className="text-violet" />
               <h3 className="mt-3 text-base">{i.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-mauve">{i.body}</p>
             </Card>

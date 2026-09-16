@@ -124,7 +124,7 @@ export default function Reviews() {
             required
           />
           {create.isError && (
-            <p className="text-xs text-powderdark">{(create.error as Error).message}</p>
+            <p className="text-xs text-dangerdark">{(create.error as Error).message}</p>
           )}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" onClick={() => setModal(false)}>

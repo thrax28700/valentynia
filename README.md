@@ -141,18 +141,20 @@ npm run seed             # amorçage des données de démonstration
 
 ## Identité visuelle
 
-Fond blanc, un accent corail et une couleur par module. Palette
-(`frontend/tailwind.config.js`) :
+Fond blanc, neutres gris (froids), accent principal neutre (graphite) et une
+couleur par module — le rouge n'est utilisé que pour les erreurs/refus, jamais
+comme accent de marque. Palette (`frontend/tailwind.config.js`) :
 
 | Nom          | Hex       | Usage                                             |
 |--------------|-----------|--------------------------------------------------|
 | `cream`      | `#FFFFFF` | Fond de page                                      |
-| `wash`       | `#F4F3F2` | Tuiles, hover, onglets, lignes de tableau         |
-| `line`       | `#E9E5E2` | Bordures et séparateurs                           |
-| `prune`      | `#211F21` | Texte courant et titres                           |
-| `mauve`      | `#6E655C` | Texte secondaire                                  |
-| `powder`     | `#E9435A` | Accent principal : boutons, liens, état actif     |
-| `powderdark` | `#CC3349` | Hover de l'accent principal                       |
+| `wash`       | `#F1F2F4` | Tuiles, hover, onglets, lignes de tableau         |
+| `line`       | `#E3E5E8` | Bordures et séparateurs                           |
+| `prune`      | `#1C1E21` | Texte courant et titres                           |
+| `mauve`      | `#5B6169` | Texte secondaire                                  |
+| `powder`     | `#24272C` | Accent principal neutre : boutons, liens, état actif |
+| `powderdark` | `#3A3F46` | Hover de l'accent principal                       |
+| `danger`     | `#E9435A` | Erreurs, refus, alertes critiques (jamais l'accent de marque) |
 | `sage`       | `#D8E7DE` | Succès / validation                               |
 | `gold`       | `#F0B429` | Module Ressources humaines                        |
 | `orange`     | `#F2762E` | Module Finance & conformité                       |

@@ -14,11 +14,13 @@ const toneText: Record<string, string> = {
   violet: 'text-violet',
   teal: 'text-tealdark',
 };
-const toneBg: Record<string, string> = {
-  gold: 'bg-goldwash',
-  orange: 'bg-orangewash',
-  violet: 'bg-violetwash',
-  teal: 'bg-tealwash',
+// État actif de la navigation : couleur pleine + texte blanc, pour que la
+// couleur de module soit immédiatement visible (pas juste un ton pâle).
+const toneActive: Record<string, string> = {
+  gold: 'bg-gold text-white',
+  orange: 'bg-orange text-white',
+  violet: 'bg-violet text-white',
+  teal: 'bg-teal text-white',
 };
 
 function groupItems(nav: NavItem[]) {
@@ -91,7 +93,7 @@ export default function AppShell({ nav, space }: { nav: NavItem[]; space: 'entre
                   end={item.end}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    cx('v-nav-link', isActive && (tone ? cx(toneBg[tone], toneText[tone], 'shadow-soft') : 'v-nav-link-active'))
+                    cx('v-nav-link', isActive && (tone ? cx(toneActive[tone], 'shadow-soft') : 'v-nav-link-active'))
                   }
                 >
                   <IconEl name={item.icon} size={18} />

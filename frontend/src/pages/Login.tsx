@@ -48,7 +48,7 @@ export default function Login() {
           <span className="font-heading text-xl font-semibold text-prune">Valentynia</span>
         </Link>
         <div>
-          <p className="font-serif text-3xl leading-snug text-prune">« L'humain, simplement. »</p>
+          <p className="font-heading text-3xl font-semibold leading-snug text-prune">« L'humain, simplement. »</p>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-mauve">
             Démo interactive : vos actions (validations, factures, demandes…) sont réellement
             enregistrées dans votre navigateur.
@@ -87,7 +87,7 @@ export default function Login() {
             <Field label="E-mail professionnel" type="email" value={email} onChange={setEmail} required />
             <Field label="Mot de passe" type="password" value={password} onChange={setPassword} required />
             {error && (
-              <p className="flex items-center gap-2 rounded-xl bg-rosewash px-3 py-2 text-xs text-powderdark">
+              <p className="flex items-center gap-2 rounded-xl bg-dangerwash px-3 py-2 text-xs text-dangerdark">
                 <IconEl name="Warning" size={14} /> {error}
               </p>
             )}
